@@ -1,0 +1,3616 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Aeterna</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="css.css">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: sticky nav, asymmetric hero with arch-framed bouquet, tinted bands (pink / vanilla), floating chat, staff inbox view. */
+/* Paleta Aeterna: amarillo claro, rosa claro y rosa oscuro */
+:root,
+:root[data-theme="dark"],
+:root[data-theme="light"]{
+  --bg:#FFF8F9;          /* blanco rosado (fondo general) */
+  --surface:#FFFFFF;     /* tarjetas */
+  --band-a:#FCE6EC;      /* rosa claro (secciones) */
+  --band-b:#FFF5D6;      /* amarillo mantequilla suave (secciones alternas) */
+  --tile-a:#FFF0C2;      /* fondo de fotos, toque amarillo */
+  --tile-b:#F9D4DF;      /* fondo de fotos, tono rosa */
+  --ink:#4A1F2F;         /* texto principal */
+  --ink-2:#7D4A5C;       /* texto secundario */
+  --accent:#C2456E;      /* rosa oscuro (botones, marquesina) */
+  --accent-ink:#FFFFFF;  /* texto sobre botones */
+  --accent-text:#A8335A; /* rosa oscuro para textos y títulos */
+  --line:#F3D5DD;        /* bordes rosados suaves */
+  --gold:#F2B71F;        /* amarillo de acento (estrellas, insignias) */
+  --shadow:0 14px 34px -14px rgba(168,51,90,.35);
+  --f-display:'Lora','Georgia',serif;
+  --f-body:'Hanken Grotesk',system-ui,-apple-system,'Segoe UI',sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;overflow-x:hidden}
+img{max-width:100%}
+[hidden]:not([hidden=until-found i]){display:none!important}
+h1,h2,h3{font-family:var(--f-display);font-weight:400;line-height:1.08;margin:0;text-wrap:balance;letter-spacing:0}
+p{margin:0}
+a{color:inherit}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--accent-text);outline-offset:2px}
+.wrap{max-width:1180px;margin-inline:auto;padding-inline:max(16px,4vw)}
+.eyebrow{font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--accent-text)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;border:1.5px solid var(--accent);background:var(--accent);color:var(--accent-ink);padding:.78rem 1.4rem;border-radius:999px;font-weight:600;text-decoration:none;transition:transform .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.btn.ghost{background:transparent;color:var(--accent-text);border-color:var(--accent-text)}
+.btn.sm{padding:.5rem 1rem;font-size:.9rem}
+.badge{display:inline-grid;place-items:center;min-width:1.35rem;height:1.35rem;padding-inline:.35rem;border-radius:999px;background:var(--gold);color:#2B1A00;font-size:.75rem;font-weight:700}
+
+/* nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:color-mix(in srgb,var(--bg) 90%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:1.2rem;min-height:70px}
+.brand{display:flex;align-items:center;gap:.65rem;text-decoration:none;color:inherit;min-width:max-content}
+.brand .mark{width:48px;height:48px;flex:none;border-radius:12px;object-fit:contain;display:block}.brand .logo-fallback{width:48px;height:48px;border-radius:12px;display:grid;place-items:center;background:var(--band-a);border:1px solid var(--line)}
+.brand b{display:block;font-family:var(--f-display);font-size:1.55rem;font-weight:600;letter-spacing:.02em;line-height:1}
+.brand small{display:block;font-size:.57rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-2);margin-top:3px}
+.links{display:flex;justify-content:center;align-items:center;gap:clamp(.6rem,.95vw,1rem);min-width:0}
+.links a{color:var(--ink-2);text-decoration:none;font-weight:600;font-size:.8rem;white-space:nowrap;padding:.35rem .1rem;transition:color .2s}
+.links a:hover{color:var(--accent-text)}
+.nav-actions{display:flex;gap:.45rem;align-items:center;justify-content:flex-end;min-width:max-content}
+.account-actions{display:flex;align-items:center;gap:.4rem;flex-wrap:nowrap}
+.menu-toggle{display:none;border:1px solid var(--line);background:var(--surface);color:var(--ink);width:42px;height:42px;border-radius:12px;font-size:1.1rem}
+.mobile-menu{display:none}
+@media(max-width:1080px){
+  .nav .wrap{gap:.8rem}
+  .links{gap:.7rem}
+  .links a{font-size:.76rem}
+  .nav-actions .btn.sm{padding:.48rem .72rem;font-size:.78rem}
+}
+@media(max-width:1180px){
+  .nav .wrap{grid-template-columns:auto 1fr auto;min-height:64px}
+  .links{display:none}
+  .menu-toggle{display:grid;place-items:center}
+  .nav-actions{margin-left:auto}
+  .nav-actions #navChat{display:none}
+  .brand b{font-size:1.35rem}
+  .brand small{display:none}
+  .brand .mark,.brand .logo-fallback{width:42px;height:42px}
+  .nav-actions .btn.sm{padding:.46rem .68rem;font-size:.78rem}
+  .mobile-menu{position:absolute;left:12px;right:12px;top:calc(100% + 8px);display:grid;gap:.25rem;padding:.7rem;background:color-mix(in srgb,var(--surface) 96%,transparent);border:1px solid var(--line);border-radius:18px;box-shadow:0 18px 50px rgba(60,25,35,.16);backdrop-filter:blur(16px)}
+  .mobile-menu[hidden]{display:none}
+  .mobile-menu a,.mobile-menu button{display:flex;align-items:center;width:100%;padding:.78rem .85rem;border:0;background:transparent;color:var(--ink);text-decoration:none;border-radius:12px;font-weight:600;text-align:left}
+  .mobile-menu a:hover,.mobile-menu button:hover{background:var(--band-a);color:var(--accent-text)}
+}
+@media(max-width:520px){
+  .nav .wrap{min-height:60px;padding-inline:12px}
+  .nav-actions{gap:.3rem}
+  .nav-actions .btn.sm{padding:.42rem .58rem;font-size:.72rem}
+  .nav-actions .btn.ghost.sm{padding-inline:.55rem}
+  .brand{gap:.45rem}
+  .brand b{font-size:1.2rem}
+  .account-actions{gap:.3rem}
+  .user-chip{max-width:92px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .menu-toggle{width:40px;height:40px}
+  .fab{left:16px;right:16px;justify-content:center}
+  .chat{right:8px;left:8px;width:auto}
+}
+
+/* hero: animated bloom intro, giant wordmark, falling petals, marquee */
+.hero{position:relative;overflow:hidden;isolation:isolate;background:radial-gradient(55% 65% at 74% 42%,var(--band-b) 0,transparent 72%),var(--band-a);padding-block:clamp(1.6rem,3.6vw,3rem) calc(clamp(5rem,21vw,17rem)*.5)}
+.hero .wrap{position:relative;z-index:2}
+.hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:clamp(1rem,4vw,3rem);align-items:center}
+.hcopy{min-width:0}
+.hero h1{font-size:clamp(2.55rem,6.1vw,5rem);margin:.9rem 0 1.2rem;line-height:1.02;max-width:12ch}
+.hero h1 em{font-style:normal;font-weight:400;color:var(--accent-text)}
+.w{display:inline-block;overflow:hidden;vertical-align:bottom;padding:.04em .06em .14em;margin:-.04em -.06em -.14em}
+.w>span{display:inline-block;animation:up .95s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(.25s + var(--i,0)*.11s)}
+@keyframes up{from{transform:translateY(110%)}}
+.rise{animation:rise .9s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(.9s + var(--i,0)*.12s)}
+@keyframes rise{from{transform:translateY(18px)}}
+.lead{font-size:1.12rem;color:var(--ink-2);max-width:34rem}
+.cta{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.3rem}
+.facts{display:flex;flex-wrap:wrap;gap:.8rem 2rem;margin-top:1.3rem;padding-top:1rem;border-top:1px solid color-mix(in srgb,var(--ink) 16%,transparent);font-size:.88rem;color:var(--ink-2)}
+.facts b{display:block;color:var(--ink);font-size:.98rem}
+
+.giant{position:absolute;left:50%;bottom:-.01em;z-index:0;display:flex;justify-content:center;align-items:flex-end;width:100%;max-width:none;box-sizing:border-box;padding:0 2vw .02em;font-family:Georgia,'Times New Roman',serif;font-style:normal;font-variant-ligatures:none;font-size:clamp(4.6rem,14.2vw,12.8rem);font-weight:500;line-height:.82;letter-spacing:-.035em;white-space:nowrap;pointer-events:none;user-select:none;transform:translateX(-50%)}
+.giant b{display:inline-block;font-weight:500;padding-inline:.04em;color:color-mix(in srgb,var(--accent) 58%,var(--band-a));animation:letter 1.3s cubic-bezier(.2,.8,.2,1) both,bob 6s ease-in-out infinite;animation-delay:calc(.15s + var(--i,0)*.1s),calc(1.9s + var(--i,0)*.4s)}
+@supports ((-webkit-background-clip:text) or (background-clip:text)){
+  .giant b{background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 74%,var(--band-a)) 0%,color-mix(in srgb,var(--accent) 36%,var(--band-a)) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+}
+@keyframes letter{from{transform:translateY(60%) scale(.9)}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3.5%)}}
+
+.stage{position:relative;width:100%;max-width:500px;justify-self:center;aspect-ratio:400/440;transform:translate(calc(var(--mx,0)*12px),calc(var(--my,0)*9px))}
+.glhost{position:absolute;inset:0}
+.gl{display:block;width:100%;height:100%}
+.stage svg.bq{display:block;width:100%;height:100%;overflow:visible}
+.sway{transform-origin:200px 420px;animation:sway 7s ease-in-out 2.8s infinite alternate}
+@keyframes sway{from{transform:rotate(-1.4deg)}to{transform:rotate(1.4deg)}}
+.pt,.lf{animation:pop 1.15s cubic-bezier(.2,.8,.2,1) both;animation-delay:var(--d,0s)}
+@keyframes pop{0%{transform:scale(.35) rotate(-16deg)}70%{transform:scale(1.07) rotate(2deg)}100%{transform:scale(1) rotate(0)}}
+.stem{stroke-dasharray:1;animation:grow 1.3s ease-out both;animation-delay:var(--d,0s)}
+@keyframes grow{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+.tw{transform-box:fill-box;transform-origin:center;animation:twinkle 3.2s ease-in-out infinite alternate;animation-delay:var(--d,0s)}
+@keyframes twinkle{from{opacity:.55;transform:scale(.85)}to{opacity:1;transform:scale(1.15)}}
+.badge-rot{position:absolute;left:-2%;bottom:6%;width:clamp(92px,22%,128px);aspect-ratio:1}
+.badge-rot svg{width:100%;height:100%;display:block;animation:spin 24s linear infinite}
+.btxt{font:600 9.5px var(--f-body);letter-spacing:.14em;fill:var(--accent-text)}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.petals{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden;transform:translate(calc(var(--mx,0)*-6px),calc(var(--my,0)*-5px))}
+.fp{position:absolute;top:-50px;left:var(--x);width:var(--s);opacity:.9;animation:fall var(--dur) linear var(--dl) infinite}
+.fp .sw{display:block;animation:swing var(--sw) ease-in-out var(--dl) infinite alternate}
+.fp svg{display:block;width:100%;height:auto}
+@keyframes fall{to{transform:translateY(var(--fall,700px))}}
+@keyframes swing{from{transform:translateX(-18px) rotate(-40deg)}to{transform:translateX(26px) rotate(55deg)}}
+
+.marquee{background:var(--accent);color:var(--accent-ink);overflow:hidden;white-space:nowrap;padding-block:.85rem}
+.track{display:inline-flex;animation:slide 40s linear infinite;will-change:transform}
+.grp{display:inline-flex}
+.grp span{display:inline-flex;align-items:center;gap:1.4rem;padding-right:1.4rem;font-family:var(--f-display);font-style:italic;font-size:clamp(1.25rem,3vw,1.8rem)}
+.grp svg{width:24px;height:24px;flex:none}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+.arch{aspect-ratio:4/5;max-width:100%;border-radius:50% 50% 22px 22px/34% 34% 22px 22px;background:var(--band-a);overflow:hidden}
+.arch svg{display:block;width:100%;height:100%}
+@media(max-width:860px){.hero-grid{grid-template-columns:1fr}.stage{order:-1;max-width:min(380px,88vw)}}
+
+@media (prefers-reduced-motion:no-preference){
+  @supports (animation-timeline:view()){
+    .card,.zone,.rev,.steps li,.tips li{animation:lift linear backwards;animation-timeline:view();animation-range:entry 0% entry 35%}
+    @keyframes lift{from{transform:translateY(28px)}}
+  }
+}
+
+/* media slots: fotos reales y videos del trabajo */
+.media-section{padding-block:clamp(3rem,7vw,5.5rem)}
+.media-head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:1rem 2rem;margin-bottom:1.7rem}
+.media-head h2{font-size:clamp(2rem,4.3vw,3.15rem);max-width:18ch}
+.media-head>p{max-width:31rem;color:var(--ink-2)}
+.photo-grid{display:grid;grid-template-columns:1.2fr .8fr .8fr;gap:1rem}
+.photo-slot{position:relative;min-height:240px;border:1px solid var(--line);border-radius:22px;overflow:hidden;background:linear-gradient(145deg,var(--band-a),var(--band-b));box-shadow:var(--shadow)}
+.photo-slot.tall{min-height:330px}
+.photo-slot img{width:100%;height:100%;display:block;object-fit:cover;transition:transform .45s ease}
+.photo-slot:hover img{transform:scale(1.025)}
+.photo-slot .slot-copy{position:absolute;left:1rem;right:1rem;bottom:1rem;padding:.8rem .9rem;border-radius:14px;background:rgba(255,255,255,.82);backdrop-filter:blur(8px);color:var(--ink)}
+.photo-slot .slot-copy b{display:block;font-family:var(--f-display);font-size:1.2rem;font-weight:400}
+.photo-slot .slot-copy span{font-size:.78rem;color:var(--ink-2)}
+.video-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.video-card{background:var(--surface);border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:0 10px 30px rgba(120,50,70,.08)}
+.video-card video{display:block;width:100%;aspect-ratio:9/14;object-fit:cover;background:var(--band-a)}
+.video-card .video-info{padding:1rem 1.05rem 1.15rem}
+.video-card h3{font-size:1.3rem;margin-bottom:.25rem}
+.video-card p{font-size:.88rem;color:var(--ink-2)}
+.video-empty{display:grid;place-items:center;min-height:320px;padding:2rem;text-align:center;background:linear-gradient(145deg,var(--band-a),var(--band-b));color:var(--ink-2)}
+.video-empty strong{display:block;font-family:var(--f-display);font-size:1.5rem;color:var(--ink);font-weight:400;margin-bottom:.35rem}
+@media(max-width:900px){.photo-grid{grid-template-columns:1fr 1fr}.photo-slot.tall{grid-row:span 2}.video-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.photo-grid,.video-grid{grid-template-columns:1fr}.photo-slot,.photo-slot.tall{min-height:260px}.photo-slot.tall{grid-row:auto}.video-card video{aspect-ratio:4/5}}
+
+/* sections */
+.section{padding-block:clamp(3rem,7vw,5.5rem)}
+.band-a{background:var(--band-a)}
+.band-b{background:var(--band-b)}
+.sec-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:1rem 2rem;margin-bottom:2rem}
+.sec-head h2{font-size:clamp(2rem,4.3vw,3.15rem);margin-top:.5rem;max-width:18ch}
+.sec-head p{color:var(--ink-2);max-width:30rem}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem}
+.chip{border:1.5px solid var(--line);background:transparent;color:var(--ink);padding:.45rem 1rem;border-radius:999px;font-weight:500;font-size:.92rem}
+.chip:hover{border-color:var(--accent-text)}
+.chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+
+/* Aeterna refinements: readable editorial typography, polished cards and controls */
+.section h2,.media-head h2,.split h2,.work h2{font-family:var(--f-display);font-weight:500;letter-spacing:-.025em;line-height:1.08}
+.sec-head h2{max-width:17ch}
+.sec-head>p,.media-head>p{font-size:.98rem;line-height:1.65}
+.card{border-radius:24px;box-shadow:0 12px 28px rgba(120,50,70,.07)}
+.card:hover{transform:translateY(-5px);box-shadow:0 20px 42px rgba(120,50,70,.13)}
+.tile{aspect-ratio:1/1.04;position:relative;overflow:hidden;background:linear-gradient(145deg,var(--band-a),var(--band-b))}
+.tile:after{content:'Aeterna';position:absolute;left:1rem;bottom:.85rem;font-family:var(--f-display);font-size:.75rem;letter-spacing:.08em;color:rgba(59,34,41,.32);pointer-events:none}
+.tile img{object-fit:cover;transition:transform .5s ease}
+.card:hover .tile img{transform:scale(1.035)}
+.card-b{padding:1.15rem 1.2rem 1.25rem;gap:.38rem}
+.card h3{font-family:var(--f-display);font-size:1.3rem;font-weight:500;line-height:1.15}
+.desc{line-height:1.55}
+.buy{align-items:center;margin-top:.65rem;padding-top:.9rem;border-top:1px solid color-mix(in srgb,var(--ink) 9%,transparent)}
+.buy .btn{min-width:92px;padding:.58rem 1rem}
+
+/* products */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,255px),1fr));gap:1.2rem;margin-top:1.4rem}
+/* Desktop: when the full catalog has 9 products, center the last card instead of leaving a visual hole. */
+.grid.catalog-nine{grid-template-columns:repeat(4,minmax(0,1fr))}
+.grid.catalog-nine .card:last-child{grid-column:auto}
+.grid.catalog-full{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(max-width:1050px) and (min-width:681px){.grid.catalog-nine,.grid.catalog-full{grid-template-columns:repeat(3,minmax(0,1fr))}.grid.catalog-nine .card:last-child{grid-column:auto}}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;min-width:0;transition:transform .25s,box-shadow .25s}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.tile{aspect-ratio:1;background:var(--tile-a)}
+.tile[data-tone="b"]{background:var(--tile-b)}
+.tile svg,.tile img{width:100%;height:100%;display:block}.tile img{object-fit:cover}
+.card-b{padding:1rem 1.15rem 1.2rem;display:flex;flex-direction:column;gap:.3rem;flex:1;min-width:0}
+.cat{font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent-text);font-weight:600}
+.card h3{font-size:1.42rem}
+.size{color:var(--ink-2);font-size:.85rem;font-weight:500}
+.desc{color:var(--ink-2);font-size:.92rem}
+.buy{display:flex;align-items:center;justify-content:space-between;gap:.6rem;margin-top:auto;padding-top:.9rem}
+.price{font-family:var(--f-display);font-size:1.75rem;font-weight:600;font-variant-numeric:tabular-nums;line-height:1}
+.price small{display:block;font-family:var(--f-body);font-size:.66rem;color:var(--ink-2);letter-spacing:.1em;text-transform:uppercase;font-weight:600;margin-bottom:3px}
+
+/* weddings */
+.split{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(1.5rem,5vw,4.5rem);align-items:center}
+.split h2{font-size:clamp(2rem,4.25vw,3.05rem);margin:.6rem 0 1rem;max-width:17ch}
+.arch.sm{background:var(--band-a);max-width:420px;width:100%;justify-self:center}.media-frame{position:relative;min-height:420px}.media-frame img{width:100%;height:100%;object-fit:cover;display:block}.media-frame .frame-fallback{position:absolute;inset:0;display:grid;place-items:center;padding:2rem;text-align:center;color:var(--ink-2);font-family:var(--f-display);font-size:1.5rem;background:linear-gradient(145deg,var(--band-a),var(--band-b))}
+.svc{list-style:none;margin:1.4rem 0 1.6rem;padding:0;display:grid}
+.svc li{display:grid;grid-template-columns:1fr auto;gap:.1rem 1rem;padding:.85rem 0;border-bottom:1px solid color-mix(in srgb,var(--ink) 16%,transparent)}
+.svc b{font-family:var(--f-display);font-size:1.2rem;font-weight:500}
+.svc span{color:var(--ink-2);font-size:.9rem;grid-column:1}
+.svc em{font-style:normal;font-weight:600;color:var(--accent-text);font-variant-numeric:tabular-nums;grid-row:1;grid-column:2}
+@media(max-width:860px){.split{grid-template-columns:1fr}}
+
+/* delivery */
+.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.5rem,5vw,4rem);align-items:start}
+.zone{display:grid;grid-template-columns:1fr auto;gap:.1rem 1rem;padding:.95rem 0;border-bottom:1px solid var(--line)}
+.zone strong{font-weight:600}
+.zone .zp{font-family:var(--f-display);font-size:1.35rem;font-weight:600;font-variant-numeric:tabular-nums}
+.zone .zn{color:var(--ink-2);font-size:.9rem;grid-column:1}
+.calc{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:1.4rem;display:grid;gap:1rem;min-width:0}
+.calc h3{font-size:1.5rem}
+label.f{display:grid;gap:.35rem;font-size:.85rem;font-weight:600;color:var(--ink-2)}
+select,input[type=text],textarea{font:inherit;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:.65rem .8rem;width:100%;min-width:0}
+textarea{resize:none}
+.out{background:var(--band-b);border-radius:16px;padding:1rem 1.1rem;display:grid;gap:.4rem}
+.out div{display:flex;justify-content:space-between;gap:1rem;font-variant-numeric:tabular-nums}
+.out .tot{border-top:1px solid color-mix(in srgb,var(--ink) 18%,transparent);padding-top:.5rem;margin-top:.2rem;font-weight:700;font-size:1.15rem}
+@media(max-width:860px){.dgrid{grid-template-columns:1fr}}
+
+/* work */
+.work{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(1.5rem,5vw,4rem)}
+.work .big{font-family:var(--f-body);font-size:clamp(1.15rem,2vw,1.48rem);line-height:1.7;font-style:normal;font-weight:500;text-wrap:balance;color:var(--ink)}
+.work .big em{color:var(--accent-text);font-style:normal;font-weight:700}
+.work p.body{color:var(--ink-2);margin-top:1.2rem;max-width:36rem}
+.tips{margin-top:1.6rem;display:grid;gap:.6rem;padding:0;list-style:none}
+.tips li{padding:.8rem 1rem;background:var(--surface);border:1px solid var(--line);border-radius:14px;font-size:.93rem}
+.tips b{display:block;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-text);margin-bottom:2px}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:0;counter-reset:s}
+.steps li{counter-increment:s;display:grid;grid-template-columns:3rem 1fr;gap:.2rem 1rem;padding:1.1rem 0;border-bottom:1px solid var(--line)}
+.steps li::before{content:counter(s);grid-row:span 2;font-family:var(--f-display);font-size:2.2rem;line-height:1;color:var(--accent-text);font-style:normal}
+.steps b{font-family:var(--f-display);font-size:1.25rem;font-weight:500}
+.steps span{color:var(--ink-2);font-size:.93rem}
+@media(max-width:860px){.work{grid-template-columns:1fr}}
+
+
+/* ===== Aeterna v3: mobile-first collection, videos and auth ===== */
+.video-grid{align-items:stretch}
+.video-card{min-width:0}
+.video-card video{display:block;width:100%;aspect-ratio:9/14;object-fit:cover;background:var(--band-b)}
+.video-card .video-empty{display:none}
+.video-card .video-info{background:var(--surface)}
+.video-card .video-info h3{font-size:1.18rem}
+.video-card .video-info p{margin-top:.2rem}
+.video-card video:not([src]):before{content:''}
+
+/* Mobile: collection becomes a horizontal product carousel */
+@media(max-width:680px){
+  .wrap{padding-inline:14px}
+  .sec-head{display:block;margin-bottom:1.15rem}
+  .sec-head h2{font-size:clamp(2rem,9.2vw,2.65rem);max-width:13ch;line-height:1.02}
+  .sec-head>p{margin-top:.8rem;font-size:.88rem;max-width:34rem}
+  #chips{flex-wrap:nowrap;overflow-x:auto;padding:.15rem 1px .45rem;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  #chips::-webkit-scrollbar{display:none}
+  #chips .chip{flex:0 0 auto}
+  #grid{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(82vw,82vw);grid-template-columns:none;overflow-x:auto;overflow-y:hidden;gap:.9rem;padding:.2rem 1px .8rem;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  #grid.catalog-nine .card:last-child{grid-column:auto}
+
+  #grid::-webkit-scrollbar{display:none}
+  #grid .card{scroll-snap-align:start;min-width:0}
+  #grid .tile{aspect-ratio:1/.92}
+  #grid .card-b{padding:1rem}
+  #grid .card h3{font-size:1.3rem}
+  #grid .desc{font-size:.86rem}
+  .media-head{display:block;margin-bottom:1rem}
+  .media-head h2{font-size:clamp(2rem,9vw,2.6rem);max-width:13ch}
+  .media-head>p{margin-top:.8rem;font-size:.88rem}
+  .video-grid{display:grid;grid-auto-flow:column;grid-auto-columns:82vw;grid-template-columns:none;overflow-x:auto;gap:.9rem;padding:.2rem 1px .8rem;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .video-grid::-webkit-scrollbar{display:none}
+  .video-card{scroll-snap-align:start}
+  .video-card video{aspect-ratio:4/5}
+  .rgrid{gap:1rem}
+  .review-intro{padding:.4rem 0}
+  .review-intro h2{font-size:clamp(2rem,9vw,2.55rem);max-width:12ch}
+  .rform{padding:1.05rem;border-radius:22px}
+}
+
+/* Auth: balanced fields, username on registration, recovery */
+.auth-card{width:min(560px,calc(100vw - 28px));max-height:min(760px,calc(100dvh - 28px));overflow:auto}
+.auth-main{padding:1.65rem 1.7rem 1.55rem}
+.auth-card input{width:100%;height:48px;padding:.78rem .95rem}
+.auth-password{position:relative;width:100%}
+.auth-password input{padding-right:4.4rem}
+.password-toggle{right:.5rem;bottom:.45rem;height:38px;min-width:46px;border-radius:10px;background:var(--band-a);font-weight:700}
+.auth-card .auth-submit{height:50px}
+.auth-recovery{display:flex;justify-content:flex-end;margin-top:-.35rem}
+.auth-recovery button{border:0;background:none;color:var(--accent-text);font-size:.82rem;font-weight:700;text-decoration:underline;padding:.15rem}
+.auth-helper{font-size:.8rem;color:var(--ink-2);line-height:1.5;text-align:center;background:linear-gradient(135deg,var(--band-a),var(--band-b));padding:.75rem .85rem;border-radius:14px}
+.auth-strength{height:5px;border-radius:99px;background:var(--line);overflow:hidden;margin-top:.1rem}
+.auth-strength span{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+.auth-field-error{font-size:.76rem;color:#9b3d52;min-height:1em}
+@media(max-width:520px){
+  .auth-backdrop{padding:.5rem}
+  .auth-card{width:min(100%,420px);max-height:calc(100dvh - 12px);border-radius:22px}
+  .auth-brand{padding:1rem 1.05rem}
+  .auth-brand p{font-size:.78rem}
+  .auth-main{padding:1.15rem 1rem 1.1rem}
+  .auth-main h2{font-size:1.85rem}
+  .auth-card input{height:46px}
+  .auth-card form{gap:.7rem}
+}
+
+/* reviews */
+.rgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(360px,.78fr);gap:clamp(1.5rem,5vw,4.5rem);align-items:start}
+.review-intro{padding:clamp(1.2rem,3vw,2rem) 0}
+.review-intro .review-kicker{display:inline-flex;align-items:center;gap:.5rem;padding:.42rem .75rem;border-radius:999px;background:var(--band-a);color:var(--accent-text);font-size:.76rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.review-intro h2{margin:.85rem 0 1rem;max-width:10ch}
+.review-intro>p{max-width:34rem;color:var(--ink-2);font-size:1rem;line-height:1.7}
+.review-note{margin-top:1.4rem;padding:1rem 1.1rem;border-left:3px solid var(--accent);background:linear-gradient(90deg,var(--band-a),transparent);border-radius:0 14px 14px 0;color:var(--ink-2)}
+.avg{display:flex;align-items:baseline;gap:.7rem;margin:1.4rem 0 1rem;font-variant-numeric:tabular-nums}
+.avg b{font-family:var(--f-display);font-size:3.2rem;font-weight:500;line-height:1}
+.stars{color:var(--gold);letter-spacing:.1em}
+.rlist{display:grid;gap:.9rem}
+.rev{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:1rem 1.15rem;min-width:0;box-shadow:0 8px 24px rgba(120,50,70,.05)}
+.rev header{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.3rem 1rem;align-items:center}
+.rev strong{font-weight:700}
+.rev p{margin-top:.4rem;color:var(--ink-2);overflow-wrap:anywhere;white-space:pre-wrap}
+.rev small{color:var(--ink-2)}
+.rev .rm{margin-top:.5rem;background:none;border:none;color:var(--accent-text);text-decoration:underline;padding:0;font-size:.85rem}
+.empty{border:1px dashed var(--line);border-radius:18px;padding:1.2rem;color:var(--ink-2);background:var(--surface)}
+.rform{background:var(--surface);border:1px solid var(--line);border-radius:26px;padding:clamp(1.25rem,3vw,1.7rem);display:grid;gap:1rem;min-width:0;box-shadow:0 18px 45px rgba(120,50,70,.09)}
+.rform .form-top{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem}
+.rform h3{font-family:var(--f-display);font-size:1.65rem;font-weight:500;line-height:1.15}
+.rform .form-sub{margin-top:.25rem;color:var(--ink-2);font-size:.88rem}
+.rate-wrap{display:grid;gap:.45rem;padding:.85rem .9rem;border-radius:16px;background:var(--band-a)}
+.rate-wrap span{font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-text)}
+.rate{display:flex;flex-direction:row-reverse;justify-content:flex-end;gap:.18rem;border:none;padding:0;margin:0}
+.rate input{position:absolute;opacity:0;pointer-events:none}
+.rate label{font-size:2rem;line-height:1;color:#DCCBD0;cursor:pointer;transition:transform .15s,color .15s}
+.rate input:checked~label,.rate label:hover,.rate label:hover~label{color:var(--gold);transform:translateY(-1px)}
+.rate input:focus-visible+label{outline:3px solid var(--accent-text);outline-offset:2px;border-radius:6px}
+.rform .f input,.rform .f textarea{background:var(--bg);border-color:var(--line);border-radius:14px}
+.rform .f textarea{min-height:118px}
+.rform #rSend{width:100%;padding:.82rem 1rem}
+.note{font-size:.86rem;color:var(--ink-2);line-height:1.5}
+@media(max-width:900px){.rgrid{grid-template-columns:1fr}}
+@media(max-width:520px){.rform{border-radius:20px}.rform h3{font-size:1.45rem}}
+
+.socials{display:flex;align-items:center;gap:.55rem;margin-top:.75rem}.socials a{width:38px;height:38px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;color:var(--accent-text);text-decoration:none;background:var(--surface);transition:transform .2s,background .2s,border-color .2s}.socials a:hover{transform:translateY(-2px);background:var(--band-a);border-color:var(--accent-text)}.socials svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.socials .wa svg,.socials .tiktok svg{fill:currentColor;stroke:none}.account-actions{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}.user-chip{display:inline-flex;align-items:center;gap:.45rem;padding:.45rem .75rem;border-radius:999px;background:var(--band-a);color:var(--ink);font-size:.82rem;font-weight:600}body.modal-open{overflow:hidden} .auth-backdrop{position:fixed;inset:0;z-index:90;background:rgba(45,18,28,.42);backdrop-filter:blur(14px);display:grid;place-items:center;padding:1rem}
+.auth-card{width:min(540px,100%);display:grid;grid-template-columns:1fr;background:var(--surface);border:1px solid rgba(234,205,211,.95);border-radius:28px;overflow:hidden;box-shadow:0 30px 90px rgba(40,15,25,.28);padding:0}
+.auth-brand{position:relative;padding:1.25rem 1.45rem;background:linear-gradient(135deg,var(--band-a),var(--band-b));display:flex;align-items:center;min-height:auto;overflow:hidden}
+
+.auth-brand:after{content:'Aeterna';position:absolute;right:-.6rem;bottom:-.35rem;font-family:var(--f-display);font-size:4.8rem;line-height:.8;color:rgba(163,90,102,.11);pointer-events:none}
+.auth-logo{width:54px;height:54px;border-radius:15px;object-fit:contain;background:rgba(255,255,255,.7);padding:.3rem;border:1px solid rgba(255,255,255,.85);margin-right:1rem}
+.auth-brand h3{font-size:1.5rem;max-width:none;margin:.15rem 0 .2rem}
+.auth-brand p{color:var(--ink-2);max-width:31rem;position:relative;z-index:1;font-size:.86rem}
+.auth-points{display:none}
+.auth-main{padding:1.55rem 1.65rem 1.7rem;min-width:0}.auth-main header{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:1.1rem}.auth-main h2{font-size:clamp(1.85rem,4vw,2.35rem);margin-top:.25rem}.auth-card form{display:grid;gap:.85rem}.auth-card label.f{color:var(--ink);font-size:.8rem;letter-spacing:.02em}.auth-card input{margin-top:.25rem;background:var(--bg);border-radius:14px;padding:.82rem .9rem;border-color:var(--line)}.auth-card input:focus{border-color:var(--accent-text);box-shadow:0 0 0 4px rgba(163,90,102,.1);outline:none}.auth-card .auth-submit{width:100%;padding:.9rem 1.2rem}.auth-card .switch{display:flex;gap:.4rem;justify-content:center;margin-top:1rem;font-size:.9rem;color:var(--ink-2)}.auth-card .switch button{border:0;background:none;color:var(--accent-text);font-weight:700;text-decoration:underline}.auth-msg{min-height:1.3rem;font-size:.84rem;color:var(--accent-text)}.privacy-note{font-size:.73rem;color:var(--ink-2);line-height:1.5;background:var(--band-a);padding:.7rem .8rem;border-radius:12px}.auth-close{position:absolute}.auth-password{position:relative}.password-toggle{position:absolute;right:.45rem;bottom:.45rem;border:0;background:transparent;color:var(--ink-2);padding:.35rem .45rem}.admin-link{font-size:.78rem;color:var(--ink-2);text-decoration:none}.admin-link:hover{color:var(--accent-text)}
+/* Ajuste fino de autenticación: el formulario completo debe quedar visible también en PC. */
+.auth-backdrop{overflow:auto;align-items:center;justify-items:center}
+.auth-card{width:min(600px,calc(100vw - 32px));max-height:calc(100dvh - 32px)}
+.auth-brand{padding:1rem 1.35rem}
+.auth-brand h3{font-size:1.4rem}
+.auth-brand p{font-size:.82rem}
+.auth-main{padding:1.35rem 1.55rem 1.4rem}
+.auth-main header{margin-bottom:.8rem}
+.auth-card form{gap:.7rem}
+.auth-card .auth-submit{display:block;visibility:visible;min-height:50px;margin-top:.1rem}
+.auth-card .switch{margin-top:.7rem}
+@media(max-height:760px) and (min-width:681px){
+  .auth-backdrop{align-items:flex-start;padding:14px 16px}
+  .auth-brand{padding:.8rem 1.2rem}
+  .auth-main{padding:1rem 1.35rem 1.05rem}
+  .auth-main header{margin-bottom:.55rem}
+  .auth-card form{gap:.55rem}
+  .auth-card input{height:44px}
+  .auth-card .auth-submit{height:46px;min-height:46px}
+  .auth-card .switch{margin-top:.5rem}
+}
+@media(max-width:680px){.auth-card{grid-template-columns:1fr;max-height:calc(100dvh - 24px);overflow:auto}.auth-brand{min-height:180px;padding:1.35rem}.auth-brand p,.auth-points{display:none}.auth-brand h3{font-size:2rem;margin:.65rem 0 0}.auth-brand:after{font-size:4.2rem}.auth-logo{width:50px;height:50px}.auth-main{padding:1.35rem}.auth-main h2{font-size:2rem}}
+
+
+
+
+.auth-main{overflow:visible}.auth-card .auth-submit{position:relative;z-index:2}
+/* Pie de página Aeterna: final con redes */
+.site-footer{position:relative;overflow:hidden;isolation:isolate;padding:0;border:0;background:linear-gradient(160deg,#D2557F 0%,#B8396A 48%,#8F2650 100%);color:#FFF4F7}
+.footer-wave{display:block;width:100%;height:clamp(34px,6vw,72px);color:var(--bg)}
+.footer-center{position:relative;z-index:2;display:grid;justify-items:center;text-align:center;gap:.3rem;padding:clamp(1.4rem,3.5vw,2.6rem) 16px clamp(2.2rem,5vw,3.4rem)}
+.footer-logo{width:68px;height:68px;object-fit:contain;border-radius:20px;background:rgba(255,255,255,.9);padding:.35rem;box-shadow:0 12px 28px -10px rgba(60,10,30,.55);margin-bottom:.7rem}
+.footer-title{font-family:var(--f-display);font-size:clamp(2.8rem,8vw,4.8rem);font-weight:500;line-height:1;letter-spacing:-.01em;color:#fff;margin:0}
+.footer-sub{font-size:.74rem;letter-spacing:.32em;text-transform:uppercase;font-weight:700;color:#FFE9A8;margin:.4rem 0 0}
+.footer-tagline{font-family:var(--f-display);font-style:italic;font-size:clamp(1.15rem,2.8vw,1.65rem);color:#FFE3EA;margin:1rem 0 0;max-width:24rem;text-wrap:balance}
+.footer-follow{display:flex;align-items:center;gap:.9rem;margin-top:1.8rem;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;font-weight:700;color:#FFE9A8}
+.footer-follow::before,.footer-follow::after{content:'';width:clamp(26px,8vw,54px);height:1px;background:currentColor;opacity:.6}
+.footer-socials{display:flex;flex-wrap:wrap;justify-content:center;gap:.8rem;margin-top:1.1rem}
+.soc-pill{display:inline-flex;align-items:center;gap:.6rem;padding:.8rem 1.5rem;border-radius:999px;background:#FFF8F9;color:#A8335A;font-weight:700;text-decoration:none;box-shadow:0 12px 26px -10px rgba(60,10,30,.6);transition:transform .2s,box-shadow .2s,background .2s}
+.soc-pill:hover{transform:translateY(-3px);background:#fff;box-shadow:0 18px 32px -10px rgba(60,10,30,.65)}
+.soc-pill svg{width:20px;height:20px;fill:currentColor;flex:none}
+.footer-deco{position:absolute;z-index:1;pointer-events:none;width:clamp(150px,21vw,300px);aspect-ratio:1;opacity:.96}
+.footer-deco svg{display:block;width:100%;height:100%}
+.footer-deco.l{left:clamp(-80px,-3vw,-24px);bottom:-46px;transform:rotate(-14deg)}
+.footer-deco.r{right:clamp(-80px,-3vw,-24px);top:22%;transform:rotate(16deg)}
+.footer-bottom{position:relative;z-index:2;display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:.4rem 1.3rem;padding:1.05rem 16px 1.2rem;border-top:1px solid rgba(255,255,255,.2);font-size:.78rem;color:#FFD9E3}
+.site-footer .footer-bottom a{color:#FFE9EE;opacity:.85;text-decoration:none}
+.site-footer .footer-bottom a:hover{opacity:1;text-decoration:underline}
+@media(max-width:620px){.footer-deco{opacity:.88;width:128px}.footer-deco.l{left:-46px;bottom:-34px}.footer-deco.r{right:-48px;top:1%}.site-footer{padding-bottom:4.2rem}.soc-pill{padding:.75rem 1.25rem}}
+
+/* Videos: botón de play centrado (reemplaza los controles nativos, que se descolocaban al deslizar) */
+.video-wrap{position:relative;background:var(--band-b);overflow:hidden}
+.video-wrap video{cursor:pointer}
+.video-play{position:absolute;left:50%;top:50%;width:72px;height:72px;margin:-36px 0 0 -36px;padding:0;border:0;border-radius:50%;background:rgba(255,248,249,.92);color:var(--accent-text);display:grid;place-items:center;box-shadow:0 12px 30px -8px rgba(90,20,45,.5);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:transform .2s,opacity .25s}
+.video-play svg{width:30px;height:30px;margin-left:4px;fill:currentColor}
+.video-play:hover{transform:scale(1.07)}
+.video-wrap.is-playing .video-play{opacity:0;pointer-events:none;transform:scale(.85)}
+.video-bar{position:absolute;left:0;right:0;bottom:0;height:18px;cursor:pointer}
+.video-bar::before{content:'';position:absolute;left:0;right:0;bottom:0;height:4px;background:rgba(255,255,255,.45)}
+.video-bar i{position:absolute;left:0;bottom:0;height:4px;width:0;background:var(--accent)}
+/* chat widget */
+.fab{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;align-items:center;gap:.55rem;background:var(--accent);color:var(--accent-ink);border:none;border-radius:999px;padding:.85rem 1.2rem;font-weight:600;box-shadow:var(--shadow)}
+.fab svg{width:20px;height:20px;flex:none}
+.fab i{position:absolute;top:-2px;right:-2px;width:14px;height:14px;border-radius:50%;background:var(--gold);border:2px solid var(--bg)}
+.chat{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(78px + env(safe-area-inset-bottom,0px));z-index:41;width:min(380px,calc(100vw - 32px));height:min(540px,calc(100dvh - 150px));background:var(--surface);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);display:flex;flex-direction:column;overflow:hidden}
+.chat>header{display:flex;align-items:center;justify-content:space-between;gap:.6rem;padding:.85rem 1rem;background:var(--band-a);border-bottom:1px solid var(--line)}
+.chat>header b{font-family:var(--f-display);font-size:1.3rem;font-weight:600;display:block;line-height:1.1}
+.chat>header small{color:var(--ink-2);font-size:.78rem}
+.x{background:none;border:none;color:var(--ink);font-size:1.6rem;line-height:1;padding:.2rem .5rem;border-radius:8px}
+.log{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:.5rem;min-height:0}
+.msg{max-width:84%;padding:.55rem .8rem;border-radius:16px;font-size:.95rem;overflow-wrap:anywhere;white-space:pre-wrap}
+.msg small{display:block;opacity:.7;font-size:.68rem;margin-top:2px}
+.msg.me{align-self:flex-end;background:var(--accent);color:var(--accent-ink);border-bottom-right-radius:4px}
+.msg.them{align-self:flex-start;background:var(--band-a);color:var(--ink);border-bottom-left-radius:4px}
+.cform{border-top:1px solid var(--line);padding:.7rem;display:grid;gap:.5rem}
+.cform .row{display:flex;gap:.5rem;align-items:end}
+.cform .row textarea{flex:1}
+.cform .note{padding:0 .3rem}
+.cform button[disabled]{opacity:.5;cursor:not-allowed}
+
+/* staff inbox */
+.panel-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:1rem;margin-bottom:1.2rem}
+.panel-head h2{font-size:clamp(2rem,4vw,2.8rem);margin-top:.4rem}
+.panel-head .acts{display:flex;gap:.6rem;align-items:center}
+.inbox{display:grid;grid-template-columns:minmax(260px,340px) 1fr;border:1px solid var(--line);border-radius:22px;overflow:hidden;background:var(--surface);height:min(680px,calc(100dvh - 230px));min-height:460px}
+.conv-list{border-right:1px solid var(--line);overflow-y:auto;min-width:0}
+.conv{display:grid;grid-template-columns:auto 1fr auto;gap:.7rem;align-items:center;width:100%;text-align:left;border:none;border-bottom:1px solid var(--line);background:transparent;color:var(--ink);padding:.85rem 1rem}
+.conv:hover,.conv.on{background:var(--band-a)}
+.av{width:40px;height:40px;border-radius:50%;background:var(--band-b);display:grid;place-items:center;font-family:var(--f-display);font-weight:600;font-size:1.1rem;flex:none}
+.conv-main{min-width:0;display:grid}
+.conv-main strong{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.snip{color:var(--ink-2);font-size:.85rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.conv-side{display:grid;justify-items:end;gap:.3rem;font-size:.75rem;color:var(--ink-2)}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--accent);display:block}
+.thread{display:flex;flex-direction:column;min-width:0;min-height:0}
+.thread-head{display:flex;align-items:center;gap:.7rem;padding:.8rem 1rem;border-bottom:1px solid var(--line)}
+.thread-head strong{font-family:var(--f-display);font-size:1.25rem;font-weight:600}
+.thread .back{display:none}
+.quick{display:flex;gap:.4rem;overflow-x:auto;padding:.6rem 1rem 0}
+.quick .chip{white-space:nowrap;font-size:.82rem;padding:.3rem .8rem}
+.reply{padding:.7rem 1rem 1rem;display:flex;gap:.6rem;align-items:end}
+.reply textarea{flex:1}
+.blank{margin:auto;padding:2rem;text-align:center;color:var(--ink-2);max-width:26rem}
+.blank h3{color:var(--ink);font-size:1.5rem;margin-bottom:.4rem}
+@media(max-width:760px){
+  .inbox{grid-template-columns:1fr;height:calc(100dvh - 220px)}
+  .inbox .thread{display:none}
+  .inbox[data-open="1"] .conv-list{display:none}
+  .inbox[data-open="1"] .thread{display:flex}
+  .thread .back{display:inline-flex}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .pt,.lf,.stem,.tw,.sway,.w>span,.rise,.giant b,.badge-rot svg,.fp,.fp .sw,.track{animation:none!important}
+  .fp{transform:translateY(calc(var(--fall,600px)*var(--p,.5)))}
+  .card,.btn{transition:none}
+}
+
+@media(max-width:620px){
+  .auth-backdrop{padding:.65rem}
+  .auth-card{border-radius:22px}
+  .auth-brand{padding:1rem 1.1rem}
+  .auth-logo{width:46px;height:46px;margin-right:.75rem}
+  .auth-brand h3{font-size:1.25rem}
+  .auth-brand p{font-size:.8rem}
+  .auth-main{padding:1.25rem 1.1rem 1.35rem}
+}
+
+
+@media(max-width:1180px){
+  .nav-actions .account-actions,.nav-actions #panelBtn,.nav-actions #navChat{display:none}
+  .nav-actions{min-width:auto}
+  .nav .wrap{grid-template-columns:auto 1fr auto}
+  .menu-toggle{margin-left:auto}
+  .mobile-menu .mobile-account{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;padding:.35rem .15rem .6rem;margin-bottom:.2rem;border-bottom:1px solid var(--line)}
+  .mobile-menu .mobile-account button{justify-content:center;text-align:center;border:1px solid var(--line);background:var(--surface)}
+  .mobile-menu .mobile-account .btn-primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+}
+/* Ajustes finales de móvil */
+@media(max-width:620px){
+  .hero{padding-bottom:6.7rem}
+  .giant{font-size:clamp(4rem,20vw,6.8rem);bottom:-.18em;line-height:.68;letter-spacing:-.045em;padding-inline:0;opacity:.58}
+  .giant b{padding-inline:.015em}
+}
+@media(max-width:380px){
+  .hero{padding-bottom:6.1rem}
+  .giant{font-size:18vw;bottom:-.22em;opacity:.62;line-height:.68}
+}
+
+.video-upload{display:flex;align-items:center;justify-content:center;gap:.4rem;margin:0 1rem 1rem;padding:.58rem .75rem;border:1px dashed var(--line);border-radius:12px;background:var(--bg);color:var(--accent-text);font-size:.8rem;font-weight:700;cursor:pointer}
+.video-upload:hover{background:var(--band-a)}
+.video-upload input{display:none}
+
+/* Mobile auth safety + balanced palette accents */
+@media(max-width:1180px){
+  .mobile-menu{z-index:60}
+  .mobile-menu .mobile-account{position:relative;z-index:2}
+  .mobile-menu .mobile-account button{min-height:44px}
+}
+@media(max-width:520px){
+  .hero{padding-bottom:clamp(7rem,32vw,10rem)}
+  .hero-grid{gap:.5rem}
+  .giant{pointer-events:none;bottom:-.20em}
+  .auth-backdrop{z-index:200;padding:max(8px,env(safe-area-inset-top,0px)) 8px max(8px,env(safe-area-inset-bottom,0px));}
+  .auth-card{width:100%;max-width:430px;max-height:calc(100dvh - 16px);}
+}
+
+/* ===== Acabado profesional: olas, encabezados, tarjetas, pasos, contacto ===== */
+.has-wave{position:relative}
+.has-wave::before{content:'';position:absolute;left:0;right:0;top:-1px;height:clamp(22px,3.4vw,44px);background:var(--wave,var(--bg));pointer-events:none;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 80' preserveAspectRatio='none'%3E%3Cpath d='M0 0H1440V30C1200 80 960 10 720 40C480 70 240 20 0 56Z'/%3E%3C/svg%3E") center/100% 100% no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 80' preserveAspectRatio='none'%3E%3Cpath d='M0 0H1440V30C1200 80 960 10 720 40C480 70 240 20 0 56Z'/%3E%3C/svg%3E") center/100% 100% no-repeat}
+.band-a{background:radial-gradient(55% 70% at 100% 0%,rgba(255,255,255,.6),transparent 62%),radial-gradient(45% 60% at 0% 100%,color-mix(in srgb,var(--band-b) 70%,transparent),transparent 70%),var(--band-a)}
+.band-b{background:radial-gradient(55% 70% at 0% 0%,rgba(255,255,255,.65),transparent 62%),radial-gradient(45% 60% at 100% 100%,color-mix(in srgb,var(--band-a) 75%,transparent),transparent 70%),var(--band-b)}
+/* encabezados con detalle */
+.sec-head .eyebrow,.media-head .eyebrow,.split .eyebrow,.work .eyebrow,.contact-head .eyebrow{display:inline-flex;align-items:center;gap:.65rem}
+.sec-head .eyebrow::before,.media-head .eyebrow::before,.split .eyebrow::before,.work .eyebrow::before,.contact-head .eyebrow::before{content:'';width:30px;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--accent),var(--gold))}
+.sec-head h2::after,.media-head h2::after,.split h2::after,.contact-head h2::after{content:'';display:block;width:64px;height:4px;border-radius:4px;margin-top:1rem;background:linear-gradient(90deg,var(--accent),var(--gold))}
+/* tarjetas */
+.cat{display:inline-block;align-self:flex-start;padding:.22rem .65rem;border-radius:999px;background:var(--band-a);font-size:.66rem}
+.card{border-color:color-mix(in srgb,var(--line) 75%,#fff)}
+.card:hover{border-color:color-mix(in srgb,var(--accent) 45%,var(--line));box-shadow:0 24px 46px -20px rgba(168,51,90,.38)}
+.video-card{transition:transform .25s,box-shadow .25s}
+.video-card:hover{transform:translateY(-4px);box-shadow:0 22px 44px -20px rgba(168,51,90,.4)}
+/* bodas */
+.arch.sm{box-shadow:0 30px 60px -28px rgba(168,51,90,.55);outline:2px solid rgba(194,69,110,.3);outline-offset:12px}
+.svc li{transition:background .2s,padding .2s}
+.svc li:hover{background:rgba(255,255,255,.5);padding-inline:.7rem;border-radius:12px}
+/* delivery */
+.zone{padding-inline:.9rem;border-radius:14px;transition:background .2s}
+.zone:hover{background:color-mix(in srgb,var(--band-a) 75%,transparent)}
+.calc{position:relative;border-color:color-mix(in srgb,var(--line) 70%,#fff);box-shadow:0 26px 54px -28px rgba(168,51,90,.5)}
+.calc::before{content:'';position:absolute;left:28px;right:28px;top:-1px;height:4px;border-radius:0 0 6px 6px;background:linear-gradient(90deg,var(--accent),var(--gold),var(--accent))}
+/* pasos */
+.steps li{grid-template-columns:3.5rem 1fr;align-items:start}
+.steps li::before{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,var(--accent),#E0668C);color:#fff;font-size:1.25rem;font-weight:600;box-shadow:0 10px 20px -8px rgba(168,51,90,.6)}
+.tips li{border-left:3px solid var(--accent)}
+/* reseñas */
+.rev{transition:transform .2s,box-shadow .2s}.rev:hover{transform:translateY(-2px);box-shadow:0 14px 30px -14px rgba(168,51,90,.3)}
+/* contacto */
+.contact{padding-bottom:clamp(3.4rem,7vw,5.6rem)}
+.contact-head{text-align:center;max-width:46rem;margin:0 auto clamp(2.8rem,6vw,3.6rem)}
+.contact-head h2{font-size:clamp(2rem,4.3vw,3.15rem);margin:.7rem 0 1.1rem}
+.contact-head h2::after{margin-inline:auto}
+.contact-head .lead{color:var(--ink-2);margin-inline:auto}
+.contact-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.4rem;max-width:880px;margin-inline:auto}
+.contact-card{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:28px;padding:3rem 1.6rem 1.9rem;text-align:center;box-shadow:0 26px 54px -28px rgba(168,51,90,.55);transition:transform .25s,box-shadow .25s}
+.contact-card:hover{transform:translateY(-5px);box-shadow:0 32px 60px -26px rgba(168,51,90,.6)}
+.contact-rose{position:absolute;left:50%;top:-36px;width:72px;height:72px;margin-left:-36px;padding:5px;border-radius:50%;background:var(--surface);border:1px solid var(--line);box-shadow:0 12px 24px -12px rgba(168,51,90,.6)}
+.contact-rose svg{display:block;width:100%;height:100%;border-radius:50%;background:var(--band-a)}
+.contact-badge{display:inline-block;padding:.28rem .8rem;border-radius:999px;background:var(--band-b);color:var(--accent-text);font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.contact-num{font-family:var(--f-display);font-size:clamp(1.8rem,3.6vw,2.3rem);font-weight:600;letter-spacing:.01em;margin:.8rem 0 .4rem;font-variant-numeric:tabular-nums}
+.contact-num a{text-decoration:none;color:var(--ink)}
+.contact-num a:hover{color:var(--accent-text)}
+.contact-note{color:var(--ink-2);font-size:.92rem;max-width:20rem;margin-inline:auto}
+.contact-actions{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin-top:1.3rem}
+.contact-actions .btn svg{width:18px;height:18px;fill:currentColor;flex:none}
+@media(max-width:700px){.contact-grid{grid-template-columns:1fr;gap:3rem}}
+.footer-wave{color:var(--band-a)}
+/* aparición suave al hacer scroll */
+.js .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1);transition-delay:var(--rd,0s)}
+.js .reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.js .reveal{opacity:1;transform:none;transition:none}}
+.chat-head-user{
+  display:flex;
+  align-items:center;
+  gap:.65rem;
+}
+
+.chat-admin-av{
+  width:38px;
+  height:38px;
+  min-width:38px;
+  border-radius:50%;
+  overflow:hidden;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(145deg,var(--gold),#F7D66B);
+  color:#2B1A00;
+  font-weight:800;
+}
+
+.chat-admin-av img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+</style>
+</head>
+<body>
+<script>
+(function(){
+  try{
+    if(sessionStorage.getItem('aeternaLogin') === '1'){
+      document.documentElement.classList.add('aeterna-redirecting');
+    }
+  }catch(e){}
+})();
+</script>
+
+<style>
+html.aeterna-redirecting body{
+  visibility:hidden !important;
+}
+
+html.aeterna-redirecting body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:#f8f3ef;
+  z-index:999999;
+}
+</style>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#inicio" data-go="inicio" aria-label="Aeterna, inicio">
+      <img class="mark" id="logoImage" src="logo.png" alt="Logo de Aeterna" onerror="this.hidden=true;document.getElementById('logoMarkFallback').hidden=false"><span class="mark logo-fallback" id="logoMarkFallback" hidden>🌹</span>
+      <span><b>Aeterna</b><small>Flores eternas</small></span>
+    </a>
+    <nav class="links" aria-label="Principal">
+      <a href="#coleccion" data-go="coleccion">Colección</a>
+      <a href="#videos" data-go="videos">Videos</a>
+      <a href="#bodas" data-go="bodas">Bodas</a>
+      <a href="#delivery" data-go="delivery">Delivery</a>
+      <a href="#trabajo" data-go="trabajo">Nuestro trabajo</a>
+      <a href="#resenas" data-go="resenas">Reseñas</a>
+      <a href="#contacto" data-go="contacto">Contacto</a>
+    </nav>
+    <div class="nav-actions">
+      <div class="account-actions" id="accountActions">
+        <button class="btn ghost sm" id="loginBtn" type="button">Iniciar sesión</button>
+        <button class="btn sm" id="registerBtn" type="button">Registrarme</button>
+      </div>
+      <button class="btn ghost sm" id="panelBtn" type="button" hidden>Panel <span class="badge" id="navBadge" hidden>0</span></button>
+      <button class="btn sm" id="navChat" type="button">Escríbenos</button>
+      <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="mobileMenu" aria-label="Abrir menú">☰</button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu" hidden>
+    <div class="mobile-account">
+      <button type="button" id="mobileLogin">Iniciar sesión</button>
+      <button type="button" id="mobileRegister" class="btn-primary">Registrarme</button>
+    </div>
+    <a href="#coleccion" data-go="coleccion">Colección</a>
+    <a href="#videos" data-go="videos">Videos</a>
+    <a href="#bodas" data-go="bodas">Bodas</a>
+    <a href="#delivery" data-go="delivery">Delivery</a>
+    <a href="#trabajo" data-go="trabajo">Nuestro trabajo</a>
+    <a href="#resenas" data-go="resenas">Reseñas</a>
+    <a href="#contacto" data-go="contacto">Contacto</a>
+    <button type="button" id="mobileChat">Escríbenos</button>
+  </div>
+</header>
+
+<main id="site">
+  <section class="hero" id="inicio">
+    <div class="giant" aria-hidden="true"><b style="--i:0">A</b><b style="--i:1">e</b><b style="--i:2">t</b><b style="--i:3">e</b><b style="--i:4">r</b><b style="--i:5">n</b><b style="--i:6">a</b></div>
+    <div class="petals" id="petals" aria-hidden="true"></div>
+    <div class="wrap hero-grid">
+      <div class="hcopy">
+        <p class="eyebrow rise" style="--i:-6">Flores eternas · hechas a mano</p>
+        <h1 aria-label="Flores que no se marchitan.">
+          <span class="w" aria-hidden="true" style="--i:0"><span>Flores</span></span>
+          <span class="w" aria-hidden="true" style="--i:1"><span>que</span></span>
+          <em><span class="w" aria-hidden="true" style="--i:2"><span>no</span></span>
+          <span class="w" aria-hidden="true" style="--i:3"><span>se</span></span>
+          <span class="w" aria-hidden="true" style="--i:4"><span>marchitan.</span></span></em>
+        </h1>
+        <p class="lead rise" style="--i:0">Rosas artificiales para regalar, celebrar y decorar. Ramos, cajas y arreglos florales hechos a mano para cada ocasión.</p>
+        <div class="cta rise" style="--i:1">
+          <a class="btn" href="#coleccion" data-go="coleccion">Ver colección</a>
+          <button class="btn ghost" type="button" data-chat="Hola Aeterna, me gustaría hacer un pedido.">Hacer un pedido</button>
+        </div>
+        <div class="facts rise" style="--i:2">
+          <div><b>Armadas a mano</b>Pétalo por pétalo</div>
+          <div><b>Duran años</b>Sin agua ni riego</div>
+          <div><b>Delivery programado</b>Eliges día y hora</div>
+        </div>
+      </div>
+      <div class="stage" id="stage"></div>
+    </div>
+  </section>
+  <div class="marquee" id="marquee" aria-hidden="true"></div>
+
+  <section class="section band-a" id="coleccion" style="padding-top:clamp(2.5rem,6vw,4.5rem)">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="eyebrow">Colección</p>
+          <h2>Para regalar y para quedarse</h2>
+        </div>
+        <p>Precios en dólares. Cada pieza se puede armar en otros tonos; pregúntanos por el chat.</p>
+      </div>
+      <div class="chips" id="chips" role="group" aria-label="Filtrar por categoría"></div>
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+
+  <section class="media-section band-a" id="videos">
+    <div class="wrap">
+      <div class="media-head">
+        <div>
+          <p class="eyebrow">Videos Aeterna</p>
+          <h2>Ramos y cajas, también en movimiento</h2>
+        </div>
+        <p>Un espacio pensado para Reels, videos cortos del armado, empaques, entregas y resultados finales.</p>
+      </div>
+      <div class="video-grid">
+        <article class="video-card">
+          <div class="video-wrap"><video playsinline preload="metadata" poster="muestra 1.jpeg">
+            <source src="video 2.mp4" type="video/mp4">
+            Tu navegador no puede reproducir este video.
+          </video><button class="video-play" type="button" aria-label="Reproducir video"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12.5-7.5a1 1 0 0 0 0-1.72L8.5 3.64A1 1 0 0 0 7 4.5z"/></svg></button><div class="video-bar" aria-hidden="true"><i></i></div></div>
+          <div class="video-info"><h3>Ramo Con Temática</h3><p>Proceso, detalles y resultado final.</p></div>
+          <label class="video-upload">＋ Añadir video de ramo<input type="file" accept="video/mp4,video/webm,video/quicktime" data-video-input="ramo"></label>
+        </article>
+        <article class="video-card">
+          <div class="video-wrap"><video playsinline preload="metadata" poster="muestra 2.jpeg">
+            <source src="video 1.mp4" type="video/mp4">
+            Tu navegador no puede reproducir este video.
+          </video><button class="video-play" type="button" aria-label="Reproducir video"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12.5-7.5a1 1 0 0 0 0-1.72L8.5 3.64A1 1 0 0 0 7 4.5z"/></svg></button><div class="video-bar" aria-hidden="true"><i></i></div></div>
+          <div class="video-info"><h3>Preparando una caja</h3><p>Empaque, y dedicatoria.</p></div>
+          <label class="video-upload">＋ Añadir video de caja<input type="file" accept="video/mp4,video/webm,video/quicktime" data-video-input="caja"></label>
+        </article>
+        <article class="video-card">
+          <div class="video-wrap"><video playsinline preload="metadata" poster="muestra 3.jpeg">
+            <source src="video 3.mp4" type="video/mp4">
+            Tu navegador no puede reproducir este video.
+          </video><button class="video-play" type="button" aria-label="Reproducir video"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12.5-7.5a1 1 0 0 0 0-1.72L8.5 3.64A1 1 0 0 0 7 4.5z"/></svg></button><div class="video-bar" aria-hidden="true"><i></i></div></div>
+          <div class="video-info"><h3>Arreglos para ocasiones</h3><p>Montajes para regalos, bodas y eventos.</p></div>
+          <label class="video-upload">＋ Añadir video de arreglo<input type="file" accept="video/mp4,video/webm,video/quicktime" data-video-input="arreglo"></label>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band-b has-wave" id="bodas" style="--wave:var(--band-a)">
+    <div class="wrap split">
+      <div class="arch sm media-frame" id="weddingArt"><img src="boda.jpg" alt="Arreglo floral para boda Aeterna" loading="lazy" onerror="this.style.display='none'"></div>
+      <div>
+        <p class="eyebrow">Bodas y eventos</p>
+        <h2>El día más importante merece flores que lo acompañen siempre</h2>
+        <p class="lead" style="color:var(--ink-2)">Cuéntanos la fecha, la paleta y cuántos invitados serán. Armamos una propuesta a tu medida y las piezas quedan de recuerdo.</p>
+        <ul class="svc">
+          <li><b>Ramo de novia</b><em>desde $23-$30</em><span>Adaptado a tu vestido y tu paleta</span></li>
+             <li><b>Ramo de damas</b><em>desde $5-$15</em><span>Adaptado a tu vestido y tu paleta</span></li>
+          <li><b>Arco floral de ceremonia</b><em>desde $220-$400</em><span>Arco de 2 m, cotizado según el lugar</span></li>
+          <li><b>Centros de mesa con Rosas Eternas</b><em>Pregunta al privado</em><span>Arreglos florales bajos, altos o personalizados</span></li>
+        </ul>
+        <button class="btn" type="button" data-chat="Hola Aeterna, estoy organizando una boda y quiero cotizar. La fecha es: ">Cotizar mi boda</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section has-wave" id="delivery" style="--wave:var(--band-b)">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="eyebrow">Delivery</p>
+          <h2>Llega a tiempo, lista para sorprender</h2>
+        </div>
+        <p>El delivery comienza desde <strong>$1</strong>. En Catia y hasta Gato Negro puedes calcularlo desde aquí; mientras más lejos sea el destino, mayor será el costo.</p>
+      </div>
+      <div class="dgrid">
+        <div id="zoneList"></div>
+        <div class="calc">
+          <h3>Calcula tu pedido</h3>
+          <label class="f" for="calcProd">Pieza
+            <select id="calcProd"></select>
+          </label>
+          <div>
+            <p class="note" style="margin-bottom:.5rem;font-weight:600">Zona de entrega</p>
+            <div class="chips" id="zoneChips" role="group" aria-label="Zona de entrega"></div>
+          </div>
+          <div class="out" id="calcOut"></div>
+          <button class="btn" type="button" id="calcOrder">Pedir con este delivery</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band-a has-wave" id="trabajo" style="--wave:var(--bg)">
+    <div class="wrap work">
+      <div>
+        <p class="eyebrow">Nuestro trabajo</p>
+        <p class="big" style="margin-top:1rem">Cada pieza de Aeterna se arma <em>una rosa a la vez</em>, con la paleta que tú elijas, y se queda contigo mucho después de la fecha.</p>
+        <p class="body">Trabajamos con rosas artificiales de acabado realista porque un detalle de pareja debería durar más que una semana. No hay polen, no hay riego y no hay pétalos que recoger. Cuidamos la forma del ramo, la caída del lazo y el equilibrio de los colores, y no entregamos nada que no regalaríamos nosotras.</p>
+        <ul class="tips">
+          <li><b>Cómo cuidarlas</b>Evita el sol directo para que el color no se desvanezca y límpialas con un plumero suave.</li>
+          <li><b>Personalización</b>Cambiamos tonos, cantidad de rosas, tarjetas y dedicatorias según la ocasión.</li>
+        </ul>
+      </div>
+      <div>
+        <p class="eyebrow" style="margin-bottom:.4rem">Cómo pedir</p>
+        <ol class="steps">
+          <li><b>Cuéntanos la ocasión</b><span>Aniversario, cumpleaños, propuesta o boda.</span></li>
+          <li><b>Elegimos diseño y tamaño</b><span>Definimos las flores, el estilo, el tamaño y los tonos del arreglo.</span></li>
+          <li><b>Armamos tu pieza</b><span>Te compartimos una foto antes de entregarla.</span></li>
+          <li><b>La recibes donde quieras</b><span>Delivery programado o retiro en el taller.</span></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="section has-wave" id="resenas" style="--wave:var(--band-a)">
+    <div class="wrap">
+      <div class="rgrid">
+        <div class="review-intro">
+          <span class="review-kicker">Reseñas de Aeterna</span>
+          <h2>Lo que dicen quienes ya tienen una Aeterna</h2>
+          <p>Nos encanta saber cómo llegó cada arreglo, cómo fue recibido y qué detalle hizo especial el momento. Tu experiencia también ayuda a otras personas a elegir.</p>
+          <div class="avg" id="avg" hidden></div>
+          <div class="rlist" id="rlist"></div>
+          <div class="review-note">Cada reseña se muestra con el nombre que elijas y puede ayudarte a contar la historia detrás de tu arreglo.</div>
+        </div>
+        <form class="rform" id="rform" autocomplete="off">
+          <div class="form-top">
+            <div>
+              <h3>Cuéntanos tu experiencia</h3>
+              <p class="form-sub">Comparte cómo fue tu pedido y la entrega.</p>
+            </div>
+          </div>
+          <div class="rate-wrap">
+            <span>Tu calificación</span>
+            <fieldset class="rate" id="rate" aria-label="Calificación">
+              <input type="radio" name="rating" id="r5" value="5"><label for="r5" title="5 estrellas">★</label>
+              <input type="radio" name="rating" id="r4" value="4"><label for="r4" title="4 estrellas">★</label>
+              <input type="radio" name="rating" id="r3" value="3"><label for="r3" title="3 estrellas">★</label>
+              <input type="radio" name="rating" id="r2" value="2"><label for="r2" title="2 estrellas">★</label>
+              <input type="radio" name="rating" id="r1" value="1"><label for="r1" title="1 estrella">★</label>
+            </fieldset>
+          </div>
+          <label class="f" for="rAlias">Nombre
+            <input type="text" id="rAlias" maxlength="40" placeholder="Cómo quieres que aparezca">
+          </label>
+          <label class="f" for="rText">Tu reseña
+            <textarea id="rText" rows="4" maxlength="600" placeholder="Cuéntanos qué pieza elegiste y cómo fue la entrega."></textarea>
+          </label>
+          <button class="btn" type="submit" id="rSend">Publicar mi reseña</button>
+          <p class="note" id="rNote"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band-a has-wave contact" id="contacto" style="--wave:var(--bg)">
+    <div class="wrap">
+      <div class="contact-head">
+        <p class="eyebrow">Contacto directo</p>
+        <h2>Habla con quienes hacen tus flores</h2>
+        <p class="lead">Estos son los números personales de las dos personas que elaboran cada arreglo de Aeterna. Escríbenos o llámanos si necesitas información más detallada o tienes un pedido con urgencia.</p>
+      </div>
+      <div class="contact-grid">
+        <article class="contact-card">
+          <div class="contact-rose" data-rose="0" aria-hidden="true"></div>
+          <span class="contact-badge">Línea directa 1</span>
+          <h3 class="contact-num"><a href="tel:+584128047465" aria-label="Llamar al 0412 804 7465">0412 804 7465</a></h3>
+          <p class="contact-note">Número personal · información detallada y pedidos con urgencia</p>
+          <div class="contact-actions">
+            <a class="btn" href="https://wa.me/584128047465?text=Hola%20Aeterna%2C%20vi%20su%20p%C3%A1gina%20y%20quisiera%20m%C3%A1s%20informaci%C3%B3n." target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 3.6A11.2 11.2 0 0 0 12.5 1C6.3 1 1.3 6 1.3 12.2c0 2 .5 3.9 1.5 5.6L1 23l5.3-1.7a11.2 11.2 0 0 0 6.2 1.8h.1c6.2 0 11.2-5 11.2-11.2 0-3.1-1.2-6-3.4-8.3zm-7.9 17.4h-.1a9.1 9.1 0 0 1-5.2-1.6l-.4-.2-3.1 1 1-3-.3-.5a9.1 9.1 0 0 1-1.4-4.9C3 7 7.3 2.8 12.5 2.8c2.5 0 4.8 1 6.5 2.7a9.3 9.3 0 0 1 2.7 6.6c0 5.2-4.2 9.4-9.2 9.4zm5.2-7c-.3-.2-1.7-.9-2-1-.3-.1-.5-.2-.7.2-.2.3-.7 1-.8 1.1-.2.2-.3.2-.6.1-1.7-.8-2.8-1.4-3.9-3.2-.3-.5.3-.5.8-1.7.1-.2 0-.4 0-.5-.1-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.2 3.4 5.4 4.8 2 .9 2.7.9 3.7.8.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.1-1.5-.2-.1-.4-.2-.7-.4z"></path></svg>WhatsApp</a>
+            <a class="btn ghost" href="tel:+584128047465"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.37 2.3.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1z"/></svg>Llamar</a>
+          </div>
+        </article>
+        <article class="contact-card">
+          <div class="contact-rose" data-rose="1" aria-hidden="true"></div>
+          <span class="contact-badge">Línea directa 2</span>
+          <h3 class="contact-num"><a href="tel:+584142450142" aria-label="Llamar al 0414 245 0142">0414 245 0142</a></h3>
+          <p class="contact-note">Número personal · información detallada y pedidos con urgencia</p>
+          <div class="contact-actions">
+            <a class="btn" href="https://wa.me/584142450142?text=Hola%20Aeterna%2C%20vi%20su%20p%C3%A1gina%20y%20quisiera%20m%C3%A1s%20informaci%C3%B3n." target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 3.6A11.2 11.2 0 0 0 12.5 1C6.3 1 1.3 6 1.3 12.2c0 2 .5 3.9 1.5 5.6L1 23l5.3-1.7a11.2 11.2 0 0 0 6.2 1.8h.1c6.2 0 11.2-5 11.2-11.2 0-3.1-1.2-6-3.4-8.3zm-7.9 17.4h-.1a9.1 9.1 0 0 1-5.2-1.6l-.4-.2-3.1 1 1-3-.3-.5a9.1 9.1 0 0 1-1.4-4.9C3 7 7.3 2.8 12.5 2.8c2.5 0 4.8 1 6.5 2.7a9.3 9.3 0 0 1 2.7 6.6c0 5.2-4.2 9.4-9.2 9.4zm5.2-7c-.3-.2-1.7-.9-2-1-.3-.1-.5-.2-.7.2-.2.3-.7 1-.8 1.1-.2.2-.3.2-.6.1-1.7-.8-2.8-1.4-3.9-3.2-.3-.5.3-.5.8-1.7.1-.2 0-.4 0-.5-.1-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.2 3.4 5.4 4.8 2 .9 2.7.9 3.7.8.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.1-1.5-.2-.1-.4-.2-.7-.4z"></path></svg>WhatsApp</a>
+            <a class="btn ghost" href="tel:+584142450142"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.37 2.3.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1z"/></svg>Llamar</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <svg class="footer-wave" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0H1440V30C1200 80 960 10 720 40C480 70 240 20 0 56Z" fill="currentColor"/></svg>
+    <div class="footer-deco l" aria-hidden="true"></div>
+    <div class="footer-deco r" aria-hidden="true"></div>
+    <div class="footer-center">
+      <img class="footer-logo" src="logo.png" alt="Aeterna" onerror="this.hidden=true">
+      <p class="footer-title">Aeterna</p>
+      <p class="footer-sub">Flores eternas</p>
+      <p class="footer-tagline">Flores que no se marchitan.</p>
+      <div class="footer-follow">Síguenos</div>
+      <div class="footer-socials" aria-label="Redes sociales">
+        <a class="soc-pill" href="https://www.tiktok.com/@aeterna.flower1?_r=1&_t=ZS-9ATddW6i0uu" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" aria-label="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4c.6 2.3 2 3.7 4.2 4.2v3.2c-1.5-.1-2.9-.6-4.2-1.5V16a5 5 0 1 1-4-4.9v3.3a1.8 1.8 0 1 0 .8 1.5V4H15z"></path></svg>TikTok</a>
+        <a class="soc-pill" href="https://whatsapp.com/channel/0029Vb8w0lC42Dcn9uHb1G1v" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" aria-label="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 3.6A11.2 11.2 0 0 0 12.5 1C6.3 1 1.3 6 1.3 12.2c0 2 .5 3.9 1.5 5.6L1 23l5.3-1.7a11.2 11.2 0 0 0 6.2 1.8h.1c6.2 0 11.2-5 11.2-11.2 0-3.1-1.2-6-3.4-8.3zm-7.9 17.4h-.1a9.1 9.1 0 0 1-5.2-1.6l-.4-.2-3.1 1 1-3-.3-.5a9.1 9.1 0 0 1-1.4-4.9C3 7 7.3 2.8 12.5 2.8c2.5 0 4.8 1 6.5 2.7a9.3 9.3 0 0 1 2.7 6.6c0 5.2-4.2 9.4-9.2 9.4zm5.2-7c-.3-.2-1.7-.9-2-1-.3-.1-.5-.2-.7.2-.2.3-.7 1-.8 1.1-.2.2-.3.2-.6.1-1.7-.8-2.8-1.4-3.9-3.2-.3-.5.3-.5.8-1.7.1-.2 0-.4 0-.5-.1-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.2 3.4 5.4 4.8 2 .9 2.7.9 3.7.8.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.1-1.5-.2-.1-.4-.2-.7-.4z"></path></svg>WhatsApp</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Aeterna · Flores eternas</span>
+      <a href="privacy.html">Privacidad</a>
+      <a href="admin.html">Acceso administrativo</a>
+    </div>
+  </footer>
+</main>
+
+<!-- Panel de mensajes (solo personal de Aeterna) -->
+<section class="section" id="panel" hidden style="padding-top:clamp(1.5rem,4vw,3rem)">
+  <div class="wrap">
+    <div class="panel-head">
+      <div>
+        <p class="eyebrow">Panel de Aeterna</p>
+        <h2>Mensajes de clientes</h2>
+      </div>
+      <div class="acts">
+        <span class="badge" id="unreadPill" hidden>0</span>
+        <button class="btn ghost sm" type="button" id="backSite">Volver a la tienda</button>
+      </div>
+    </div>
+    <div class="inbox" id="inbox" data-open="0">
+      <div class="conv-list" id="convList"></div>
+      <div class="thread" id="thread"></div>
+    </div>
+  </div>
+</section>
+
+<button class="fab" id="chatFab" type="button" aria-expanded="false" aria-controls="chatBox">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/></svg>
+  Chatea con nosotras
+  <i id="chatDot" hidden></i>
+</button>
+<section class="chat" id="chatBox" hidden aria-label="Chat con Aeterna">
+ <header>
+  <div class="chat-head-user">
+    <span class="av chat-admin-av" id="publicChatAdminAv">
+      🌹
+    </span>
+
+    <div>
+      <b id="publicChatAdminName">Aeterna</b>
+      <small>Te respondemos por aquí</small>
+    </div>
+  </div>
+
+  <button
+    class="x"
+    id="chatClose"
+    type="button"
+    aria-label="Cerrar chat"
+  >
+    ×
+  </button>
+</header>
+  <div class="log" id="chatLog" aria-live="polite"></div>
+  <form class="cform" id="chatForm">
+    <p class="note" id="chatNote" hidden></p>
+    <input type="text" id="chatAlias" maxlength="40" placeholder="Tu nombre (opcional)" aria-label="Tu nombre">
+    <div class="row">
+      <textarea id="chatText" rows="2" maxlength="1000" placeholder="Escribe tu mensaje" aria-label="Mensaje"></textarea>
+      <button class="btn sm" type="submit" id="chatSend">Enviar</button>
+    </div>
+  </form>
+</section>
+
+
+<!-- Autenticación pública. La autorización real del administrador debe imponerse en el backend/RLS. -->
+<section class="auth-backdrop" id="authModal" hidden aria-modal="true" role="dialog" aria-labelledby="authTitle">
+  <div class="auth-card">
+    <aside class="auth-brand">
+      <div>
+        <img class="auth-logo" src="logo.png" alt="Aeterna" onerror="this.style.display='none'">
+        <p class="eyebrow" style="margin-top:1rem">Aeterna</p>
+        <h3>Flores para guardar.</h3>
+        <p id="authBrandText">Crea tu cuenta para pedir tus arreglos, conversar con Aeterna y compartir tu experiencia.</p>
+      </div>
+    </aside>
+    <div class="auth-main">
+      <header>
+        <div><p class="eyebrow" id="authEyebrow">Cuenta Aeterna</p><h2 id="authTitle">Iniciar sesión</h2></div>
+        <button class="x" id="authClose" type="button" aria-label="Cerrar">×</button>
+      </header>
+      <form id="authForm" autocomplete="on" novalidate>
+        <label class="f" for="authEmail">Correo electrónico
+          <input type="email" id="authEmail" autocomplete="email" required maxlength="254" placeholder="tu@correo.com">
+          <span class="auth-field-error" id="authEmailError"></span>
+        </label>
+        <label class="f" id="authNameWrap" hidden for="authName">Nombre de usuario
+          <input type="text" id="authName" autocomplete="username" maxlength="24" minlength="3" placeholder="Cómo quieres que te llamemos">
+          <span class="auth-field-error" id="authNameError"></span>
+        </label>
+        <label class="f" for="authPassword">Contraseña
+          <div class="auth-password"><input type="password" id="authPassword" autocomplete="current-password" required minlength="8" maxlength="128" placeholder="Mínimo 8 caracteres"><button class="password-toggle" type="button" id="togglePassword" aria-label="Mostrar contraseña">Ver</button></div>
+          <div class="auth-strength" id="authStrength" hidden><span id="authStrengthBar"></span></div>
+          <span class="auth-field-error" id="authPasswordError"></span>
+        </label>
+        <div class="auth-recovery" id="authRecovery"><button type="button" id="forgotPassword">¿Olvidaste tu contraseña?</button></div>
+        <label class="f" id="authConfirmWrap" hidden for="authConfirm">Repetir contraseña
+          <div class="auth-password"><input type="password" id="authConfirm" autocomplete="new-password" minlength="8" maxlength="128" placeholder="Repite tu contraseña"><button class="password-toggle" type="button" id="toggleConfirm" aria-label="Mostrar contraseña">Ver</button></div>
+          <span class="auth-field-error" id="authConfirmError"></span>
+        </label>
+        <button class="btn auth-submit" type="submit" id="authSubmit">Entrar</button>
+        <p class="auth-msg" id="authMsg" aria-live="polite"></p>
+        <p class="auth-helper" id="authHelper">Tu cuenta te permite hacer pedidos, conversar con Aeterna y dejar reseñas.</p>
+      </form>
+      <div class="switch"><span id="authSwitchText">¿No tienes cuenta?</span><button type="button" id="authSwitch">Registrarme</button></div>
+    </div>
+  </div>
+</section>
+<!-- =========================================================
+     RECUPERACIÓN DE CONTRASEÑA AETERNA
+     ========================================================= -->
+
+<section
+  class="auth-backdrop"
+  id="passwordRecoveryModal"
+  hidden
+  aria-modal="true"
+  role="dialog"
+  aria-labelledby="recoveryTitle"
+>
+
+  <div class="auth-card">
+
+    <!-- LADO DE MARCA -->
+
+    <aside class="auth-brand">
+
+      <div>
+
+        <img
+          class="auth-logo"
+          src="logo.png"
+          alt="Aeterna"
+          onerror="this.style.display='none'"
+        >
+
+        <p
+          class="eyebrow"
+          style="margin-top:1rem"
+        >
+          Aeterna
+        </p>
+
+        <h3 id="recoveryBrandTitle">
+          Recupera tu cuenta.
+        </h3>
+
+        <p id="recoveryBrandText">
+          Verificaremos que eres la persona propietaria
+          del correo antes de permitir cambiar la contraseña.
+        </p>
+
+      </div>
+
+    </aside>
+
+
+    <!-- CONTENIDO -->
+
+    <div class="auth-main">
+
+      <header>
+
+        <div>
+
+          <p class="eyebrow">
+            Seguridad de tu cuenta
+          </p>
+
+          <h2 id="recoveryTitle">
+            Recuperar contraseña
+          </h2>
+
+        </div>
+
+        <button
+          class="x"
+          id="recoveryClose"
+          type="button"
+          aria-label="Cerrar"
+        >
+          ×
+        </button>
+
+      </header>
+
+
+      <!-- =====================================================
+           PASO 1 — CORREO
+           ===================================================== -->
+
+      <div id="recoveryStepEmail">
+
+        <p class="auth-helper" style="margin-top:0">
+          Introduce el correo electrónico asociado a tu cuenta
+          Aeterna. Te enviaremos un código de verificación.
+        </p>
+
+        <form
+          id="recoveryEmailForm"
+          autocomplete="off"
+          novalidate
+        >
+
+          <label
+            class="f"
+            for="recoveryEmail"
+          >
+
+            Correo electrónico
+
+            <input
+              type="email"
+              id="recoveryEmail"
+              autocomplete="email"
+              maxlength="254"
+              required
+              placeholder="tu@correo.com"
+            >
+
+            <span
+              class="auth-field-error"
+              id="recoveryEmailError"
+            ></span>
+
+          </label>
+
+
+          <button
+            class="btn auth-submit"
+            type="submit"
+            id="recoverySend"
+          >
+            Enviar código
+          </button>
+
+        </form>
+
+      </div>
+
+
+      <!-- =====================================================
+           PASO 2 — CÓDIGO
+           ===================================================== -->
+
+      <div
+        id="recoveryStepCode"
+        hidden
+      >
+
+        <p
+          class="auth-helper"
+          style="margin-top:0"
+          id="recoveryCodeInfo"
+        >
+          Hemos enviado un código de verificación a tu correo.
+        </p>
+
+
+        <form
+          id="recoveryCodeForm"
+          autocomplete="off"
+          novalidate
+        >
+
+          <label
+            class="f"
+            for="recoveryCode"
+          >
+
+            Código de verificación
+
+            <input
+              type="text"
+              id="recoveryCode"
+              inputmode="numeric"
+              autocomplete="one-time-code"
+              maxlength="6"
+              minlength="6"
+              pattern="[0-9]{6}"
+              required
+              placeholder="000000"
+            >
+
+            <span
+              class="auth-field-error"
+              id="recoveryCodeError"
+            ></span>
+
+          </label>
+
+
+          <button
+            class="btn auth-submit"
+            type="submit"
+            id="recoveryVerify"
+          >
+            Verificar código
+          </button>
+
+        </form>
+
+
+        <div
+          class="auth-recovery"
+          style="margin-top:1rem"
+        >
+
+          <button
+            type="button"
+            id="recoveryResend"
+          >
+            Reenviar código
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- =====================================================
+           PASO 3 — NUEVA CONTRASEÑA
+           ===================================================== -->
+
+      <div
+        id="recoveryStepPassword"
+        hidden
+      >
+
+        <p
+          class="auth-helper"
+          style="margin-top:0"
+        >
+          Identidad verificada. Ahora puedes crear una nueva
+          contraseña para tu cuenta Aeterna.
+        </p>
+
+
+        <form
+          id="recoveryPasswordForm"
+          autocomplete="off"
+          novalidate
+        >
+
+          <label
+            class="f"
+            for="recoveryPassword"
+          >
+
+            Nueva contraseña
+
+            <div class="auth-password">
+
+              <input
+                type="password"
+                id="recoveryPassword"
+                autocomplete="new-password"
+                minlength="8"
+                maxlength="128"
+                required
+                placeholder="Mínimo 8 caracteres"
+              >
+
+              <button
+                class="password-toggle"
+                type="button"
+                id="toggleRecoveryPassword"
+                aria-label="Mostrar contraseña"
+              >
+                Ver
+              </button>
+
+            </div>
+
+
+            <div
+              class="auth-strength"
+              id="recoveryStrength"
+            >
+              <span id="recoveryStrengthBar"></span>
+            </div>
+
+
+            <span
+              class="auth-field-error"
+              id="recoveryPasswordError"
+            ></span>
+
+          </label>
+
+
+          <label
+            class="f"
+            for="recoveryConfirm"
+          >
+
+            Repetir contraseña
+
+            <div class="auth-password">
+
+              <input
+                type="password"
+                id="recoveryConfirm"
+                autocomplete="new-password"
+                minlength="8"
+                maxlength="128"
+                required
+                placeholder="Repite tu contraseña"
+              >
+
+              <button
+                class="password-toggle"
+                type="button"
+                id="toggleRecoveryConfirm"
+                aria-label="Mostrar contraseña"
+              >
+                Ver
+              </button>
+
+            </div>
+
+
+            <span
+              class="auth-field-error"
+              id="recoveryConfirmError"
+            ></span>
+
+          </label>
+
+
+          <button
+            class="btn auth-submit"
+            type="submit"
+            id="recoverySave"
+          >
+            Guardar nueva contraseña
+          </button>
+
+        </form>
+
+      </div>
+
+
+      <!-- MENSAJE GENERAL -->
+
+      <p
+        class="auth-msg"
+        id="recoveryMsg"
+        aria-live="polite"
+      ></p>
+
+    </div>
+
+  </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</section><script>
+  console.log('SweetAlert:', typeof Swal);
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js.js"></script>
+<script src="aeterna-common.js"></script>
+<script src="aeterna-redirect.js"></script>
+<script>
+(function(){
+'use strict';
+
+/* ====== Configuración editable ====== */
+var WHATSAPP = ''; // Número con código de país y sin signos. Ejemplo: 584121234567
+
+var PRODUCTS = [
+  {id:'primavera',name:'Primavera Eterna',cat:'Ramos',price:30,size:'21 tallos',desc:'Ramo floral hecho a mano, envuelto y preparado para regalar.',image:'trabajo 1.jpeg',kind:'bouquet',pal:['pastel','pastel','ivory'],tone:'a'},
+  {id:'vainilla',name:'Ramo Cumplañero',cat:'Ramos',price:20,size:'15 tallos rosa + banda personalizada y mariposa ',desc:'Ramo mediano para cumpleaños y fechas especiales.',image:'trabajo 2.jpeg',kind:'bouquet',pal:['vanilla','dusty','vanilla','pastel'],tone:'b'},
+  {id:'corazon',name:'Ramo Especial',cat:'Ramos',price:25,size:'9 rosas',desc:'Ramo al gusto pesonal del cliente.',image:'trabajo 3.jpeg',kind:'box',pal:['pastel','deep'],tone:'b',box:['#C98593','#E7B4C0']},
+  {id:'luna',name:'Caja Con Tematica',cat:'Cajas',price:16,size:'Un Pelucha + LLavero + chucheria + Carros Hot Wheels',desc:'Caja grande y mediana al gusto del cliente.',image:'trabajo 4.jpeg',kind:'box',pal:['vanilla','pastel','dusty'],tone:'a',box:['#E9D79A','#F6EBC0']},
+  {id:'cupula',name:'Rosa De Dulces',cat:'Ramos Dulces',price:15,size:'Dulces + Globos',desc:'Ven y haz un lindo obsequio a tu persona especial, pregunta para mas información.',image:'trabajo 5.jpeg',kind:'dome',pal:['dusty'],tone:'a'},
+  {id:'aniversario',name:'Rosas Pasión',cat:'Ramos',price:10,size:'5 Tallos + 5 Mariposas y Piedras',desc:'Arreglo para aniversario, Noviazgo o Dedicaroria.',image:'trabajo 6.jpeg',kind:'pair',pal:['pastel','dusty'],tone:'b'},
+  {id:'nupcial',name:'Ramo De Girasoles',cat:'Ramos',price:17,size:'3 Tallos Rosas y Girasoles + Piedritas',desc:'Ramo Personalizados De Girazoles Con Rosas Rojas.',image:'trabajo 7.jpeg',kind:'bouquet',pal:['ivory','pastel','ivory','vanilla'],tone:'a',from:true},
+  {id:'arco',name:'Arreglo De Maquillaje',cat:'Arreglos',price:15,size:'Cajas Personalizada + Maquillaje',desc:'Caja Con Tu Lip Combo Perfecto.',image:'trabajo 8.jpeg',kind:'arch',pal:['pastel','vanilla','dusty'],tone:'b',from:true},
+  {id:'centros',name:'Arreglos florales de quinceañera',cat:'Quinceaños',price:23,size:'Ramos',desc:'Arreglos Para ventos De Quinceañeras.',image:'trabajo 9.jpeg',kind:'vase',pal:['vanilla','pastel'],tone:'a'},
+  /* ====== BLOQUES EXTRA EDITABLES ======
+     Reemplaza nombre, categoría, precio, descripción e imagen cuando tengas
+     nuevos ramos, cajas o regalos. Estos 3 espacios ayudan a mantener la
+     colección equilibrada en PC. */
+  {id:'extra-1',name:'Arreglo De Dulces',cat:'Cajas',price:10,size:'Arreglo + Dulces',desc:'Caja Personalizadas de Dulces, para eventos o fechas especiales.',image:'trabajo 10.jpeg',kind:'bouquet',pal:['pastel','ivory'],tone:'a'},
+  {id:'extra-2',name:'Ramo de Hot Weels',cat:'Ramos',price:13,size:'Ramos Con carro De Hat Weels',desc:'Ramos de Hot Wheels al gusto del cliente.',image:'trabajo 11.jpeg',kind:'box',pal:['vanilla','dusty'],tone:'b',box:['#E9D79A','#F6EBC0']},
+  {id:'extra-3',name:'Arreglo De Rosas + Chocholate Personalizado',cat:'Cajas',price:13,size:'Rojas + Dulces',desc:'Arreglo de Rosas con Maquillaje para el disfrute de tu persona especial.',image:'trabajo 12.jpeg',kind:'pair',pal:['pastel','dusty'],tone:'a'}
+];
+/* Los filtros se crean automáticamente a partir de la categoría que tenga cada producto.
+   Así, si cambias nombre, descripción, precio o categoría en PRODUCTS, los botones
+   se actualizan solos y nunca quedan filtros que ya no corresponden al catálogo. */
+var CATS = [['todo','Todo']];
+var CATLABEL = {};
+PRODUCTS.forEach(function(p){
+  var key=String(p.cat||'Otros').trim();
+  if(!CATLABEL[key])CATLABEL[key]=key;
+  if(!CATS.some(function(c){return c[0]===key}))CATS.push([key,key]);
+});
+var ZONES = [
+  {id:'retiro',name:'Retiro en taller',note:'Coordinas la hora con nosotras',price:0},
+  {id:'gato-negro',name:'Catia · Gato Negro',note:'Delivery desde $1 · zona cercana',price:1},
+  {id:'cercana',name:'Zona cercana',note:'El precio aumenta según la distancia',price:2},
+  {id:'media',name:'Zona media',note:'Distancia intermedia desde el taller',price:3},
+  {id:'lejana',name:'Zona lejana',note:'Mayor distancia · se calcula según destino',price:4},
+  {id:'otra',name:'Otra zona / ciudad',note:'Te confirmamos el costo exacto según la dirección',price:null}
+];
+
+/* ====== Utilidades ====== */
+var $ = function(id){return document.getElementById(id)};
+var money = function(n){return '$'+n};
+function h(tag,props){
+  var e=document.createElement(tag);props=props||{};
+  Object.keys(props).forEach(function(k){
+    var v=props[k];
+    if(k==='class')e.className=v;
+    else if(k==='text')e.textContent=v;
+    else if(k.indexOf('on')===0)e.addEventListener(k.slice(2),v);
+    else if(v===true)e.setAttribute(k,'');
+    else if(v!==false&&v!=null)e.setAttribute(k,v);
+  });
+  for(var i=2;i<arguments.length;i++){
+    [].concat(arguments[i]).forEach(function(c){
+      if(c==null||c===false)return;
+      e.append(c.nodeType?c:document.createTextNode(String(c)));
+    });
+  }
+  return e;
+}
+function fmt(ms){
+  var d=new Date(ms),n=new Date();
+  return d.toDateString()===n.toDateString()
+    ? d.toLocaleTimeString('es',{hour:'2-digit',minute:'2-digit'})
+    : d.toLocaleDateString('es',{day:'numeric',month:'short'});
+}
+
+/* ====== Ilustraciones de rosas (generadas) ====== */
+var P='M0 0C-.62 -.12 -.78 -.78 -.3 -1.02Q0 -1.12 .3 -1.02C.78 -.78 .62 -.12 0 0Z';
+var LEAF='M0 0C-.55 -.25 -.6 -.95 0 -1.4C.6 -.95 .55 -.25 0 0Z';
+var PAL={pastel:['#F9D5DE','#E39BB0'],vanilla:['#F9EEC4','#E4CB80'],dusty:['#D9A0AB','#A55867'],ivory:['#FFF5E8','#E9D0B6'],deep:['#EBA9B8','#B65770']};
+function mulberry(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function hx(c){return[1,3,5].map(function(i){return parseInt(c.slice(i,i+2),16)})}
+function mix(a,b,t){var A=hx(a),B=hx(b);return '#'+A.map(function(v,i){return Math.round(v+(B[i]-v)*t).toString(16).padStart(2,'0')}).join('')}
+function svg(inner,vb){return '<svg viewBox="'+(vb||'0 0 300 300')+'" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice">'+inner+'</svg>'}
+function leaf(x,y,a,s,c){return '<path d="'+LEAF+'" transform="translate('+x.toFixed(1)+' '+y.toFixed(1)+') rotate('+a+') scale('+s+')" fill="'+c+'" stroke="rgba(40,70,40,.25)" stroke-width="'+(.8/s).toFixed(3)+'"/>'}
+function rose(cx,cy,r,pal,seed){
+  var rnd=mulberry(seed),L=[[6,.30,.62],[5,.22,.52],[5,.15,.42],[4,.09,.32],[3,.04,.22]],s='';
+  L.forEach(function(l,i){
+    var col=mix(pal[0],pal[1],i/(L.length-1)),rot=rnd()*360,sc=l[2]*r;
+    for(var k=0;k<l[0];k++){
+      var a=rot+k*360/l[0]+(rnd()-.5)*12;
+      s+='<path d="'+P+'" transform="translate('+cx.toFixed(1)+' '+cy.toFixed(1)+') rotate('+a.toFixed(1)+') translate(0 '+(-l[1]*r).toFixed(2)+') scale('+sc.toFixed(2)+')" fill="'+col+'" stroke="rgba(110,40,58,.28)" stroke-width="'+(.8/sc).toFixed(3)+'"/>';
+    }
+  });
+  return s;
+}
+function cluster(cx,cy,R,rings,pals,seed,flat,lift){
+  flat=flat||1;lift=lift||0;var pts=[];
+  rings.forEach(function(rg,ri){
+    for(var i=0;i<rg[0];i++){
+      var a=(i/rg[0])*Math.PI*2+ri*.55;
+      pts.push({x:cx+Math.cos(a)*rg[1],y:cy+Math.sin(a)*rg[1]*flat-(rings.length-1-ri)*lift,ri:ri});
+    }
+  });
+  pts.sort(function(a,b){return b.ri-a.ri||a.y-b.y});
+  return pts.map(function(p,i){return rose(p.x,p.y,R*(1-p.ri*.05),pals[i%pals.length],seed+i*11)}).join('');
+}
+function bow(x,y,c){return '<g fill="'+c+'"><ellipse cx="'+(x-15)+'" cy="'+y+'" rx="17" ry="8" transform="rotate(-18 '+(x-15)+' '+y+')"/><ellipse cx="'+(x+15)+'" cy="'+y+'" rx="17" ry="8" transform="rotate(18 '+(x+15)+' '+y+')"/><circle cx="'+x+'" cy="'+y+'" r="6"/></g>'}
+function bouquet(pals,seed,o){
+  o=o||{};var rings=o.rings||[[1,0],[6,40],[9,74]],s='';
+  for(var a=-100;a<=100;a+=25){var r=a*Math.PI/180;s+=leaf(150+Math.sin(r)*58,138-Math.cos(r)*40,a,64,(a/25)%2?'#8CA38A':'#789868')}
+  s+='<path d="M60 170Q150 222 240 170L168 288Q150 296 132 288Z" fill="'+(o.paper||'#F6E9BC')+'"/>';
+  s+='<path d="M60 170Q150 222 240 170L222 205Q150 245 78 205Z" fill="'+(o.fold||'#EBC4CE')+'"/>';
+  s+=cluster(150,128,27,rings,pals,seed,.88);
+  s+=bow(150,226,'#B9737F');
+  return s;
+}
+function artBox(pals,seed,cols){
+  var body=cols[0],rim=cols[1],s='';
+  s+='<path d="M52 178V238A98 34 0 0 0 248 238V178Z" fill="'+body+'"/>';
+  s+='<ellipse cx="150" cy="178" rx="98" ry="30" fill="'+rim+'"/>';
+  s+='<ellipse cx="150" cy="180" rx="90" ry="25" fill="rgba(90,30,45,.35)"/>';
+  s+=cluster(150,168,25,[[1,0],[6,42],[10,76]],pals,seed,.34,9);
+  s+='<path d="M52 178A98 30 0 0 0 248 178" fill="none" stroke="'+rim+'" stroke-width="7" stroke-linecap="round"/>';
+  s+='<path d="M52 212A98 34 0 0 0 248 212" fill="none" stroke="#F8EEC4" stroke-width="9" opacity=".9"/>';
+  s+=bow(150,254,'#B9737F');
+  return s;
+}
+function artDome(pals,seed){
+  var s='';
+  s+='<path d="M66 236V252A84 20 0 0 0 234 252V236Z" fill="#A9606D"/><ellipse cx="150" cy="236" rx="84" ry="20" fill="#C98593"/>';
+  s+='<path d="M150 236C150 205 148 180 150 150" stroke="#7F9A7C" stroke-width="5" fill="none" stroke-linecap="round"/>';
+  s+=leaf(150,205,-55,34,'#8CA38A')+leaf(150,190,50,30,'#789868');
+  s+=rose(150,128,36,pals[0],seed);
+  s+='<g fill="#E8B2BE" opacity=".95"><path d="'+P+'" transform="translate(112 238) rotate(70) scale(12)"/><path d="'+P+'" transform="translate(188 244) rotate(-60) scale(11)"/><path d="'+P+'" transform="translate(150 250) rotate(20) scale(10)"/></g>';
+  s+='<path d="M78 236C78 78 222 78 222 236" fill="rgba(255,255,255,.28)" stroke="#B9737F" stroke-opacity=".55" stroke-width="3"/>';
+  s+='<path d="M104 120C112 100 128 90 146 88" stroke="#fff" stroke-opacity=".7" stroke-width="4" fill="none" stroke-linecap="round"/>';
+  return s;
+}
+function artPair(pals,seed){
+  var s='';
+  s+='<path d="M150 108C130 60 66 80 78 130C86 165 130 190 150 212C170 190 214 165 222 130C234 80 170 60 150 108Z" fill="#F8EEC4"/>';
+  s+='<path d="M118 160Q140 222 156 290" stroke="#7F9A7C" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M184 166Q164 222 148 290" stroke="#7F9A7C" stroke-width="5" fill="none" stroke-linecap="round"/>';
+  s+=leaf(136,214,-60,32,'#8CA38A')+leaf(168,222,58,30,'#789868');
+  s+=rose(118,128,36,pals[0],seed)+rose(184,140,31,pals[1],seed+5);
+  s+=bow(152,252,'#B9737F');
+  return s;
+}
+function artArch(pals,seed){
+  var s='<path d="M58 290V150A92 92 0 0 1 242 150V290" fill="none" stroke="#B9737F" stroke-width="5" stroke-linecap="round" opacity=".55"/>',i,t;
+  for(i=0;i<=8;i++){t=Math.PI*(1-i/8);s+=leaf(150+Math.cos(t)*92,150-Math.sin(t)*92,-90+i*22.5,34,i%2?'#8CA38A':'#789868')}
+  for(i=0;i<=8;i++){t=Math.PI*(1-i/8);s+=rose(150+Math.cos(t)*92,150-Math.sin(t)*92,15,pals[i%pals.length],seed+i*3)}
+  s+=leaf(58,262,-40,40,'#789868')+leaf(242,262,40,40,'#789868');
+  s+=cluster(58,268,20,[[1,0],[5,26]],pals,seed+40,1)+cluster(242,268,20,[[1,0],[5,26]],pals,seed+60,1);
+  return s;
+}
+function artVase(pals,seed){
+  var s='';
+  for(var a=-80;a<=80;a+=32){var r=a*Math.PI/180;s+=leaf(150+Math.sin(r)*30,160-Math.cos(r)*20,a,56,(a/32)%2?'#8CA38A':'#789868')}
+  s+=cluster(150,148,26,[[1,0],[5,34]],pals,seed,.9);
+  s+='<path d="M104 196H196L188 276Q150 286 112 276Z" fill="rgba(255,255,255,.42)" stroke="#B9737F" stroke-opacity=".5" stroke-width="3"/>';
+  s+='<path d="M118 206L124 262" stroke="#fff" stroke-opacity=".7" stroke-width="4" stroke-linecap="round"/>';
+  return s;
+}
+function artFor(p,i){
+  var pals=p.pal.map(function(k){return PAL[k]}),seed=100+i*13;
+  switch(p.kind){
+    case 'box':return svg(artBox(pals,seed,p.box));
+    case 'dome':return svg(artDome(pals,seed));
+    case 'pair':return svg(artPair(pals,seed));
+    case 'arch':return svg(artArch(pals,seed));
+    case 'vase':return svg(artVase(pals,seed));
+    default:return svg(bouquet(pals,seed,p.id==='nupcial'?{paper:'#FFF3E2',fold:'#F4D2DA'}:{}));
+  }
+}
+function bloomRose(cx,cy,r,pal,seed,d0){
+  var rnd=mulberry(seed),L=[[7,.32,.62],[6,.26,.56],[6,.20,.48],[5,.14,.40],[5,.09,.32],[4,.05,.24],[3,.02,.16]],s='';
+  L.forEach(function(l,i){
+    var col=mix(pal[0],pal[1],i/(L.length-1)),rot=rnd()*360,sc=l[2]*r;
+    for(var k=0;k<l[0];k++){
+      var a=rot+k*360/l[0]+(rnd()-.5)*12,d=(d0+(L.length-1-i)*.12+k*.03).toFixed(2);
+      s+='<g transform="translate('+cx+' '+cy+') rotate('+a.toFixed(1)+') translate(0 '+(-l[1]*r).toFixed(2)+') scale('+sc.toFixed(2)+')"><path class="pt" style="--d:'+d+'s" d="'+P+'" fill="'+col+'" stroke="rgba(110,40,58,.3)" stroke-width=".9" vector-effect="non-scaling-stroke"/></g>';
+    }
+  });
+  return s;
+}
+function heroBouquet(){
+  var s='<g class="sway">',i,rnd=mulberry(9);
+  [['M200 420C200 340 196 260 200 205',0],['M192 420C150 366 112 322 90 292',.15],['M208 420C252 366 300 322 318 282',.3]].forEach(function(st){
+    s+='<path class="stem" pathLength="1" style="--d:'+st[1]+'s" d="'+st[0]+'" fill="none" stroke="#7F9A7C" stroke-width="7" stroke-linecap="round"/>';
+  });
+  [[196,338,-52,46,.9],[203,300,56,44,1],[142,352,-74,40,1.1],[112,318,-20,34,1.2],[262,346,70,42,1.15],[296,316,24,36,1.25],[160,250,-85,50,1.3],[245,236,80,52,1.35]].forEach(function(l,j){
+    s+='<g transform="translate('+l[0]+' '+l[1]+') rotate('+l[2]+') scale('+l[3]+')"><path class="lf" style="--d:'+l[4]+'s" d="'+LEAF+'" fill="'+(j%2?'#8CA38A':'#789868')+'" stroke="rgba(40,70,40,.25)" stroke-width=".8" vector-effect="non-scaling-stroke"/></g>';
+  });
+  for(i=0;i<16;i++){
+    var a=rnd()*Math.PI*2,rad=95+rnd()*70;
+    s+='<circle class="tw" style="--d:'+(rnd()*2.5).toFixed(2)+'s" cx="'+(200+Math.cos(a)*rad*1.1).toFixed(1)+'" cy="'+(210+Math.sin(a)*rad*.85).toFixed(1)+'" r="'+(2.5+rnd()*2.5).toFixed(1)+'" fill="'+(i%2?'#EBCB6B':'#FFFFFF')+'"/>';
+  }
+  s+=bloomRose(88,262,56,PAL.dusty,21,.65)+bloomRose(316,248,60,PAL.vanilla,33,.85)+bloomRose(200,170,96,PAL.pastel,5,.35);
+  s+=bow(200,398,'#B9737F')+'<path d="M197 404L184 432L197 424L201 434Z" fill="#B9737F"/><path d="M203 404L216 432L203 424L199 434Z" fill="#A55867"/>';
+  s+='</g>';
+  return '<svg class="bq" viewBox="0 0 400 440" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">'+s+'</svg>';
+}
+function heroBadge(){
+  return '<div class="badge-rot"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="60" cy="60" r="58" style="fill:var(--surface);stroke:var(--line)" stroke-width="1"/><defs><path id="circ" d="M60 60m-42 0a42 42 0 1 1 84 0a42 42 0 1 1-84 0"/></defs><text class="btxt"><textPath href="#circ" textLength="262" lengthAdjust="spacing">FLORES ETERNAS · HECHAS A MANO ·</textPath></text>'+rose(60,60,19,PAL.dusty,4)+'</svg></div>';
+}
+function falling(){
+  var box=$('petals'),hero=$('inicio'),n=window.matchMedia('(max-width:700px)').matches?9:16,rnd=mulberry(77);
+  var cols=[PAL.pastel[0],PAL.pastel[1],PAL.vanilla[0],PAL.dusty[0],PAL.ivory[0],PAL.vanilla[1]];
+  for(var i=0;i<n;i++){
+    var sz=16+rnd()*20,dur=11+rnd()*9;
+    var el=h('span',{class:'fp',style:'--x:'+(rnd()*96).toFixed(1)+'%;--s:'+sz.toFixed(0)+'px;--dur:'+dur.toFixed(1)+'s;--dl:-'+(rnd()*dur).toFixed(1)+'s;--p:'+rnd().toFixed(2)+';--sw:'+(2.6+rnd()*2.4).toFixed(1)+'s'});
+    el.innerHTML='<span class="sw"><svg viewBox="-.9 -1.2 1.8 1.3" aria-hidden="true"><path d="'+P+'" fill="'+cols[i%cols.length]+'" stroke="rgba(110,40,58,.25)" stroke-width=".03"/></svg></span>';
+    box.append(el);
+  }
+  function size(){box.style.setProperty('--fall',(hero.offsetHeight+80)+'px')}
+  size();window.addEventListener('resize',size);
+}
+function buildMarquee(){
+  var words=['Ramos personalizados','Cajas de regalo','Arreglos florales','Flores eternas','Hechas a mano','Entrega programada','Detalles para bodas'];
+  var one=words.map(function(w,i){return '<span>'+w+svg(rose(20,20,12,PAL.ivory,i+1),'0 0 40 40')+'</span>'}).join('');
+  var g='<div class="grp">'+one+'</div>';
+  $('marquee').innerHTML='<div class="track">'+g+g+g+g+'</div>';
+}
+/* Aeterna: ramo de rosas 3D en WebGL puro (sin librerías). Devuelve un controlador o lanza error si no hay WebGL. */
+function createBouquet(host,ptr,opts){
+'use strict';
+opts=opts||{};
+var cv=document.createElement('canvas');
+cv.className='gl';cv.setAttribute('aria-hidden','true');
+var gl=cv.getContext('webgl',{antialias:true,alpha:true,premultipliedAlpha:true,powerPreference:'high-performance'});
+if(!gl)throw new Error('webgl');
+host.append(cv);
+
+/* ---------- utilidades matemáticas ---------- */
+function clamp(x,a,b){return x<a?a:x>b?b:x}
+function lerp(a,b,t){return a+(b-a)*t}
+function sstep(a,b,x){x=clamp((x-a)/(b-a),0,1);return x*x*(3-2*x)}
+function easeOut(t){return 1-Math.pow(1-t,3)}
+function easeIO(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2}
+function mulberry(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function hex3(h){return [parseInt(h.slice(1,3),16)/255,parseInt(h.slice(3,5),16)/255,parseInt(h.slice(5,7),16)/255]}
+function ident(){return new Float32Array([1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1])}
+function mul(a,b){var o=new Float32Array(16);for(var c=0;c<4;c++)for(var r=0;r<4;r++){var s=0;for(var k=0;k<4;k++)s+=a[k*4+r]*b[c*4+k];o[c*4+r]=s}return o}
+function persp(f,a,n,fa){var t=1/Math.tan(f/2),o=new Float32Array(16);o[0]=t/a;o[5]=t;o[10]=(fa+n)/(n-fa);o[11]=-1;o[14]=2*fa*n/(n-fa);return o}
+function lookAt(e,c,u){
+  var zx=e[0]-c[0],zy=e[1]-c[1],zz=e[2]-c[2],l=Math.hypot(zx,zy,zz);zx/=l;zy/=l;zz/=l;
+  var xx=u[1]*zz-u[2]*zy,xy=u[2]*zx-u[0]*zz,xz=u[0]*zy-u[1]*zx;l=Math.hypot(xx,xy,xz);xx/=l;xy/=l;xz/=l;
+  var yx=zy*xz-zz*xy,yy=zz*xx-zx*xz,yz=zx*xy-zy*xx;
+  return new Float32Array([xx,yx,zx,0,xy,yy,zy,0,xz,yz,zz,0,-(xx*e[0]+xy*e[1]+xz*e[2]),-(yx*e[0]+yy*e[1]+yz*e[2]),-(zx*e[0]+zy*e[1]+zz*e[2]),1]);
+}
+function rotX(a){var c=Math.cos(a),s=Math.sin(a),m=ident();m[5]=c;m[6]=s;m[9]=-s;m[10]=c;return m}
+function rotY(a){var c=Math.cos(a),s=Math.sin(a),m=ident();m[0]=c;m[2]=-s;m[8]=s;m[10]=c;return m}
+function rotZ(a){var c=Math.cos(a),s=Math.sin(a),m=ident();m[0]=c;m[1]=s;m[4]=-s;m[5]=c;return m}
+function trans(x,y,z){var m=ident();m[12]=x;m[13]=y;m[14]=z;return m}
+function scl(s){var m=ident();m[0]=s;m[5]=s;m[10]=s;return m}
+
+/* ---------- shaders ---------- */
+var VS='attribute vec3 aPos;attribute vec3 aNor;attribute vec4 aCol;attribute vec2 aUV;uniform mat4 uVP;uniform mat4 uModel;varying vec3 vN;varying vec3 vP;varying vec4 vC;varying vec2 vUV;void main(){vec4 w=uModel*vec4(aPos,1.0);vP=w.xyz;vN=mat3(uModel)*aNor;vC=aCol;vUV=aUV;gl_Position=uVP*w;}';
+var FS='#ifdef GL_FRAGMENT_PRECISION_HIGH\nprecision highp float;\n#else\nprecision mediump float;\n#endif\n'+
+'varying vec3 vN;varying vec3 vP;varying vec4 vC;varying vec2 vUV;uniform vec3 uCam;uniform float uVel;'+
+'void main(){'+
+' vec3 N=normalize(vN);vec3 V=normalize(uCam-vP);if(dot(N,V)<0.0)N=-N;'+
+' vec3 L1=normalize(vec3(-.55,.85,.65));vec3 L2=normalize(vec3(.85,.25,.45));'+
+' float w1=clamp((dot(N,L1)+.35)/1.35,0.,1.);float d2=max(dot(N,L2),0.);'+
+' vec3 base=vC.rgb;float ao=vC.a;'+
+' float vein=sin(vUV.x*15.+sin(vUV.y*5.)*1.6)*.5+.5;'+
+' base*=1.-.035*vein*uVel*smoothstep(.1,.8,vUV.y);'+
+' vec3 hemi=mix(vec3(.52,.38,.44),vec3(.95,.9,.92),N.y*.5+.5);'+
+' vec3 lit=hemi*.62+vec3(1.,.95,.9)*w1*.80+vec3(1.,.8,.88)*d2*.16;'+
+' vec3 col=base*lit*ao;'+
+' float fr=pow(1.-max(dot(N,V),0.),3.);'+
+' col+=vec3(1.,.84,.9)*fr*.14*uVel*ao;'+
+' float back=max(dot(-N,L1),0.);'+
+' col+=base*vec3(1.,.72,.78)*back*.07*uVel;'+
+' vec3 H=normalize(L1+V);col+=vec3(1.)*pow(max(dot(N,H),0.),30.)*.035;'+
+' col=col/(col*.3+.8);'+
+' float lum=dot(col,vec3(.3,.59,.11));col=mix(vec3(lum),col,1.18);'+
+' gl_FragColor=vec4(col,1.);}';
+function sh(t,src){var s=gl.createShader(t);gl.shaderSource(s,src);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw new Error(gl.getShaderInfoLog(s));return s}
+var prog=gl.createProgram();
+gl.attachShader(prog,sh(gl.VERTEX_SHADER,VS));gl.attachShader(prog,sh(gl.FRAGMENT_SHADER,FS));
+gl.bindAttribLocation(prog,0,'aPos');gl.bindAttribLocation(prog,1,'aNor');gl.bindAttribLocation(prog,2,'aCol');gl.bindAttribLocation(prog,3,'aUV');
+gl.linkProgram(prog);if(!gl.getProgramParameter(prog,gl.LINK_STATUS))throw new Error(gl.getProgramInfoLog(prog));
+gl.useProgram(prog);
+var uVP=gl.getUniformLocation(prog,'uVP'),uModel=gl.getUniformLocation(prog,'uModel'),uCam=gl.getUniformLocation(prog,'uCam'),uVel=gl.getUniformLocation(prog,'uVel');
+gl.enable(gl.DEPTH_TEST);gl.disable(gl.CULL_FACE);gl.clearColor(0,0,0,0);
+
+/* ---------- mallas ---------- */
+function makeMesh(pos,nor,col,uv,idx,dynamic,vel){
+  var m={n:idx.length,vel:vel,pos:pos,nor:nor,model:ident()};
+  function buf(target,data,dyn){var b=gl.createBuffer();gl.bindBuffer(target,b);gl.bufferData(target,data,dyn?gl.DYNAMIC_DRAW:gl.STATIC_DRAW);return b}
+  m.bPos=buf(gl.ARRAY_BUFFER,pos,dynamic);m.bNor=buf(gl.ARRAY_BUFFER,nor,dynamic);
+  m.bCol=buf(gl.ARRAY_BUFFER,col,false);m.bUV=buf(gl.ARRAY_BUFFER,uv,false);
+  m.bIdx=buf(gl.ELEMENT_ARRAY_BUFFER,idx,false);
+  return m;
+}
+function upload(m){
+  gl.bindBuffer(gl.ARRAY_BUFFER,m.bPos);gl.bufferSubData(gl.ARRAY_BUFFER,0,m.pos);
+  gl.bindBuffer(gl.ARRAY_BUFFER,m.bNor);gl.bufferSubData(gl.ARRAY_BUFFER,0,m.nor);
+}
+function draw(m){
+  gl.bindBuffer(gl.ARRAY_BUFFER,m.bPos);gl.enableVertexAttribArray(0);gl.vertexAttribPointer(0,3,gl.FLOAT,false,0,0);
+  gl.bindBuffer(gl.ARRAY_BUFFER,m.bNor);gl.enableVertexAttribArray(1);gl.vertexAttribPointer(1,3,gl.FLOAT,false,0,0);
+  gl.bindBuffer(gl.ARRAY_BUFFER,m.bCol);gl.enableVertexAttribArray(2);gl.vertexAttribPointer(2,4,gl.FLOAT,false,0,0);
+  gl.bindBuffer(gl.ARRAY_BUFFER,m.bUV);gl.enableVertexAttribArray(3);gl.vertexAttribPointer(3,2,gl.FLOAT,false,0,0);
+  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,m.bIdx);
+  gl.uniformMatrix4fv(uModel,false,m.model);gl.uniform1f(uVel,m.vel);
+  gl.drawElements(gl.TRIANGLES,m.n,gl.UNSIGNED_SHORT,0);
+}
+function gridNormals(pos,nor,base,U,V){
+  for(var j=0;j<V;j++){
+    var j0=j>0?j-1:j,j1=j<V-1?j+1:j;
+    for(var k=0;k<U;k++){
+      var k0=k>0?k-1:k,k1=k<U-1?k+1:k;
+      var a=(base+j*U+k1)*3,b=(base+j*U+k0)*3,c=(base+j1*U+k)*3,d=(base+j0*U+k)*3;
+      var t1x=pos[a]-pos[b],t1y=pos[a+1]-pos[b+1],t1z=pos[a+2]-pos[b+2];
+      var t2x=pos[c]-pos[d],t2y=pos[c+1]-pos[d+1],t2z=pos[c+2]-pos[d+2];
+      var nx=t2y*t1z-t2z*t1y,ny=t2z*t1x-t2x*t1z,nz=t2x*t1y-t2y*t1x,l=Math.hypot(nx,ny,nz),o=(base+j*U+k)*3;
+      if(l<1e-7){
+        if(j>0){var p=(base+(j-1)*U+k)*3;nor[o]=nor[p];nor[o+1]=nor[p+1];nor[o+2]=nor[p+2]}
+        else{nor[o]=0;nor[o+1]=1;nor[o+2]=0}
+      }else{nor[o]=nx/l;nor[o+1]=ny/l;nor[o+2]=nz/l}
+    }
+  }
+}
+/* constructor de mallas estáticas */
+function Builder(){this.pos=[];this.col=[];this.uv=[];this.idx=[];this.n=0}
+Builder.prototype.grid=function(U,V,fn){
+  var base=this.n;
+  for(var j=0;j<V;j++)for(var k=0;k<U;k++){
+    var r=fn(j/(V-1),k/(U-1)*2-1);
+    this.pos.push(r[0],r[1],r[2]);this.col.push(r[3],r[4],r[5],r[6]);this.uv.push(r[7],r[8]);
+  }
+  for(var j2=0;j2<V-1;j2++)for(var k2=0;k2<U-1;k2++){var a=base+j2*U+k2,b=a+1,c=a+U,d=c+1;this.idx.push(a,c,b,b,c,d)}
+  this.n+=U*V;
+};
+Builder.prototype.finish=function(vel){
+  var pos=new Float32Array(this.pos),nor=new Float32Array(this.pos.length),idx=new Uint16Array(this.idx);
+  for(var i=0;i<idx.length;i+=3){
+    var a=idx[i]*3,b=idx[i+1]*3,c=idx[i+2]*3;
+    var ux=pos[b]-pos[a],uy=pos[b+1]-pos[a+1],uz=pos[b+2]-pos[a+2],vx=pos[c]-pos[a],vy=pos[c+1]-pos[a+1],vz=pos[c+2]-pos[a+2];
+    var nx=uy*vz-uz*vy,ny=uz*vx-ux*vz,nz=ux*vy-uy*vx;
+    [a,b,c].forEach(function(o){nor[o]+=nx;nor[o+1]+=ny;nor[o+2]+=nz});
+  }
+  for(var o=0;o<nor.length;o+=3){var l=Math.hypot(nor[o],nor[o+1],nor[o+2])||1;nor[o]/=l;nor[o+1]/=l;nor[o+2]/=l}
+  return makeMesh(pos,nor,new Float32Array(this.col),new Float32Array(this.uv),idx,false,vel);
+};
+function place(p,rz,ry,tx,ty,tz){
+  var c=Math.cos(rz),s=Math.sin(rz),x=p[0]*c-p[1]*s,y=p[0]*s+p[1]*c,z=p[2];
+  var c2=Math.cos(ry),s2=Math.sin(ry),x2=x*c2+z*s2,z2=-x*s2+z*c2;
+  return [x2+tx,y+ty,z2+tz];
+}
+
+/* ---------- follaje ---------- */
+var GREEN={base:hex3('#244a2c'),mid:hex3('#437a43'),tip:hex3('#7fae68'),rib:hex3('#a9c783')};
+function addLeaf(b,len,wid,droop,rz,ry,tx,ty,tz,seed,shade){
+  var U=9,V=15,sd=seed;
+  b.grid(U,V,function(v,uu){
+    var saw=((v*13+sd)%1)-.5;
+    var hw=wid*Math.pow(Math.sin(Math.PI*Math.pow(v,.75)),.8)*(1+.1*saw*Math.abs(uu));
+    var x=uu*hw,y=v*len,z=-droop*v*v*len+Math.abs(x)*.42;
+    var p=place([x,y,z],rz,ry,tx,ty,tz),c=[0,0,0],m=sstep(0,.55,v),t=sstep(.4,1,v);
+    for(var i=0;i<3;i++){var q=GREEN.base[i]+(GREEN.mid[i]-GREEN.base[i])*m;q=q+(GREEN.tip[i]-q)*t*.8;if(Math.abs(uu)<.1)q+= (GREEN.rib[i]-q)*.45;c[i]=q*shade}
+    return [p[0],p[1],p[2],c[0],c[1],c[2],.55+.45*sstep(0,.5,v),uu,v];
+  });
+}
+
+/* ---------- rosa ---------- */
+var U=15,V=21,VV=[];for(var q0=0;q0<V;q0++)VV.push(1-Math.pow(1-q0/(V-1),1.7));
+function prof(v){return v<.5?(.2+.8*Math.pow(Math.sin(v/.5*Math.PI/2),.9)):Math.pow(Math.max(0,1-Math.pow((v-.5)/.5,2.3)),.5)}
+function makeRose(rig){
+  var rnd=mulberry(rig.seed),N=rig.N,pet=[],pal=[hex3(rig.pal[0]),hex3(rig.pal[1]),hex3(rig.pal[2])];
+  var pos=new Float32Array(N*U*V*3),nor=new Float32Array(N*U*V*3),col=new Float32Array(N*U*V*4),uv=new Float32Array(N*U*V*2),idx=[];
+  for(var i=0;i<N;i++){
+    var t=(i+.5)/N,r0=.05+.5*Math.pow(t,.9),L=.52+.62*Math.pow(t,.75),tint=.94+.1*rnd();
+    var pt={base:i*U*V,t:t,a:i*2.39996323+rnd()*.15,r0:r0,L:L,W:.17+.6*Math.pow(t,.8),y0:-.11*t,
+      phiC:Math.asin(clamp((.1-r0)/L,-.9,.9)),phiO:(.1+.95*Math.pow(t,1.3))*rig.open,
+      curl:1.25*Math.pow(t,2.4)*rig.open,cup:(.12+.4*t)*rig.open,rip:.022+.02*t,ph:rnd()*6.28,
+      d:.04+.5*(1-t)+rnd()*.05};
+    pet.push(pt);
+    for(var j=0;j<V;j++)for(var k=0;k<U;k++){
+      var v=VV[j],uu=k/(U-1)*2-1,o=(i*U*V+j*U+k);
+      var a=sstep(0,.5,v),b2=sstep(.4,1,v)*.88,edge=Math.pow(Math.abs(uu),3)*sstep(.3,1,v)*.12;
+      var ao=(.34+.66*sstep(0,.72,v))*(.74+.26*Math.sqrt(t))*tint;
+      for(var c=0;c<3;c++){var x=pal[0][c]+(pal[1][c]-pal[0][c])*a;x=x+(pal[2][c]-x)*b2;x=x+(pal[2][c]-x)*edge;col[o*4+c]=x}
+      col[o*4+3]=ao;uv[o*2]=uu;uv[o*2+1]=v;
+    }
+    var bs=i*U*V;
+    for(var j2=0;j2<V-1;j2++)for(var k2=0;k2<U-1;k2++){var q=bs+j2*U+k2;idx.push(q,q+U,q+1,q+1,q+U,q+U+1)}
+  }
+  var head=makeMesh(pos,nor,col,uv,new Uint16Array(idx),true,1);
+  function pose(Tr){
+    for(var i=0;i<N;i++){
+      var pt=pet[i],p=easeIO(clamp((Tr-pt.d)/.42,0,1));
+      var phi0=lerp(pt.phiC,pt.phiO,p),curl=pt.curl*p,r=pt.r0,y=pt.y0,cup=pt.cup*(.3+.7*p);
+      for(var j=0;j<V;j++){
+        var v=VV[j];
+        if(j>0){var vm=(v+VV[j-1])/2,ds=(v-VV[j-1])*pt.L,ph=phi0*(.35+.65*vm)+curl*vm*vm*vm;r+=Math.sin(ph)*ds;y+=Math.cos(ph)*ds}
+        var hw=pt.W*prof(v),rr=Math.max(r,.025);
+        for(var k=0;k<U;k++){
+          var uu=k/(U-1)*2-1,x=uu*hw,delta=clamp(x/Math.max(rr,.07),-2,2),ang=pt.a+delta;
+          var rip=pt.rip*v*v*(Math.sin(uu*4.3+pt.ph)*.6+Math.sin(uu*8.1+v*5+pt.ph*1.7)*.4)*(.25+.75*p);
+          var rad=rr+rip,yy=y+cup*x*x*(.5+v),o=(pt.base+j*U+k)*3;
+          pos[o]=Math.cos(ang)*rad;pos[o+1]=yy;pos[o+2]=Math.sin(ang)*rad;
+        }
+      }
+      gridNormals(pos,nor,pt.base,U,V);
+    }
+    upload(head);
+  }
+  /* sépalos, receptáculo y hojas junto a la flor */
+  var b=new Builder();
+  b.grid(13,10,function(v,uu){
+    var lat=v*Math.PI,th=(uu*.5+.5)*Math.PI*2,rad=.2*Math.sin(lat)*(1-.25*v);
+    return [Math.cos(th)*rad,-.1+.26*Math.cos(lat),Math.sin(th)*rad,.28,.5,.27,.85,uu,v];
+  });
+  for(var s=0;s<5;s++)addLeaf(b,.78,.075,-.2,-(Math.PI-.78),s*(Math.PI*2/5)+.3,0,-.12,0,s*.37,1.05);
+  (rig.leaves||[]).forEach(function(l,q){if(l[0]<.05)addLeaf(b,l[1],l[2],.35,l[3],l[4],0,-.24,0,q*.31,1)});
+  var stat=b.finish(.0);
+  var cb=new Builder(),dc=pal[0];
+  cb.grid(15,8,function(v,uu){var lat=v*Math.PI/2,th=(uu*.5+.5)*Math.PI*2,rad=.5*Math.cos(lat);return [Math.cos(th)*rad,-.05+.45*Math.sin(lat),Math.sin(th)*rad,dc[0]*.9,dc[1]*.9,dc[2]*.9,.62,uu,v]});
+  var core=cb.finish(1);
+  return {head:head,stat:stat,core:core,pose:pose,rig:rig};
+}
+
+/* ---------- escena ---------- */
+var PINK=['#a8335f','#e5809f','#f9d2de'],DUSTY=['#8a374c','#bd6f80','#e6b8c1'],VAN=['#b58a30','#ebd078','#fbf1c6'],BLUSH=['#c9507a','#f09ab5','#fde3ea'],FUCH=['#8f2650','#d4608a','#f5bdd0'];
+/* siete rosas agrupadas como en un ramo de florería: una grande al centro y las demás alrededor */
+var rigs=[
+  {pal:PINK, seed:5, N:34,open:1,  x:0,   y:-.1, z:.2,  rx:.5, rz:0,   sc:1.0, delay:0,  leaves:[[.01,1.2,.44,-1.35,1.5],[.012,1.15,.42,-1.35,4.6]]},
+  {pal:DUSTY,seed:21,N:26,open:.85,x:-1.5,y:-.75,z:.1,  rx:.55,rz:.7,  sc:.72,delay:.1, leaves:[[.012,1.0,.38,-1.35,4.2]]},
+  {pal:VAN,  seed:33,N:26,open:.72,x:1.55,y:-.7, z:.05, rx:.55,rz:-.72,sc:.74,delay:.18,leaves:[[.012,1.0,.38,-1.35,1.9]]},
+  {pal:BLUSH,seed:47,N:24,open:.8, x:-.7, y:.9,  z:-.55,rx:.35,rz:.35, sc:.66,delay:.26,leaves:[[.012,1.0,.36,-1.3,2.6]]},
+  {pal:FUCH, seed:61,N:24,open:.8, x:.85, y:.75, z:-.6, rx:.35,rz:-.35,sc:.62,delay:.32,leaves:[[.012,1.0,.36,-1.3,5.4]]},
+  {pal:VAN,  seed:73,N:22,open:.68,x:-.4, y:-1.25,z:.9, rx:.95,rz:.15, sc:.56,delay:.4, leaves:[]},
+  {pal:BLUSH,seed:89,N:22,open:.7, x:.65, y:-1.2, z:.85,rx:.9, rz:-.2, sc:.5, delay:.46,leaves:[]}
+];
+var roses=rigs.map(makeRose);
+function mv(m,x,y,z){return [m[0]*x+m[4]*y+m[8]*z,m[1]*x+m[5]*y+m[9]*z,m[2]*x+m[6]*y+m[10]*z]}
+function bez(p0,p1,p2,p3,t){var u=1-t;return [0,1,2].map(function(i){return u*u*u*p0[i]+3*u*u*t*p1[i]+3*u*t*t*p2[i]+t*t*t*p3[i]})}
+function mixc(a,b,t){return [a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t]}
+var wb=new Builder();
+
+/* ---- utilidades de malla: tubo, bola, cinta ---- */
+var SG0=[.2,.34,.19],SG1=[.32,.5,.28];
+function addTube(b,fn,r0,r1,steps,c0,c1){
+  b.grid(9,steps,function(t,uu){
+    var c=fn(t),c2=fn(Math.min(1,t+.01)),c1p=fn(Math.max(0,t-.01));
+    var tx=c2[0]-c1p[0],ty=c2[1]-c1p[1],tz=c2[2]-c1p[2],tl=Math.hypot(tx,ty,tz)||1;tx/=tl;ty/=tl;tz/=tl;
+    var n1x=ty,n1y=-tx,n1z=0,nl=Math.hypot(n1x,n1y,n1z);
+    if(nl<1e-4){n1x=1;n1y=0;n1z=0;nl=1}
+    n1x/=nl;n1y/=nl;n1z/=nl;
+    var n2x=ty*n1z-tz*n1y,n2y=tz*n1x-tx*n1z,n2z=tx*n1y-ty*n1x;
+    var th=(uu*.5+.5)*Math.PI*2,r=r0+(r1-r0)*t,cs=Math.cos(th)*r,sn=Math.sin(th)*r,k=mixc(c0,c1,t);
+    return [c[0]+n1x*cs+n2x*sn,c[1]+n1y*cs+n2y*sn,c[2]+n1z*cs+n2z*sn,k[0],k[1],k[2],.72+.28*t,uu,t];
+  });
+}
+function addBall(b,cx,cy,cz,r,c,sy){
+  b.grid(7,5,function(v,uu){
+    var lat=v*Math.PI,th=(uu*.5+.5)*Math.PI*2,rr=r*Math.sin(lat);
+    return [cx+Math.cos(th)*rr,cy+r*(sy||1)*Math.cos(lat),cz+Math.sin(th)*rr,c[0],c[1],c[2],.95,uu,v];
+  });
+}
+function addStrip(b,fn,wd,steps,col,tilt){
+  b.grid(5,steps,function(t,uu){
+    var c=fn(t),c2=fn(Math.min(1,t+.012)),c1p=fn(Math.max(0,t-.012));
+    var tx=c2[0]-c1p[0],ty=c2[1]-c1p[1],tl=Math.hypot(tx,ty)||1;
+    var nx=ty/tl,ny=-tx/tl,ct=Math.cos(tilt),st=Math.sin(tilt);
+    var w=(typeof wd==='function'?wd(t):wd)*uu*.5,sh=.82+.18*(1-Math.abs(uu));
+    return [c[0]+nx*ct*w,c[1]+ny*ct*w,c[2]+st*w,col[0]*sh,col[1]*sh,col[2]*sh,.95,uu,t];
+  });
+}
+
+/* ---- tallos: cada rosa baja en espiral hasta el atado ---- */
+var STEM_BOT=-5.15;
+rigs.forEach(function(rg,i){
+  var R=mul(rotZ(rg.rz),rotX(rg.rx)),d0=mv(R,0,-1,0),o=mv(R,0,-.2*rg.sc,0);
+  var P0=[rg.x+o[0],rg.y+o[1],rg.z+o[2]],a=i*2.4;
+  var P3=[Math.cos(a)*.2,STEM_BOT,Math.sin(a)*.17];
+  var P1=[P0[0]+d0[0]*1.3,P0[1]+d0[1]*1.3,P0[2]+d0[2]*1.3],P2=[P3[0]*2,P3[1]+2.6,P3[2]*2];
+  var rad=.052+.014*rg.sc;
+  addTube(wb,function(t){return bez(P0,P1,P2,P3,t)},rad,rad*1.12,30,SG0,SG1);
+  /* corte limpio del tallo */
+  wb.grid(9,2,function(v,uu){var th=(uu*.5+.5)*Math.PI*2,r=rad*1.12*(1-v);return [P3[0]+Math.cos(th)*r,P3[1]-.004,P3[2]+Math.sin(th)*r,.82,.86,.6,1,uu,v]});
+  (rg.leaves||[]).forEach(function(l,q){
+    if(l[0]<.05)return;
+    var c=bez(P0,P1,P2,P3,l[0]*.9);
+    addLeaf(wb,l[1]*rg.sc,l[2]*rg.sc,.35,l[3],l[4],c[0],c[1],c[2],q*.31+i,1);
+  });
+});
+
+/* ---- papel de florería: tres hojas superpuestas, con pliegues, borde ondulado y forro amarillo ---- */
+var YT=-4.15,YR=-2.0,RT=.34,RR=1.95,ZS=.92;
+function paperR(e){return RT+(RR-RT)*Math.pow(clamp(e,0,1.5),1.12)}
+var PB=1.32;
+function paperSheet(th0,th1,top,rm,c0,c1,n,ph){
+  wb.grid(61,28,function(v,uu){
+    var th=th0+(uu*.5+.5)*(th1-th0),yt=top(th),y=YT+(yt-YT)*v,e=(y-YT)/(YR-YT);
+    var pl=Math.sin(th*n+ph+e*1.4)*.5+.5,cr=Math.sin(th*23+e*9+ph)*.5+.5,amp=sstep(.2,1,e);
+    var r=paperR(e)*rm*(1+.09*amp*(pl-.5)+.024*amp*(cr-.5));
+    r+=.3*Math.pow(sstep(.74,1,v),2)*(.55+.45*Math.sin(th*4+ph));
+    var k=mixc(c0,c1,sstep(.05,.95,v)),hem=sstep(.96,1,v);
+    k=mixc(k,[1,.97,.96],hem*.55);
+    k=[k[0]*PB,k[1]*PB,k[2]*PB];
+    var ao=(.84+.16*sstep(0,.5,v))*(.9+.1*pl);
+    return [Math.cos(th)*r,y,Math.sin(th)*r*ZS,k[0],k[1],k[2],ao,uu,v];
+  });
+}
+var PI=Math.PI;
+function wv(th,a,b2){return .09*Math.sin(th*a+b2)+.05*Math.sin(th*(a*2+1)+b2*2)}
+/* forro (por dentro, amarillo claro): la hoja de atrás, más alta */
+paperSheet(PI*1.02,2*PI-.02*PI,function(th){return -1.45+.8*Math.pow(Math.max(0,-Math.sin(th)),.8)+wv(th,6,.5)},1.0,hex3('#F0D49A'),hex3('#FAE9B4'),9,.4);
+/* hoja izquierda (rosa claro) */
+paperSheet(.5*PI,1.12*PI,function(th){return -2.3+1.05*Math.pow(sstep(.5*PI,1.05*PI,th),1.2)+wv(th,7,1.2)},1.03,hex3('#F6BCCD'),hex3('#FDE0E8'),8,1.7);
+/* hoja derecha (rosa un poco más intenso), encima de la otra */
+paperSheet(-.12*PI,.62*PI,function(th){return -2.36+1.1*(1-sstep(0,.62*PI,th))+wv(th,7,2.4)},1.07,hex3('#F0A2BB'),hex3('#F9CCD9'),8,3.1);
+
+/* ---- cinta alrededor del cuello del ramo y lazo de satén ---- */
+var RIB=hex3('#C2456E'),yT=-3.92;
+var eT=(yT-YT)/(YR-YT),zF=paperR(eT)*1.1*ZS+.07;
+wb.grid(45,7,function(v,uu){
+  var th=(uu*.5+.5)*PI*2,y=yT+.2-.4*v,e=(y-YT)/(YR-YT),r=paperR(e)*1.1+.04+.018*Math.sin(v*PI),sh=.72+.28*Math.sin(v*PI);
+  return [Math.cos(th)*r,y,Math.sin(th)*r*ZS,RIB[0]*sh,RIB[1]*sh,RIB[2]*sh,.9,uu,v];
+});
+function loopFn(sd,Lc,Wc,ang,z0){
+  return function(t){
+    var u=t*2*PI,x=sd*Lc*(1-Math.cos(u)),y=Wc*Math.sin(u)*(.55+.45*Math.sin(u/2)),a=sd*ang,ca=Math.cos(a),sa=Math.sin(a);
+    return [x*ca-y*sa,yT+x*sa+y*ca,z0+.12*Math.sin(u/2)];
+  };
+}
+addStrip(wb,loopFn(-1,.5,.34,-.22,zF),.32,40,RIB,.85);
+addStrip(wb,loopFn(1,.5,.34,-.22,zF),.32,40,RIB,.85);
+addStrip(wb,loopFn(-1,.38,.27,.6,zF-.01),.27,34,mixc(RIB,[0,0,0],.12),.85);
+addStrip(wb,loopFn(1,.38,.27,.6,zF-.01),.27,34,mixc(RIB,[0,0,0],.12),.85);
+[-1,1].forEach(function(sd){
+  addStrip(wb,function(t){return [sd*(.07+.2*t+.1*Math.sin(t*4.4)*t),yT-.1-1.05*t,zF+.04+.06*Math.sin(t*3.6)]},function(t){return .27-.05*t},24,mixc(RIB,[0,0,0],.08),.45);
+});
+addBall(wb,0,yT,zF+.05,.12,mixc(RIB,[0,0,0],.18),.9);
+
+/* ---- relleno: ramitas de florecitas (gypsophila) en blanco, crema, amarillo y rosa pálido ---- */
+var SPC=[[1,.97,.92],[1,.92,.66],[1,.86,.9],[.99,.99,.96]];
+function addSprig(b,B,E,seed){
+  var rnd=mulberry(seed),P1=[B[0]+(E[0]-B[0])*.2,B[1]+(E[1]-B[1])*.65,B[2]+(E[2]-B[2])*.2],P2=[B[0]+(E[0]-B[0])*.7,B[1]+(E[1]-B[1])*.9,B[2]+(E[2]-B[2])*.7];
+  var f=function(t){return bez(B,P1,P2,E,t)};
+  addTube(b,f,.022,.012,10,SG0,SG1);
+  [.5,.68,.84,1].forEach(function(t,q){
+    var c=f(t),e=c,L=.5+.25*rnd(),a=rnd()*6.28;
+    if(t<1){
+      e=[c[0]+Math.cos(a)*L*.8,c[1]+L*(.35+.4*rnd()),c[2]+Math.sin(a)*L*.8];
+      addTube(b,(function(c,e){return function(s){return [c[0]+(e[0]-c[0])*s,c[1]+(e[1]-c[1])*s+.1*Math.sin(s*3.1),c[2]+(e[2]-c[2])*s]}})(c,e),.014,.008,5,SG0,SG1);
+    }
+    var n=5+Math.floor(rnd()*3);
+    for(var k=0;k<n;k++)addBall(b,e[0]+(rnd()-.5)*.26,e[1]+(rnd()-.3)*.22,e[2]+(rnd()-.5)*.26,.055+.04*rnd(),SPC[(k+q)%SPC.length]);
+  });
+}
+var sr=mulberry(404);
+for(var sp=0;sp<10;sp++){
+  var sa=sp/10*PI*2+sr()*.4,rr2=1.35+sr()*.95,ey=-.3+sr()*1.9;
+  addSprig(wb,[Math.cos(sa)*.25,-2.7,Math.sin(sa)*.2],[Math.cos(sa)*rr2,ey,Math.sin(sa)*rr2*.85],sp*7+3);
+}
+
+/* ---- collar de hojas verdes asomando por el borde del papel ---- */
+var lr=mulberry(808);
+[.08,.3,.7,.92,1.2,1.4,1.6,1.8].forEach(function(f,q){
+  var th=f*PI,back=Math.max(0,-Math.sin(th)),ytp=-1.6+.75*back,front=Math.max(0,Math.sin(th));
+  addLeaf(wb,(front>.5?.8:1.0)+.15*lr(),.24+.05*lr(),.3,-(.6+.3*lr()),-th,Math.cos(th)*1.7,ytp-.1,Math.sin(th)*1.7*ZS,q*.7+1,1);
+});
+var wstem=wb.finish(0);
+var T=0,fixed=typeof opts.fixedT==='number';
+
+function setSize(){
+  var w=host.clientWidth||600,h=host.clientHeight||660,dpr=Math.min(window.devicePixelRatio||1,2);
+  cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);gl.viewport(0,0,cv.width,cv.height);
+  return w/h;
+}
+var aspect=setSize();
+function render(el){
+  var tt=fixed?opts.fixedT:easeIO(clamp((el-.35)/3.6,0,1));
+  var intro=fixed?1:easeOut(clamp((el-.2)/3.2,0,1));
+  var needH=8.6,needW=6.8,fov=30*Math.PI/180,D=Math.max(needH,needW/aspect)/(2*Math.tan(fov/2))*lerp(1.12,1,intro);
+  var VP=mul(persp(fov,aspect,.5,60),lookAt([0,.9,D],[0,-1.75,0],[0,1,0]));
+  gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
+  gl.uniformMatrix4fv(uVP,false,VP);gl.uniform3f(uCam,0,.9,D);
+  var sway=fixed?0:Math.sin(el*.9)*.025;
+  var Rb=mul(mul(rotZ(sway),rotX((ptr?ptr.y:0)*.12)),rotY(lerp(-.55,0,intro)+(ptr?ptr.x:0)*.3+(fixed?0:Math.sin(el*.5)*.06)));
+  /* el ramo se balancea desde el agarre, no desde las flores */
+  var B=mul(trans(0,-3.9,0),mul(Rb,trans(0,3.9,0)));
+  rigs.forEach(function(rg,i){
+    var rs=roses[i],Tr=clamp((tt-rg.delay)/(1-rg.delay),0,1);
+    if(!rs.last||Math.abs(rs.last-Tr)>1e-4){rs.pose(Tr);rs.last=Tr||1e-9}
+    var M=mul(B,mul(trans(rg.x,rg.y,rg.z),mul(rotZ(rg.rz),mul(rotX(rg.rx),rotY(i*1.3+Tr*.5)))));
+    var hs=rg.sc*lerp(.78,1,easeOut(Tr));
+    rs.head.model=mul(M,scl(hs));rs.core.model=rs.head.model;rs.stat.model=mul(M,scl(rg.sc));
+    draw(rs.stat);draw(rs.core);draw(rs.head);
+  });
+  wstem.model=B;draw(wstem);
+}
+var running=false,vis=true,t0=0,raf=0;
+function loop(now){
+  if(!t0)t0=now;render((now-t0)/1000);
+  raf=(vis&&!fixed)?requestAnimationFrame(loop):0;
+}
+function start(){if(!raf&&!fixed)raf=requestAnimationFrame(loop)}
+if(fixed)render(5);else{
+  render(0);start();
+  if('IntersectionObserver' in window){new IntersectionObserver(function(es){vis=es[0].isIntersecting;if(vis)start()}).observe(host)}
+}
+if('ResizeObserver' in window){new ResizeObserver(function(){aspect=setSize();if(fixed)render(5)}).observe(host)}
+return {canvas:cv,render:render,setT:function(v){opts.fixedT=v;fixed=true;render(5)}};
+}
+
+function parallax(){
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  var hero=$('inicio'),tx=0,ty=0,cx=0,cy=0,raf=0;
+  function step(){
+    cx+=(tx-cx)*.08;cy+=(ty-cy)*.08;ptr.x=cx;ptr.y=cy;
+    hero.style.setProperty('--mx',cx.toFixed(3));hero.style.setProperty('--my',cy.toFixed(3));
+    raf=(Math.abs(tx-cx)>.002||Math.abs(ty-cy)>.002)?requestAnimationFrame(step):0;
+  }
+  hero.addEventListener('pointermove',function(e){
+    var r=hero.getBoundingClientRect();
+    tx=((e.clientX-r.left)/r.width-.5)*2;ty=((e.clientY-r.top)/r.height-.5)*2;
+    if(!raf)raf=requestAnimationFrame(step);
+  });
+  hero.addEventListener('pointerleave',function(){tx=0;ty=0;if(!raf)raf=requestAnimationFrame(step)});
+}
+function weddingArt(){
+  var pals=[PAL.pastel,PAL.vanilla,PAL.dusty,PAL.ivory];
+  return svg('<g transform="translate(0 40) scale(1)">'+artArch(pals,51)+'</g>','0 0 300 375');
+}
+function footerDeco(){
+  var L=document.querySelector('.footer-deco.l'),R=document.querySelector('.footer-deco.r');if(!L||!R)return;
+  L.innerHTML=svg(leaf(60,66,-72,52,'#8CA38A')+leaf(60,66,38,48,'#789868')+leaf(60,66,158,46,'#8CA38A')+rose(60,60,46,PAL.pastel,7),'0 0 120 120');
+  R.innerHTML=svg(leaf(60,66,64,50,'#789868')+leaf(60,66,-34,48,'#8CA38A')+leaf(60,66,196,44,'#789868')+rose(60,60,44,PAL.vanilla,11),'0 0 120 120');
+}
+function contactRoses(){
+  var pals=[PAL.pastel,PAL.vanilla];
+  document.querySelectorAll('.contact-rose').forEach(function(el,i){
+    el.innerHTML=svg(leaf(60,68,-70,58,'#8CA38A')+leaf(60,68,40,54,'#789868')+leaf(60,68,160,52,'#8CA38A')+rose(60,60,56,pals[i%2],13+i*9),'0 0 120 120');
+  });
+}
+function logoMark(){
+  return svg('<circle cx="20" cy="20" r="19" style="fill:var(--band-a)"/>'+rose(20,20,13,PAL.pastel,3),'0 0 40 40');
+}
+
+/* ====== Catálogo, entrega ====== */
+var cat='todo',zone='gato-negro';
+function wireFooterActions(){
+  var fc=$('footerChat'); if(fc)fc.addEventListener('click',function(){openChat('Hola Aeterna, quiero hacer una consulta.')});
+  var fo=$('footerOrder'); if(fo)fo.addEventListener('click',function(){openChat('Hola Aeterna, me gustaría hacer un pedido.')});
+}
+window.__AeternaWireFooterActions=wireFooterActions;
+function renderChips(){
+  $('chips').replaceChildren.apply($('chips'),CATS.map(function(c){
+    return h('button',{class:'chip',type:'button','aria-pressed':String(cat===c[0]),onclick:function(){cat=c[0];renderChips();renderGrid()}},c[1]);
+  }));
+}
+function renderGrid(){
+  var g=$('grid');g.classList.toggle('catalog-nine',cat==='todo'&&PRODUCTS.length===9);g.classList.toggle('catalog-full',cat==='todo'&&PRODUCTS.length>=10);g.replaceChildren();
+  PRODUCTS.forEach(function(p,i){
+    if(cat!=='todo'&&p.cat!==cat)return;
+    var tile=h('div',{class:'tile','data-tone':p.tone});
+    if(p.image){tile.innerHTML='<img src="'+p.image+'" alt="'+p.name+'" loading="lazy">'}else{tile.innerHTML=artFor(p,i);}
+    g.append(h('article',{class:'card'},tile,
+      h('div',{class:'card-b'},
+        h('span',{class:'cat',text:CATLABEL[p.cat]||p.cat||'Otros'}),
+        h('h3',{text:p.name}),
+        h('span',{class:'size',text:p.size}),
+        h('p',{class:'desc',text:p.desc}),
+        h('div',{class:'buy'},
+          h('div',{class:'price'},p.from?h('small',{text:'Desde'}):null,money(p.price)),
+          h('button',{class:'btn sm',type:'button',onclick:function(){openChat('Hola Aeterna, quiero el '+p.name+' ('+money(p.price)+'). ¿Está disponible?')}},'Pedir este diseño')
+        )
+      )
+    ));
+  });
+}
+function renderZones(){
+  $('zoneList').replaceChildren.apply($('zoneList'),ZONES.map(function(z){
+    return h('div',{class:'zone'},h('strong',{text:z.name}),h('span',{class:'zp',text:z.price==null?'A convenir':(z.price===0?'Gratis':money(z.price))}),h('span',{class:'zn',text:z.note}));
+  }));
+}
+function renderCalc(){
+  $('zoneChips').replaceChildren.apply($('zoneChips'),ZONES.map(function(z){
+    return h('button',{class:'chip',type:'button','aria-pressed':String(zone===z.id),onclick:function(){zone=z.id;renderCalc()}},z.name);
+  }));
+  var p=PRODUCTS.filter(function(x){return x.id===$('calcProd').value})[0]||PRODUCTS[0];
+  var z=ZONES.filter(function(x){return x.id===zone})[0];
+  var dtxt=z.price==null?'A convenir':(z.price===0?'Gratis':(z.price===1?'Desde $1':money(z.price)));
+  var ttxt=z.price==null?money(p.price)+' + delivery':money(p.price+z.price);
+  $('calcOut').replaceChildren(
+    h('div',null,h('span',{text:p.name}),h('span',{text:money(p.price)})),
+    h('div',null,h('span',{text:z.name}),h('span',{text:dtxt})),
+    h('div',{class:'tot'},h('span',{text:'Total estimado'}),h('span',{text:ttxt}))
+  );
+  $('calcOrder').onclick=function(){
+    openChat('Hola Aeterna, quiero '+p.name+' ('+money(p.price)+') con '+(z.id==='retiro'?'retiro en taller':'delivery en '+z.name)+'. ¿Qué día pueden entregarlo y cuál es el costo exacto según la dirección?');
+  };
+}
+
+/* ====== Datos privados y chat: Supabase + RLS ====== */
+  var AETERNA_AUTH={url:'https://jnupbjuotrrwqmgrxgsm.supabase.co',anonKey:'sb_publishable_JMHjkEWvKmmQfNAq4UUaoA_W1waVpQF'}; // URL de Supabase + clave pública (anon/publishable). Nunca service_role.
+  var ptr={x:0,y:0};
+  var user=null,db=null,uid=null,isStaff=false,writeOk=true,canSend=false;
+  var myMsgs=[],sending=false,convs=[],openId=null,unsubThread=null,listTok=0,threadMsgs=[],reviews=[],revTok=0,mineLoaded=false;
+
+  /* ====== Autenticación Aeterna ====== */
+  var authMode='login';
+  var session=null;
+  var supabaseConfigured=!!(AETERNA_AUTH.url&&AETERNA_AUTH.anonKey);
+
+  function authOpen(mode){
+    authMode=mode||'login';
+    renderAuthMode();
+    $('authModal').hidden=false;
+    document.body.classList.add('modal-open');
+    setTimeout(function(){var f=$(authMode==='register'?'authName':'authEmail');if(f)f.focus()},40);
+  }
+  function authClose(){
+    $('authModal').hidden=true;
+    document.body.classList.remove('modal-open');
+    $('authMsg').textContent='';
+  }
+  window.__AeternaAuthOpen=authOpen;
+  window.__AeternaAuthClose=authClose;
+  function renderAuthMode(){
+    var reg=authMode==='register';
+    $('authEyebrow').textContent=reg?'Crear cuenta':'Cuenta Aeterna';
+    $('authTitle').textContent=reg?'Crear tu cuenta':'Iniciar sesión';
+    $('authNameWrap').hidden=!reg;
+    $('authConfirmWrap').hidden=!reg;
+    $('authRecovery').hidden=reg;
+    $('authStrength').hidden=!reg;
+    $('authName').required=reg;
+    $('authConfirm').required=reg;
+    $('authPassword').autocomplete=reg?'new-password':'current-password';
+    $('authSubmit').textContent=reg?'Crear cuenta':'Entrar';
+    $('authSwitchText').textContent=reg?'¿Ya tienes una cuenta?':'¿No tienes cuenta?';
+    $('authSwitch').textContent=reg?'Iniciar sesión':'Registrarme';
+    $('authHelper').textContent=reg?'Usa un correo válido, un nombre de usuario de 3 a 24 caracteres y una contraseña segura.':'Puedes recuperar tu contraseña desde este mismo acceso si la olvidas.';
+    $('authBrandText').textContent=reg?'Crea tu cuenta para pedir tus arreglos, conversar con Aeterna y compartir tu experiencia.':'Entra para hacer pedidos, conversar con Aeterna y dejar tus reseñas.';
+    clearAuthErrors();
+    $('authMsg').textContent='';
+  }
+  function clearAuthErrors(){
+    ['authEmailError','authNameError','authPasswordError','authConfirmError'].forEach(function(id){var e=$(id);if(e)e.textContent=''});
+  }
+  function validEmail(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)}
+  function validUsername(v){return /^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9._-]{3,24}$/.test(v)}
+  function passwordScore(v){var n=0;if(v.length>=8)n++;if(/[A-ZÁÉÍÓÚÑ]/.test(v))n++;if(/[a-záéíóúñ]/.test(v))n++;if(/\d/.test(v))n++;if(/[^A-Za-zÁÉÍÓÚáéíóúÑñ0-9]/.test(v))n++;return n}
+  function validateAuth(){
+    clearAuthErrors();
+    var email=$('authEmail').value.trim().toLowerCase(),name=$('authName').value.trim(),pass=$('authPassword').value,confirm=$('authConfirm').value,ok=true;
+    if(!validEmail(email)){$('authEmailError').textContent='Escribe un correo electrónico válido.';ok=false}
+    if(authMode==='register'&&!validUsername(name)){$('authNameError').textContent='Usa entre 3 y 24 caracteres, sin espacios.';ok=false}
+    if(pass.length<8){$('authPasswordError').textContent='La contraseña debe tener al menos 8 caracteres.';ok=false}
+    if(authMode==='register'&&pass!==confirm){$('authConfirmError').textContent='Las contraseñas no coinciden.';ok=false}
+    return ok;
+  }
+  function updatePasswordStrength(){
+    var bar=$('authStrengthBar');if(!bar)return;var score=passwordScore($('authPassword').value);bar.style.width=(score*20)+'%';
+  }
+  window.__AeternaUpdatePasswordStrength=updatePasswordStrength;
+ async function updateAccountUI(){
+    var box=$('accountActions');
+    if(!box)return;
+
+    box.replaceChildren();
+
+    if(!session){
+      box.append(
+        h('button',{
+          class:'btn ghost sm',
+          type:'button',
+          onclick:function(){authOpen('login')}
+        },'Iniciar sesión'),
+
+        h('button',{
+          class:'btn sm',
+          type:'button',
+          onclick:function(){authOpen('register')}
+        },'Registrarme')
+      );
+      return;
+    }
+
+    /* LOGIN RECIENTE:
+       no pintar NADA del usuario mientras se decide
+       si va al perfil o al panel admin.
+    */
+    try{
+      if(sessionStorage.getItem('aeternaLogin')==='1'){
+        return;
+      }
+    }catch(e){}
+
+var label=
+  (session.user.user_metadata&&session.user.user_metadata.display_name)
+  ||
+  session.user.email
+  ||
+  'Mi cuenta';
+
+if(uid&&window.supabaseClient){
+
+  var pr=await window.supabaseClient
+    .from('profiles')
+    .select('display_name,role')
+    .eq('id',uid)
+    .maybeSingle();
+
+  if(pr.data){
+
+    isStaff=pr.data.role==='admin';
+    label=pr.data.display_name||label;
+
+    /* ADMIN: si estamos en el proceso de login,
+       no mostrar el menú antes de abandonar index.html */
+    try{
+      if(
+        isStaff &&
+        sessionStorage.getItem('aeternaLogin')==='1'
+      ){
+        box.replaceChildren();
+        return;
+      }
+    }catch(e){}
+  }
+}
+    var chip=h(
+      'span',
+      {
+        class:'user-chip',
+        title:session.user.email
+      },
+      'Hola, '+label.slice(0,24)
+    );
+
+    box.append(chip);
+
+    if(isStaff){
+      box.append(
+        h(
+          'button',
+          {
+            class:'btn ghost sm',
+            type:'button',
+            onclick:function(){
+              location.href='admin.html';
+            }
+          },
+          'Panel admin'
+        )
+      );
+    }
+
+    box.append(
+      h(
+        'button',
+        {
+          class:'btn sm',
+          type:'button',
+          onclick:authSignOut
+        },
+        'Salir'
+      )
+    );
+}
+  async function authSignOut(){
+    if(window.supabaseClient)await window.supabaseClient.auth.signOut();
+    session=null;uid=null;user=null;isStaff=false;canSend=false;mineLoaded=false;
+    if(window.clientChannel){window.supabaseClient.removeChannel(window.clientChannel);window.clientChannel=null}
+    updateAccountUI();chatUnavailable();
+  }
+  async function handleAuthSubmit(e){
+    e.preventDefault();
+    var email=$('authEmail').value.trim().toLowerCase();
+    var password=$('authPassword').value;
+    var name=$('authName').value.trim().slice(0,40);
+    var confirm=$('authConfirm').value;
+    if(!validateAuth())return;
+    $('authSubmit').disabled=true;
+    $('authMsg').textContent='Procesando…';
+    try{
+      if(!supabaseConfigured||!window.supabaseClient)throw new Error('CONFIG');
+      if(authMode==='register'){
+        if(password!==confirm)throw new Error('MATCH');
+        if(password.length<8)throw new Error('SHORT');
+   if(authMode==='register'){
+
+  if(password!==confirm)throw new Error('MATCH');
+  if(password.length<8)throw new Error('SHORT');
+
+  /* Comprobar si correo o usuario ya existen */
+  var check=await window.supabaseClient.rpc(
+    'check_aeterna_registration',
+    {
+      p_email:email,
+      p_username:name
+    }
+  );
+
+  if(check.error){
+    throw check.error;
+  }
+
+  var exists=check.data||{};
+
+  /* CORREO YA EXISTE */
+  if(exists.email_exists){
+
+    if(window.Swal){
+      await Swal.fire({
+        icon:'warning',
+        title:'Correo ya registrado',
+        text:'Ya existe una cuenta con este correo. Por favor, utiliza otro correo o inicia sesión.',
+        confirmButtonText:'Entendido',
+        confirmButtonColor:'#9B465D',
+        background:'#FFFDF8',
+        color:'#4A3036',
+        allowOutsideClick:false
+      });
+    }else{
+      alert('Ya existe una cuenta con este correo. Por favor, utiliza otro correo o inicia sesión.');
+    }
+
+    return;
+  }
+
+  /* USUARIO YA EXISTE */
+  if(exists.username_exists){
+
+    if(window.Swal){
+      await Swal.fire({
+        icon:'warning',
+        title:'Usuario ya registrado',
+        text:'Este nombre de usuario ya está en uso. Por favor, elige otro.',
+        confirmButtonText:'Entendido',
+        confirmButtonColor:'#9B465D',
+        background:'#FFFDF8',
+        color:'#4A3036',
+        allowOutsideClick:false
+      });
+    }else{
+      alert('Este nombre de usuario ya está en uso. Por favor, elige otro.');
+    }
+
+    return;
+  }
+
+  /* CREAR LA CUENTA */
+  var sign=await window.supabaseClient.auth.signUp({
+    email:email,
+    password:password,
+    options:{
+      data:{
+        username:name,
+        display_name:name
+      }
+    }
+  });
+
+  if(sign.error){
+    throw sign.error;
+  }
+
+  /* CUENTA CREADA */
+  if(sign.data.session){
+
+    session=sign.data.session;
+    uid=session.user.id;
+    makeUser();
+
+    var pr=await window.supabaseClient
+      .from('profiles')
+      .select('role,display_name')
+      .eq('id',uid)
+      .maybeSingle();
+
+    isStaff=!!(pr.data&&pr.data.role==='admin');
+    canSend=true;
+
+    await updateAccountUI();
+    authClose();
+
+ if(isStaff){
+  canSend=false;
+  $('panelBtn').hidden=true;
+
+  try{sessionStorage.setItem('aeternaLogin','1');}catch(e){}
+  window.location.replace('admin.html');
+  return;
+}
+    await loadMine();
+    await renderReviews();
+
+  }else{
+
+    if(window.Swal){
+      await Swal.fire({
+        icon:'success',
+        title:'¡Cuenta creada!',
+        text:'Tu cuenta Aeterna está lista. Ahora puedes iniciar sesión.',
+        confirmButtonText:'Ir a iniciar sesión',
+        confirmButtonColor:'#9B465D',
+        background:'#FFFDF8',
+        color:'#4A3036',
+        allowOutsideClick:false
+      });
+    }else{
+      alert('¡Cuenta creada! Ahora puedes iniciar sesión.');
+    }
+
+    authMode='login';
+    renderAuthMode();
+
+    $('authEmail').value=email;
+    $('authPassword').value='';
+    $('authConfirm').value='';
+    $('authMsg').textContent='';
+  }
+
+
+  // Cerrar cualquier sesión temporal y volver al login
+  if(window.supabaseClient){
+    await window.supabaseClient.auth.signOut();
+  }
+
+  session=null;
+  uid=null;
+  user=null;
+  isStaff=false;
+  canSend=false;
+
+  authMode='login';
+  renderAuthMode();
+
+  $('authEmail').value=email;
+  $('authPassword').value='';
+  $('authConfirm').value='';
+
+  $('authModal').hidden=false;
+  document.body.classList.add('modal-open');
+
+  $('authMsg').textContent='';
+}
+
+}else{
+  var signIn=await window.supabaseClient.auth.signInWithPassword({
+    email:email,
+    password:password
+  });
+
+  if(signIn.error)throw signIn.error;
+
+  session=signIn.data.session;
+  uid=session.user.id;
+  makeUser();
+
+  var pr2=await window.supabaseClient
+    .from('profiles')
+    .select('role,display_name')
+    .eq('id',uid)
+    .maybeSingle();
+
+  isStaff=!!(pr2.data&&pr2.data.role==='admin');
+
+  if(isStaff){
+    canSend=false;
+    try{sessionStorage.setItem('aeternaLogin','1');}catch(e){}
+    document.documentElement.classList.add('aeterna-redirecting');
+    document.body.style.visibility='hidden';
+    authClose();
+    window.location.replace('admin.html');
+    return;
+  }
+
+  await updateAccountUI();
+  authClose();
+  $('panelBtn').hidden=true;
+
+  canSend=true;
+  await loadMine();
+  await renderReviews();
+}
+    }catch(err){
+  console.error('AETERNA AUTH ERROR:', err);
+      var m='No se pudo completar la operación.';
+      if(err&&err.message==='CONFIG')m='Primero configura el Project URL y la clave pública de Supabase en AETERNA_AUTH.';
+      else if(err&&err.message==='MATCH')m='Las contraseñas no coinciden.';
+      else if(err&&err.message==='SHORT')m='La contraseña debe tener al menos 8 caracteres.';
+      else if(err&&/Invalid login credentials/i.test(err.message||''))m='Correo o contraseña incorrectos.';
+      else if(err&&/User already registered/i.test(err.message||''))m='Ese correo ya tiene una cuenta. Inicia sesión.';
+      else if(err&&/Email not confirmed/i.test(err.message||''))m='Confirma tu correo electrónico antes de iniciar sesión.';
+      $('authMsg').textContent=m;
+    }finally{$('authSubmit').disabled=false}
+  }
+
+function openPasswordRecovery(){
+
+  var modal=$('passwordRecoveryModal');
+
+  if(!modal)return;
+
+  $('authModal').hidden=true;
+  modal.hidden=false;
+
+  document.body.classList.add('modal-open');
+
+  recoveryEmailValue='';
+  recoveryVerified=false;
+
+  showRecoveryStep('email');
+
+  $('recoveryEmail').value='';
+  $('recoveryCode').value='';
+  $('recoveryPassword').value='';
+  $('recoveryConfirm').value='';
+
+  clearRecoveryErrors();
+  $('recoveryMsg').textContent='';
+
+  setTimeout(function(){
+    $('recoveryEmail').focus();
+  },80);
+}
+
+window.__AeternaOpenPasswordRecovery = openPasswordRecovery;
+window.__AeternaClosePasswordRecovery = closePasswordRecovery;
+
+function showRecoveryStep(step){
+
+  $('recoveryStepEmail').hidden=step!=='email';
+  $('recoveryStepCode').hidden=step!=='code';
+  $('recoveryStepPassword').hidden=step!=='password';
+
+  if(step==='email'){
+    $('recoveryTitle').textContent='Recuperar contraseña';
+    $('recoveryBrandTitle').textContent='Recupera tu cuenta.';
+    $('recoveryBrandText').textContent='Primero comprobaremos el correo asociado a tu cuenta.';
+  }
+
+  if(step==='code'){
+    $('recoveryTitle').textContent='Verificar tu identidad';
+    $('recoveryBrandTitle').textContent='Una comprobación más.';
+    $('recoveryBrandText').textContent='Introduce el código que enviamos al correo de tu cuenta.';
+  }
+
+  if(step==='password'){
+    $('recoveryTitle').textContent='Crear nueva contraseña';
+    $('recoveryBrandTitle').textContent='Cuenta protegida.';
+    $('recoveryBrandText').textContent='Tu identidad fue verificada. Ahora puedes cambiar tu contraseña.';
+  }
+}
+
+function clearRecoveryErrors(){
+
+  $('recoveryEmailError').textContent='';
+  $('recoveryCodeError').textContent='';
+  $('recoveryPasswordError').textContent='';
+  $('recoveryConfirmError').textContent='';
+
+}
+
+
+/* Abrir interfaz de recuperación */
+
+function openPasswordRecovery(){
+
+  var modal=$('passwordRecoveryModal');
+
+  if(!modal)return;
+
+  $('authModal').hidden=true;
+
+  modal.hidden=false;
+
+  document.body.classList.add('modal-open');
+
+  recoveryEmailValue='';
+  recoveryVerified=false;
+
+  showRecoveryStep('email');
+
+  $('recoveryEmail').value='';
+  $('recoveryCode').value='';
+  $('recoveryPassword').value='';
+  $('recoveryConfirm').value='';
+
+  clearRecoveryErrors();
+
+  setTimeout(function(){
+
+    $('recoveryEmail').focus();
+
+  },80);
+}
+
+
+/* Cerrar recuperación */
+
+function closePasswordRecovery(){
+
+  var modal=$('passwordRecoveryModal');
+
+  if(!modal)return;
+
+  modal.hidden=true;
+
+  document.body.classList.remove('modal-open');
+
+  clearRecoveryErrors();
+
+  $('recoveryMsg').textContent='';
+
+}
+
+
+/* Cambiar paso */
+
+function showRecoveryStep(step){
+
+  $('recoveryStepEmail').hidden=step!=='email';
+
+  $('recoveryStepCode').hidden=step!=='code';
+
+  $('recoveryStepPassword').hidden=step!=='password';
+
+
+  if(step==='email'){
+
+    $('recoveryTitle').textContent=
+      'Recuperar contraseña';
+
+    $('recoveryBrandTitle').textContent=
+      'Recupera tu cuenta.';
+
+    $('recoveryBrandText').textContent=
+      'Primero comprobaremos el correo asociado a tu cuenta.';
+
+  }
+
+
+  if(step==='code'){
+
+    $('recoveryTitle').textContent=
+      'Verificar tu identidad';
+
+    $('recoveryBrandTitle').textContent=
+      'Una comprobación más.';
+
+    $('recoveryBrandText').textContent=
+      'Introduce el código que enviamos al correo de tu cuenta.';
+
+  }
+
+
+  if(step==='password'){
+
+    $('recoveryTitle').textContent=
+      'Crear nueva contraseña';
+
+    $('recoveryBrandTitle').textContent=
+      'Cuenta protegida.';
+
+    $('recoveryBrandText').textContent=
+      'Tu identidad fue verificada. Ahora puedes cambiar tu contraseña.';
+
+  }
+
+}
+
+
+/* Limpiar errores */
+
+function clearRecoveryErrors(){
+
+  $('recoveryEmailError').textContent='';
+
+  $('recoveryCodeError').textContent='';
+
+  $('recoveryPasswordError').textContent='';
+
+  $('recoveryConfirmError').textContent='';
+
+}
+
+
+/* =========================================================
+   PASO 1
+   ENVIAR CÓDIGO
+   ========================================================= */
+
+async function sendRecoveryCode(){
+
+  clearRecoveryErrors();
+
+  $('recoveryMsg').textContent='';
+
+
+  var email=$('recoveryEmail')
+    .value
+    .trim()
+    .toLowerCase();
+
+
+  if(!validEmail(email)){
+
+    $('recoveryEmailError').textContent=
+      'Escribe un correo electrónico válido.';
+
+    $('recoveryEmail').focus();
+
+    return;
+
+  }
+
+
+  if(!supabaseConfigured || !window.supabaseClient){
+
+    $('recoveryMsg').textContent=
+      'La autenticación de Aeterna todavía no está configurada.';
+
+    return;
+
+  }
+
+
+  var btn=$('recoverySend');
+
+  btn.disabled=true;
+
+  btn.textContent='Enviando…';
+
+
+  try{
+
+    /*
+      Supabase enviará el código al correo.
+
+      shouldCreateUser:false evita que este proceso
+      cree una cuenta nueva durante la recuperación.
+    */
+
+    var r=await window.supabaseClient.auth.signInWithOtp({
+
+      email:email,
+
+      options:{
+        shouldCreateUser:false
+      }
+
+    });
+
+
+    if(r.error){
+
+      throw r.error;
+
+    }
+
+
+    recoveryEmailValue=email;
+
+
+    $('recoveryCodeInfo').textContent=
+      'Hemos enviado un código de verificación a '+
+      email+
+      '. Introduce los 6 dígitos para continuar.';
+
+
+    showRecoveryStep('code');
+
+    $('recoveryCode').value='';
+
+
+    setTimeout(function(){
+
+      $('recoveryCode').focus();
+
+    },80);
+
+
+  }catch(err){
+
+    console.error(
+      'Aeterna recovery send:',
+      err
+    );
+
+
+    var message=
+      'No pudimos enviar el código. Comprueba el correo e inténtalo nuevamente.';
+
+
+    if(err&&/rate limit/i.test(err.message||'')){
+
+      message=
+        'Has solicitado varios códigos recientemente. Espera un momento antes de intentarlo otra vez.';
+
+    }
+
+
+    if(err&&/Signups not allowed/i.test(err.message||'')){
+
+      message=
+        'No se pudo iniciar la recuperación con este correo.';
+
+    }
+
+
+    $('recoveryMsg').textContent=message;
+
+
+  }finally{
+
+    btn.disabled=false;
+
+    btn.textContent='Enviar código';
+
+  }
+
+}
+
+
+/* =========================================================
+   PASO 2
+   VERIFICAR CÓDIGO
+   ========================================================= */
+
+async function verifyRecoveryCode(){
+
+  clearRecoveryErrors();
+
+  $('recoveryMsg').textContent='';
+
+
+  var code=$('recoveryCode')
+    .value
+    .trim()
+    .replace(/\D/g,'');
+
+
+  if(!/^\d{6}$/.test(code)){
+
+    $('recoveryCodeError').textContent=
+      'Introduce el código de 6 dígitos que recibiste.';
+
+    $('recoveryCode').focus();
+
+    return;
+
+  }
+
+
+  if(!recoveryEmailValue){
+
+    showRecoveryStep('email');
+
+    $('recoveryEmailError').textContent=
+      'Introduce nuevamente tu correo.';
+
+    return;
+
+  }
+
+
+  var btn=$('recoveryVerify');
+
+  btn.disabled=true;
+
+  btn.textContent='Verificando…';
+
+
+  try{
+
+    var r=await window.supabaseClient.auth.verifyOtp({
+
+      email:recoveryEmailValue,
+
+      token:code,
+
+      type:'email'
+
+    });
+
+
+    if(r.error){
+
+      throw r.error;
+
+    }
+
+
+    /*
+      El usuario ya demostró que tiene acceso al correo.
+      Supabase entrega una sesión autenticada.
+    */
+
+    session=r.data.session;
+
+    uid=session&&session.user
+      ?session.user.id
+      :null;
+
+
+    recoveryVerified=true;
+
+
+    showRecoveryStep('password');
+
+
+    $('recoveryPassword').value='';
+
+    $('recoveryConfirm').value='';
+
+
+    setTimeout(function(){
+
+      $('recoveryPassword').focus();
+
+    },80);
+
+
+  }catch(err){
+
+    console.error(
+      'Aeterna recovery verify:',
+      err
+    );
+
+
+    var message=
+      'El código no es válido o ya expiró.';
+
+
+    if(err&&/expired/i.test(err.message||'')){
+
+      message=
+        'El código ha expirado. Solicita uno nuevo.';
+
+    }
+
+
+    $('recoveryCodeError').textContent=
+      message;
+
+
+  }finally{
+
+    btn.disabled=false;
+
+    btn.textContent='Verificar código';
+
+  }
+
+}
+
+
+/* =========================================================
+   REENVIAR CÓDIGO
+   ========================================================= */
+
+async function resendRecoveryCode(){
+
+  if(!recoveryEmailValue)return;
+
+  $('recoveryEmail').value=
+    recoveryEmailValue;
+
+  await sendRecoveryCode();
+
+}
+
+
+/* =========================================================
+   PASO 3
+   CAMBIAR CONTRASEÑA
+   ========================================================= */
+
+async function saveRecoveredPassword(){
+
+  clearRecoveryErrors();
+
+  $('recoveryMsg').textContent='';
+
+
+  if(!recoveryVerified){
+
+    showRecoveryStep('email');
+
+    return;
+
+  }
+
+
+  var password=
+    $('recoveryPassword').value;
+
+
+  var confirm=
+    $('recoveryConfirm').value;
+
+
+  if(password.length<8){
+
+    $('recoveryPasswordError').textContent=
+      'La contraseña debe tener al menos 8 caracteres.';
+
+    $('recoveryPassword').focus();
+
+    return;
+
+  }
+
+
+  if(password!==confirm){
+
+    $('recoveryConfirmError').textContent=
+      'Las contraseñas no coinciden.';
+
+    $('recoveryConfirm').focus();
+
+    return;
+
+  }
+
+
+  var btn=$('recoverySave');
+
+  btn.disabled=true;
+
+  btn.textContent='Guardando…';
+
+
+  try{
+
+    /*
+      MUY IMPORTANTE:
+      esta llamada solo ocurre después de verificar
+      correctamente el código.
+    */
+
+    var r=await window.supabaseClient.auth.updateUser({
+
+      password:password
+
+    });
+
+
+    if(r.error){
+
+      throw r.error;
+
+    }
+
+
+    /*
+      Cerramos la sesión de recuperación para que
+      el usuario vuelva a iniciar sesión normalmente.
+    */
+
+    await window.supabaseClient.auth.signOut();
+
+
+    recoveryVerified=false;
+
+
+    if(window.Swal){
+
+      await Swal.fire({
+
+        icon:'success',
+
+        title:'Contraseña actualizada',
+
+        text:
+          'Tu contraseña Aeterna se cambió correctamente. Ahora puedes iniciar sesión.',
+
+        confirmButtonText:
+          'Ir a iniciar sesión',
+
+        confirmButtonColor:
+          '#9B465D',
+
+        background:
+          '#FFFDF8',
+
+        color:
+          '#4A3036',
+
+        allowOutsideClick:false
+
+      });
+
+    }
+
+
+    closePasswordRecovery();
+
+
+    authOpen('login');
+
+
+    $('authEmail').value=
+      recoveryEmailValue;
+
+
+    $('authPassword').value='';
+
+
+  }catch(err){
+
+    console.error(
+      'Aeterna recovery password:',
+      err
+    );
+
+
+    $('recoveryMsg').textContent=
+      'No pudimos actualizar la contraseña. Inténtalo nuevamente.';
+
+
+  }finally{
+
+    btn.disabled=false;
+
+    btn.textContent=
+      'Guardar nueva contraseña';
+
+  }
+
+}
+
+  async function currentSession(){
+    if(!window.supabaseClient)return null;
+    var r=await window.supabaseClient.auth.getSession();
+    return r.data.session||null;
+  }
+  function makeUser(){
+    user={profiles:async function(ids){
+      if(!Array.isArray(ids))ids=[ids];
+      if(!ids.length)return {};
+      var r=await window.supabaseClient.from('profiles').select('id,display_name,role').in('id',ids);
+      var out={};(r.data||[]).forEach(function(x){out[x.id]={name:x.display_name,role:x.role}});return out;
+    }};
+  }
+  function setNote(t){var n=$('chatNote');n.hidden=!t;n.textContent=t||''}
+  function msgEl(m,mine){return h('div',{class:'msg '+(m.from===mine?'me':'them')},m.text,h('small',{text:fmt(m.at)}))}
+  function renderClient(){
+    var log=$('chatLog');log.replaceChildren(h('div',{class:'msg them'},'¡Hola! Cuéntanos qué ocasión celebras y te ayudamos a elegir.'));
+    myMsgs.forEach(function(m){log.append(msgEl(m,'client'))});
+    $('chatAlias').hidden=myMsgs.length>0;log.scrollTop=log.scrollHeight;
+  }
+  function openChat(prefill){
+    $('chatBox').hidden=false;$('chatFab').setAttribute('aria-expanded','true');$('chatDot').hidden=true;
+    if(prefill&&!$('chatText').value)$('chatText').value=prefill;$('chatText').focus();$('chatLog').scrollTop=$('chatLog').scrollHeight;
+  }
+  function closeChat(){$('chatBox').hidden=true;$('chatFab').setAttribute('aria-expanded','false')}
+  /* ===== SONIDOS DEL CHAT ===== */
+  var aeChatAudioCtx=null;
+  var aeTypingSoundTimer=null;
+  var aeTypingSoundActive=false;
+  var aeTypingSoundWasActive=false;
+
+  function aeChatAudio(){
+    try{
+      if(!aeChatAudioCtx){
+        var C=window.AudioContext||window.webkitAudioContext;
+        if(!C)return null;
+        aeChatAudioCtx=new C();
+      }
+      if(aeChatAudioCtx.state==='suspended')aeChatAudioCtx.resume().catch(function(){});
+      return aeChatAudioCtx;
+    }catch(e){return null}
+  }
+
+  function aePlayChatBubble(){
+    var ctx=aeChatAudio();
+    if(!ctx)return;
+    try{
+      var now=ctx.currentTime;
+      var o=ctx.createOscillator();
+      var g=ctx.createGain();
+      o.type='sine';
+      o.frequency.setValueAtTime(880,now);
+      o.frequency.exponentialRampToValueAtTime(620,now+0.10);
+      g.gain.setValueAtTime(0.0001,now);
+      g.gain.exponentialRampToValueAtTime(0.075,now+0.012);
+      g.gain.exponentialRampToValueAtTime(0.0001,now+0.16);
+      o.connect(g);g.connect(ctx.destination);o.start(now);o.stop(now+0.17);
+    }catch(e){}
+  }
+
+  function aePlayTypingTick(){
+    var ctx=aeChatAudio();
+    if(!ctx)return;
+    try{
+      var now=ctx.currentTime;
+      var o=ctx.createOscillator();
+      var g=ctx.createGain();
+      o.type='sine';
+      o.frequency.setValueAtTime(540,now);
+      o.frequency.exponentialRampToValueAtTime(390,now+.055);
+      g.gain.setValueAtTime(.0001,now);
+      g.gain.exponentialRampToValueAtTime(.035,now+.008);
+      g.gain.exponentialRampToValueAtTime(.0001,now+.075);
+      o.connect(g);g.connect(ctx.destination);o.start(now);o.stop(now+.08);
+    }catch(e){}
+  }
+
+  function aeStartTypingSound(){
+    if(aeTypingSoundActive)return;
+    aeTypingSoundActive=true;
+    aeTypingSoundWasActive=true;
+    aePlayTypingTick();
+    aeTypingSoundTimer=setInterval(function(){
+      if(!aeTypingSoundActive){clearInterval(aeTypingSoundTimer);aeTypingSoundTimer=null;return;}
+      aePlayTypingTick();
+    },650);
+  }
+
+  function aeStopTypingSound(playFinishedBubble){
+    var was=aeTypingSoundActive||aeTypingSoundWasActive;
+    aeTypingSoundActive=false;
+    aeTypingSoundWasActive=false;
+    if(aeTypingSoundTimer){clearInterval(aeTypingSoundTimer);aeTypingSoundTimer=null;}
+    if(playFinishedBubble&&was)aePlayChatBubble();
+  }
+
+  async function getConversation(){
+    if(!uid)return null;
+    var r=await window.supabaseClient.from('conversations').select('*').eq('customer_id',uid).order('created_at',{ascending:true}).limit(1).maybeSingle();
+    if(r.error)throw r.error;
+    if(r.data)return r.data;
+    var ins=await window.supabaseClient.from('conversations').insert({customer_id:uid,alias:($('chatAlias').value||'').trim().slice(0,40)}).select().single();
+    if(ins.error)throw ins.error;return ins.data;
+  }
+  async function aeIndexCensorText(text){
+  var bad=[
+    'hijo de puta','hija de puta','hijueputa','hijueputas',
+    'malparido','malparida','malparidos','malparidas',
+    'mamaguevo','mamagueva','mamaguevos','mamaguevas',
+    'mamagüevo','mamagüevos','marico','marica','maricón','maricon',
+    'mariquera','pajuo','pajua','pajudo','pajuda',
+    'pendejo','pendeja','pendejos','pendejas',
+    'coño','coñazo','cono','mierda','mierdero',
+    'puta','puto','putas','putos','verga','vergas',
+    'carajo','cabron','cabrón','cabrona','culiao','culeado',
+    'jodido','jodida','imbecil','imbécil','estupido','estúpido',
+    'estupida','estúpida','idiota','maldito','maldita','hdp','hp'
+  ];
+  var out=String(text||'');
+  function fold(v){return String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
+  bad.sort(function(a,b){return b.length-a.length;}).forEach(function(w){
+    var chars=fold(w).split('').map(function(ch){
+      if(ch===' ')return '\\s+';
+      var esc=ch.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+      return esc+'+';
+    }).join('');
+    var re=new RegExp('(^|[^a-z0-9])'+chars+'(?=$|[^a-z0-9])','gi');
+    out=out.replace(re,function(_,pre){return pre+'***';});
+  });
+  return out;
+}
+async function sendClient(text){
+    text=aeIndexCensorText(text).trim();
+    if(!text)return;
+    var c=await getConversation();
+    var ins=await window.supabaseClient.from('messages').insert({conversation_id:c.id,sender_id:uid,sender_role:'customer',body:text.slice(0,1000)});
+    if(ins.error)throw ins.error;
+    var up=await window.supabaseClient.from('conversations').update({alias:($('chatAlias').value||c.alias||'').trim().slice(0,40),last_text:text.slice(0,140),last_at:new Date().toISOString(),last_sender_role:'customer',unread:true}).eq('id',c.id);if(up.error)throw up.error;
+  }
+  async function loadMine(){
+    var c=await getConversation();
+    var r=await window.supabaseClient.from('messages').select('*').eq('conversation_id',c.id).order('created_at',{ascending:true}).limit(300);if(r.error)throw r.error;
+    myMsgs=(r.data||[]).map(function(m){return {from:m.sender_role==='customer'?'client':'staff',text:aeIndexCensorText(m.body),at:m.created_at}});renderClient();
+    if(window.supabaseClient){
+      if(window.clientChannel)window.supabaseClient.removeChannel(window.clientChannel);
+      window.clientChannel=window.supabaseClient.channel('client-msg-'+c.id,{config:{broadcast:{self:false}}})
+        .on('broadcast',{event:'typing'},function(p){
+          var d=p&&p.payload?p.payload:{};
+          if(d.user_id===uid||d.role!=='staff'&&d.role!=='admin')return;
+          var open=!$('chatBox').hidden;
+          if(d.typing&&open){aeStartTypingSound()}else{aeStopTypingSound(!!open)}
+        })
+        .on('postgres_changes',{event:'INSERT',schema:'public',table:'messages',filter:'conversation_id=eq.'+c.id},function(p){
+          var m=p&&p.new?p.new:{};
+          if(m.sender_role==='staff'&&m.sender_id!==uid&&$('chatBox').hidden)aePlayChatBubble();
+          loadMine().catch(function(){});
+        }).subscribe();
+    }
+  }
+  function setupChatForm(){
+    $('chatForm').addEventListener('submit',async function(e){e.preventDefault();var t=$('chatText').value.trim();if(!canSend||sending||!t)return;sending=true;$('chatSend').disabled=true;setNote('');try{await sendClient(t);$('chatText').value=''}catch(err){setNote('No pudimos enviar tu mensaje. Intenta de nuevo en un momento.')}sending=false;$('chatSend').disabled=!canSend});
+    $('chatText').addEventListener('focus',function(){aeChatAudio()});$('chatText').addEventListener('keydown',function(e){aeChatAudio();if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();$('chatForm').requestSubmit()}});$('chatClose').addEventListener('click',function(){aeStopTypingSound(false);closeChat()});$('chatFab').addEventListener('click',function(){aeChatAudio();$('chatBox').hidden?openChat():closeChat()});
+  }
+  function chatUnavailable(){canSend=false;$('chatSend').disabled=true;$('chatText').disabled=true;setNote('Inicia sesión para escribirnos y conservar tu conversación de forma privada.')}
+
+  /* ====== Panel legado dentro de index: redirige al panel privado ====== */
+  function initial(n){return (n||'C').trim().charAt(0).toUpperCase()}
+  function nameOf(c){return c.alias||'Clienta'}
+  function updateBadge(){var n=convs.filter(function(c){return c.unread&&c.id!==openId}).length;[$('navBadge'),$('unreadPill')].forEach(function(b){b.hidden=!n;b.textContent=n})}
+  function renderList(){
+    var list=$('convList');
+    if(!list)return;
+    list.replaceChildren();
+    if(!convs.length){
+      list.append(h('div',{class:'blank'},h('h3',{text:'Aún no hay conversaciones'}),h('p',{text:'Cuando una clienta escriba desde la tienda, su mensaje aparecerá aquí.'})));
+      return;
+    }
+    convs.forEach(function(c){
+      list.append(
+        h('button',{class:'conv'+(c.id===openId?' on':''),type:'button',onclick:function(){openThread(c.id)}},
+          h('span',{class:'av',text:initial(nameOf(c))}),
+          h('span',{class:'conv-main'},
+            h('strong',{text:nameOf(c)}),
+            h('span',{class:'snip',text:(c.last_sender_role==='admin'?'Tú: ':'')+(c.last_text||'')})
+          ),
+          h('span',{class:'conv-side'},
+            h('span',{text:c.last_at?fmt(c.last_at):''}),
+            (c.unread&&c.id!==openId)?h('i',{class:'dot','aria-label':'Sin leer'}):null
+          )
+        )
+      );
+    });
+  }
+  async function loadConvs(){if(!isStaff)return;var r=await window.supabaseClient.from('conversations').select('*').order('last_at',{ascending:false}).limit(100);if(!r.error){convs=r.data||[];renderList();updateBadge()}}
+  async function openThread(id){location.href='admin.html#'+encodeURIComponent(id)}
+  function showPanel(){if(isStaff)location.href='admin.html'}
+  function showSite(){$('site').hidden=false;$('panel').hidden=true;$('chatFab').hidden=false}
+  function watchConvs(){loadConvs();if(window.adminChannel)window.supabaseClient.removeChannel(window.adminChannel);window.adminChannel=window.supabaseClient.channel('admin-conversations').on('postgres_changes',{event:'*',schema:'public',table:'conversations'},function(){loadConvs()}).subscribe()}
+
+  /* ====== Reseñas ====== */
+  function starsTxt(n){return '★★★★★'.slice(0,n)+'☆☆☆☆☆'.slice(0,5-n)}
+  async function renderReviews(){
+    if(!window.supabaseClient){return}
+    var r=await window.supabaseClient.from('reviews').select('id,rating,alias,body,created_at,updated_at').order('created_at',{ascending:false}).limit(60);if(r.error)return;reviews=r.data||[];
+    var list=$('rlist'),avg=$('avg');list.replaceChildren();if(!reviews.length){avg.hidden=true;list.append(h('div',{class:'empty'},'Aún no hay reseñas. Cuando una clienta cuente su experiencia, aparecerá aquí.'));return}
+    var sum=reviews.reduce(function(a,x){return a+(x.rating||0)},0)/reviews.length;avg.hidden=false;avg.replaceChildren(h('b',{text:sum.toFixed(1)}),h('span',{class:'stars','aria-hidden':'true'},starsTxt(Math.round(sum))),h('span',{class:'note',text:reviews.length+(reviews.length===1?' reseña':' reseñas')}));
+    reviews.forEach(function(x){var rm=isStaff?h('button',{class:'rm',type:'button',onclick:async function(){if(confirm('¿Quitar esta reseña?')){await window.supabaseClient.from('reviews').delete().eq('id',x.id);renderReviews()}}},'Quitar'):null;list.append(h('article',{class:'rev'},h('header',null,h('strong',{text:x.alias||'Clienta'}),h('span',{class:'stars','aria-label':(x.rating||0)+' de 5'},starsTxt(x.rating||0))),x.body?h('p',{text:x.body}):null,h('small',{text:x.created_at?fmt(x.created_at):''}),rm))});
+    if(uid){var mine=reviews.filter(function(x){return x.id===uid})[0];if(mine&&!mineLoaded){mineLoaded=true;var rb=document.getElementById('r'+mine.rating);if(rb)rb.checked=true;$('rText').value=mine.body||'';$('rAlias').value=mine.alias||'';$('rSend').textContent='Actualizar mi reseña'}}
+  }
+  function setupReviewForm(){$('rform').addEventListener('submit',async function(e){e.preventDefault();var sel=document.querySelector('#rform input[name=rating]:checked');if(!canSend){authOpen('login');return}if(!sel){$('rNote').textContent='Elige de 1 a 5 estrellas para publicar tu reseña.';return}$('rSend').disabled=true;try{var r=await window.supabaseClient.from('reviews').upsert({id:uid,rating:Number(sel.value),body:$('rText').value.trim().slice(0,600),alias:$('rAlias').value.trim().slice(0,40),updated_at:new Date().toISOString()});if(r.error)throw r.error;$('rNote').textContent='Gracias por tu reseña.';$('rSend').textContent='Actualizar mi reseña';await renderReviews()}catch(err){$('rNote').textContent='No pudimos publicar tu reseña. Intenta de nuevo.'}$('rSend').disabled=false})}
+  function reviewsUnavailable(){$('rNote').textContent='Inicia sesión para dejar una reseña.'}
+
+/* ====== Arranque ====== */
+function go(id){
+  if(!$('panel').hidden)showSite();
+  var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function renderStatic(){
+  // El logo real se carga desde logo-aeterna.png; si no existe se muestra el respaldo.
+  var stg=$('stage'),glh=h('div',{class:'glhost'}),glOk=false;
+  stg.append(glh);
+  try{createBouquet(glh,ptr,window.matchMedia('(prefers-reduced-motion: reduce)').matches?{fixedT:1}:{});glOk=true}catch(e){glOk=false}
+  if(!glOk){glh.remove();stg.innerHTML=heroBouquet()}
+  buildMarquee();falling();parallax();footerDeco();contactRoses();
+  renderChips();renderGrid();renderZones();
+  var sel=$('calcProd');
+  PRODUCTS.forEach(function(p){sel.append(h('option',{value:p.id},p.name+' · '+money(p.price)))});
+  sel.addEventListener('change',renderCalc);
+  renderCalc();
+  document.querySelectorAll('[data-go]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();go(a.getAttribute('data-go'))})});
+  document.querySelectorAll('[data-chat]').forEach(function(b){b.addEventListener('click',function(){openChat(b.getAttribute('data-chat'))})});
+  $('navChat').addEventListener('click',function(){openChat()});
+  $('panelBtn').addEventListener('click',showPanel);
+  $('backSite').addEventListener('click',showSite);
+  setupChatForm();setupReviewForm();renderClient();
+  $('loginBtn').addEventListener('click',function(){authOpen('login')}); $('registerBtn').addEventListener('click',function(){authOpen('register')}); $('authClose').addEventListener('click',authClose); $('authSwitch').addEventListener('click',function(){authMode=authMode==='login'?'register':'login';renderAuthMode()}); $('authForm').addEventListener('submit',handleAuthSubmit); $('authModal').addEventListener('click',function(e){if(e.target===$('authModal'))authClose()});
+  function bindPasswordToggle(id,buttonId){var input=$(id),btn=$(buttonId);if(!input||!btn)return;btn.addEventListener('click',function(){var show=input.type==='password';input.type=show?'text':'password';btn.textContent=show?'Ocultar':'Ver';btn.setAttribute('aria-label',show?'Ocultar contraseña':'Mostrar contraseña')})}
+  bindPasswordToggle('authPassword','togglePassword');bindPasswordToggle('authConfirm','toggleConfirm');
+  renderAuthMode();updateAccountUI();renderReviews();
+}
+async function init(){
+
+  renderStatic();
+
+  if(supabaseConfigured && window.supabase){
+
+    window.supabaseClient=window.supabase.createClient(
+      AETERNA_AUTH.url,
+      AETERNA_AUTH.anonKey,
+      {
+        auth:{
+          persistSession:true,
+          autoRefreshToken:true,
+          detectSessionInUrl:true
+        }
+      }
+    );
+
+    window.supabaseClient.auth.onAuthStateChange(function(_event,s){
+
+      if(s){
+        session=s;
+        uid=s.user.id;
+        makeUser();
+        updateAccountUI();
+      }else{
+        session=null;
+        uid=null;
+        user=null;
+        isStaff=false;
+        canSend=false;
+        updateAccountUI();
+        chatUnavailable();
+      }
+
+    });
+  }
+
+  if(!window.supabaseClient){
+    chatUnavailable();
+    reviewsUnavailable();
+    return;
+  }
+
+  var s=await currentSession();
+
+  if(!s){
+    chatUnavailable();
+    reviewsUnavailable();
+    return;
+  }
+
+  session=s;
+  uid=s.user.id;
+  makeUser();
+  canSend=true;
+
+  try{
+
+    var pr=await window.supabaseClient
+      .from('profiles')
+      .select('role,display_name')
+      .eq('id',uid)
+      .maybeSingle();
+
+    isStaff=!!(
+      pr.data &&
+      pr.data.role==='admin'
+    );
+
+    if(isStaff){
+
+      console.log('🌸 ADMIN DETECTADO: redirigiendo');
+      canSend=false;
+      $('panelBtn').hidden=true;
+      try{sessionStorage.setItem('aeternaLogin','1');}catch(e){}
+      document.documentElement.classList.add('aeterna-redirecting');
+      document.body.style.visibility='hidden';
+      window.location.replace('admin.html');
+      return;
+
+    }else{
+
+      canSend=true;
+
+      await loadMine();
+
+    }
+
+    await renderReviews();
+
+  }catch(e){
+
+    console.error(
+      'Error inicializando Aeterna:',
+      e
+    );
+
+    chatUnavailable();
+  }
+}
+
+init();
+})();
+
+(function(){
+  var toggle=document.getElementById('menuToggle');
+  var menu=document.getElementById('mobileMenu');
+  if(!toggle||!menu)return;
+  toggle.addEventListener('click',function(){
+    var open=!menu.hidden;
+    menu.hidden=open;
+    toggle.setAttribute('aria-expanded',String(!open));
+    toggle.textContent=open?'☰':'×';
+  });
+  menu.querySelectorAll('a[data-go]').forEach(function(a){
+    a.addEventListener('click',function(){
+      menu.hidden=true;
+      toggle.setAttribute('aria-expanded','false');
+      toggle.textContent='☰';
+    });
+  });
+  var mc=document.getElementById('mobileChat');
+  if(mc)mc.addEventListener('click',function(){
+    menu.hidden=true;
+    toggle.setAttribute('aria-expanded','false');
+    toggle.textContent='☰';
+    var chat=document.getElementById('navChat');if(chat)chat.click();
+  });
+  var ml=document.getElementById('mobileLogin'),mr=document.getElementById('mobileRegister');
+  if(ml)ml.addEventListener('click',function(){if(window.__AeternaAuthOpen)window.__AeternaAuthOpen('login');menu.hidden=true;toggle.setAttribute('aria-expanded','false');toggle.textContent='☰'});
+  if(mr)mr.addEventListener('click',function(){if(window.__AeternaAuthOpen)window.__AeternaAuthOpen('register');menu.hidden=true;toggle.setAttribute('aria-expanded','false');toggle.textContent='☰'});
+  document.querySelectorAll('[data-video-input]').forEach(function(input){
+    input.addEventListener('change',function(){
+      var file=this.files&&this.files[0]; if(!file)return;
+      if(!file.type.startsWith('video/')){this.value='';return;}
+      var card=this.closest('.video-card'),video=card&&card.querySelector('video'); if(!video)return;
+      if(video.dataset.objectUrl)URL.revokeObjectURL(video.dataset.objectUrl);
+      video.dataset.objectUrl=URL.createObjectURL(file);
+      video.src=video.dataset.objectUrl; video.load();
+    });
+  });
+  document.querySelectorAll('.video-wrap').forEach(function(w){
+    var v=w.querySelector('video'),btn=w.querySelector('.video-play'),bar=w.querySelector('.video-bar'),fill=bar&&bar.querySelector('i');
+    if(!v||!btn)return;
+    function sync(){var p=!v.paused&&!v.ended;w.classList.toggle('is-playing',p);btn.setAttribute('aria-label',p?'Pausar video':'Reproducir video')}
+    function toggle(){
+      if(v.paused||v.ended){
+        document.querySelectorAll('.video-wrap video').forEach(function(o){if(o!==v)o.pause()});
+        var pr=v.play();if(pr&&pr.catch)pr.catch(function(){});
+      }else v.pause();
+    }
+    btn.addEventListener('click',function(e){e.stopPropagation();toggle()});
+    v.addEventListener('click',toggle);
+    ['play','pause','ended'].forEach(function(ev){v.addEventListener(ev,sync)});
+    v.addEventListener('timeupdate',function(){if(v.duration&&fill)fill.style.width=(v.currentTime/v.duration*100)+'%'});
+    if(bar)bar.addEventListener('click',function(e){var r=bar.getBoundingClientRect();if(v.duration)v.currentTime=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width))*v.duration});
+  });
+  (function(){
+    var els=document.querySelectorAll('.sec-head,.media-head,.split>div,.dgrid>div,.work>div,.rgrid>*,.contact-head,.contact-card,.footer-center');
+    if(!('IntersectionObserver' in window)||(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches))return;
+    document.documentElement.classList.add('js');
+    els.forEach(function(e,i){e.classList.add('reveal');e.style.setProperty('--rd',((i%3)*.08)+'s')});
+    var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}})},{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+    els.forEach(function(e){io.observe(e)});
+  })();
+var forgot=document.getElementById('forgotPassword');
+
+if(forgot && window.__AeternaOpenPasswordRecovery){
+  forgot.addEventListener('click',function(e){
+    e.preventDefault();
+    window.__AeternaOpenPasswordRecovery();
+  });
+}
+  if(window.__AeternaWireFooterActions)window.__AeternaWireFooterActions();
+  var ap=document.getElementById('authPassword'); if(ap&&window.__AeternaUpdatePasswordStrength)ap.addEventListener('input',window.__AeternaUpdatePasswordStrength);
+
+})();
+
+(function(){
+  try{
+    var login=sessionStorage.getItem('aeternaLogin');
+    if(login==='1'){
+      document.documentElement.classList.add('aeterna-redirecting');
+    }
+  }catch(e){}
+})();
+</script>
+
+<style>
+html.aeterna-redirecting body{
+  visibility:hidden !important;
+}
+
+html.aeterna-redirecting body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:#f8f3ef;
+  z-index:999999;
+}
+</style>
+<script>
+(function(){
+  try{
+    if(sessionStorage.getItem('aeternaLogin') === '1'){
+      document.documentElement.classList.add('aeterna-redirecting');
+    }
+  }catch(e){}
+})();
+</script>
+
+<style>
+html.aeterna-redirecting body{
+  visibility:hidden !important;
+}
+
+html.aeterna-redirecting body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:#f8f3ef;
+  z-index:999999;
+}
+</style>
+</script>
+
+</body>
+</html>

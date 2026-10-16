@@ -1,0 +1,7273 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#FFF8F9">
+<title>Mi jardín · Aeterna</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="aeterna.css">
+</head>
+
+<body class="ae-auth-pending">
+
+<div class="splash" id="splash">Aeterna…</div>
+
+<header class="nav">
+  <div class="wrap">
+
+    <button class="brand" type="button" id="brand" aria-label="Aeterna, inicio">
+      <img
+        src="logo.png"
+        alt="Aeterna"
+        onerror="this.hidden=true;this.nextElementSibling.hidden=false"
+      >
+      <span class="fb" hidden>🌹</span>
+
+      <span>
+        <b>Aeterna</b>
+        <small>Flores eternas</small>
+      </span>
+    </button>
+
+    <nav
+      class="nlinks"
+      id="nav"
+      aria-label="Menú del perfil"
+    ></nav>
+
+    <div class="nav-user">
+      <span class="who" id="navWho"></span>
+      <span class="av mini-av" id="navAv"></span>
+      <button
+        class="btn ghost sm"
+        id="logout"
+        type="button"
+      >
+        Salir
+      </button>
+    </div>
+
+  </div>
+</header>
+
+<div class="cover" aria-hidden="true">
+  <div class="petals" id="petals"></div>
+  <div class="giant">Aeterna</div>
+</div>
+
+<main class="wrap layout" id="layout">
+
+  <aside class="side" id="side">
+
+    <section
+      class="card pcard"
+      id="pcard"
+      aria-label="Mi perfil"
+    >
+
+      <div class="avwrap">
+
+        <span
+          class="av"
+          id="bigAv"
+        ></span>
+
+        <label
+          class="cam"
+          title="Cambiar foto de perfil"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+            <circle cx="12" cy="13" r="4"/>
+          </svg>
+
+          <input
+            type="file"
+            id="avatarInput"
+            accept="image/*"
+            hidden
+            aria-label="Cambiar foto de perfil"
+          >
+        </label>
+
+      </div>
+
+      <h1 class="pname" id="pName">…</h1>
+
+      <p class="pmail" id="pMail"></p>
+
+      <span
+        class="plevel"
+        id="pLevel"
+      >
+        🌱 Brote
+      </span>
+
+      <p
+        class="pbio"
+        id="pBio"
+      ></p>
+
+      <div class="stats">
+        <div>
+          <b id="stOrders">0</b>
+          <span>Pedidos</span>
+        </div>
+
+        <div>
+          <b id="stFavs">0</b>
+          <span>Favoritos</span>
+        </div>
+
+        <div>
+          <b id="stPosts">0</b>
+          <span>Posts</span>
+        </div>
+      </div>
+
+      <div class="bar">
+        <i id="lvlBar"></i>
+      </div>
+
+      <p
+        class="lvl-note"
+        id="lvlNote"
+      ></p>
+
+      <div class="row-btn">
+
+        <button
+          class="btn ghost sm"
+          id="editBtn"
+          type="button"
+        >
+          ✎ Editar perfil
+        </button>
+
+        <button
+          class="btn ghost sm"
+          id="logout2"
+          type="button"
+        >
+          Cerrar sesión
+        </button>
+
+      </div>
+
+    </section>
+
+    <div
+      class="wgts"
+      id="widgets"
+    ></div>
+
+    <section class="card shopcard">
+
+      <p class="eyebrow">
+        Atención directa
+      </p>
+
+      <h3>
+        ¿Necesitas algo especial?
+      </h3>
+
+      <p>
+        Escríbenos por el chat privado o por WhatsApp y armamos tu pieza a medida.
+      </p>
+
+      <button
+        class="btn block"
+        id="sideChat"
+        type="button"
+      >
+        Abrir chat privado
+      </button>
+
+      <a
+        class="btn ghost block"
+        id="waOrder"
+        target="_blank"
+        rel="noopener noreferrer"
+        href="#"
+      >
+        WhatsApp
+      </a>
+
+    </section>
+
+  </aside>
+
+  <div class="mainc">
+
+    <div
+      class="ptabs"
+      id="ptabs"
+      role="tablist"
+      aria-label="Secciones"
+    ></div>
+
+    <div class="greet">
+      <p
+        class="eyebrow"
+        id="greetEy"
+      >
+        Comunidad Aeterna
+      </p>
+
+      <h2 id="greetH">
+        Cuenta tu momento con flores
+      </h2>
+    </div>
+
+    <!-- COMUNIDAD -->
+
+    <section data-sec="comunidad">
+
+      <button
+        class="opener"
+        id="openComposer"
+        type="button"
+        aria-label="Crear publicación"
+      >
+
+        <span
+          class="av"
+          id="cmpAv"
+        ></span>
+
+        <span
+          class="fake"
+          id="fakeText"
+        >
+          ¿Qué flores te hicieron feliz hoy?
+        </span>
+
+        <span
+          class="pic"
+          aria-hidden="true"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect
+              x="3"
+              y="3"
+              width="18"
+              height="18"
+              rx="3"
+            />
+            <circle
+              cx="8.5"
+              cy="8.5"
+              r="1.5"
+            />
+            <path d="m21 15-5-5L5 21"/>
+          </svg>
+        </span>
+
+      </button>
+
+      <div
+        class="quick"
+        id="quick"
+        role="group"
+        aria-label="Atajos para publicar"
+      ></div>
+
+      <div
+        class="filters"
+        id="filters"
+        role="group"
+        aria-label="Filtrar publicaciones"
+      ></div>
+
+      <div
+        class="feed"
+        id="feed"
+        aria-live="polite"
+      ></div>
+
+    </section>
+
+
+    <!-- COLECCIÓN -->
+
+    <section
+      data-sec="coleccion"
+      hidden
+    >
+
+      <div class="card hero-c">
+
+        <div>
+
+          <p class="eyebrow">
+            Nuestro trabajo
+          </p>
+
+          <h3>
+            Cada pieza, hecha a mano
+          </h3>
+
+          <p>
+            Toca una pieza para verla de cerca, guardarla con ❤ o pedirla sin salir de tu perfil.
+          </p>
+
+        </div>
+
+      </div>
+
+      <div
+        class="filters"
+        id="catChips"
+        role="group"
+        aria-label="Categorías"
+      ></div>
+
+      <div
+        class="pgrid"
+        id="catGrid"
+      ></div>
+
+    </section>
+
+
+    <!-- FAVORITOS -->
+
+    <section
+      data-sec="favoritos"
+      hidden
+    >
+
+      <div class="sec-top">
+
+        <p>
+          Los ramos y arreglos que guardaste para comprar cuando quieras.
+        </p>
+
+      </div>
+
+      <div
+        class="pgrid"
+        id="favGrid"
+      ></div>
+
+    </section>
+
+
+    <!-- FECHAS -->
+
+    <section
+      data-sec="fechas"
+      hidden
+    >
+
+      <div class="sec-top">
+
+        <p>
+          Guarda cumpleaños, aniversarios y fechas importantes. Te avisamos antes y te sugerimos el regalo ideal.
+        </p>
+
+        <button
+          class="btn"
+          id="addDate"
+          type="button"
+        >
+          ＋ Nueva fecha
+        </button>
+
+      </div>
+
+      <div
+        class="feed"
+        id="dateList"
+      ></div>
+
+    </section>
+
+
+    <!-- PEDIDOS -->
+
+    <section
+      data-sec="pedidos"
+      hidden
+    >
+
+      <h3
+        class="h-sub"
+        style="margin-top:0"
+      >
+        Pedidos activos
+      </h3>
+
+      <div id="ordActive"></div>
+
+      <h3 class="h-sub">
+        Historial de compras
+      </h3>
+
+      <div id="ordHist"></div>
+
+    </section>
+
+
+    <!-- MENSAJES -->
+
+    <section
+      data-sec="mensajes"
+      hidden
+    >
+
+      <div class="card chat">
+
+        <div class="chat-h">
+
+          <span
+            class="av"
+            id="chatAdminAv"
+            style="background:linear-gradient(145deg,var(--gold),#F7D66B);color:#2B1A00"
+          >
+            🌹
+          </span>
+
+          <div>
+
+            <strong id="chatAdminName">
+              Aeterna
+            </strong>
+
+            <small
+              id="chatTyping"
+              hidden
+              style="font-weight:600"
+            >
+              escribiendo...
+            </small>
+
+            <small>
+              Chat privado · respondemos por aquí
+            </small>
+
+          </div>
+
+          <a
+            class="btn ghost sm"
+            id="waChat"
+            target="_blank"
+            rel="noopener noreferrer"
+            href="#"
+          >
+            WhatsApp
+          </a>
+
+        </div>
+
+        <div
+          class="log"
+          id="chatLog"
+          aria-live="polite"
+        ></div>
+
+        <div
+          class="qr"
+          id="chatQr"
+        ></div>
+
+        <form
+          class="chat-f"
+          id="chatForm"
+        >
+
+          <textarea
+            id="chatText"
+            rows="1"
+            maxlength="1000"
+            placeholder="Escribe tu mensaje…"
+            aria-label="Mensaje"
+          ></textarea>
+
+          <button
+            class="btn"
+            type="submit"
+            id="chatSend"
+          >
+            Enviar
+          </button>
+
+        </form>
+
+      </div>
+
+    </section>
+
+  </div>
+
+</main>
+
+<nav
+  class="bnav"
+  id="bnav"
+  aria-label="Navegación principal"
+></nav>
+
+
+<style>
+/* =====================================================
+ * CHAT TYPING · ESTILO WHATSAPP
+ * ===================================================== */
+.chat-typing{
+  display:inline-flex !important;
+  align-items:center;
+  gap:5px;
+  color:#8b6b73;
+  font-weight:700;
+  line-height:1.15;
+  min-height:16px;
+  opacity:0;
+  transform:translateY(2px);
+  transition:opacity .18s ease,transform .18s ease;
+}
+.chat-typing:not([hidden]){
+  opacity:1;
+  transform:translateY(0);
+}
+.chat-typing .typing-dots{
+  display:inline-flex;
+  gap:2px;
+  margin-left:2px;
+}
+.chat-typing .typing-dots i{
+  width:4px;
+  height:4px;
+  border-radius:50%;
+  background:currentColor;
+  display:block;
+  animation:aeTypingDot 1.15s infinite ease-in-out;
+}
+.chat-typing .typing-dots i:nth-child(2){animation-delay:.16s}
+.chat-typing .typing-dots i:nth-child(3){animation-delay:.32s}
+@keyframes aeTypingDot{
+  0%,60%,100%{transform:translateY(0);opacity:.42}
+  30%{transform:translateY(-3px);opacity:1}
+}
+
+.date-contact-fields .f{margin:0}
+/* Campos de contacto de fechas: teléfono y correo comparten exactamente la misma barra */
+.date-contact-fields .date-contact-input{
+  display:block;
+  width:100%;
+  min-width:0;
+  height:46px;
+  box-sizing:border-box;
+  padding:.72rem .85rem;
+  margin:0;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--surface);
+  color:var(--ink);
+  font:inherit;
+  line-height:1.25;
+  outline:none;
+  appearance:none;
+  -webkit-appearance:none;
+}
+.date-contact-fields .date-contact-input:focus{
+  border-color:var(--accent-text);
+  box-shadow:0 0 0 3px rgba(168,51,90,.10);
+}
+
+.date-contact-fields input[type=tel],
+.date-contact-fields input[type=email]{
+  width:100%;
+  min-width:0;
+  box-sizing:border-box;
+  font:inherit;
+  color:inherit;
+}
+body.ae-auth-pending > :not(#splash){visibility:hidden!important}
+body.ae-auth-pending{overflow:hidden}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="aeterna-common.js"></script>
+
+<script>
+(function(){
+
+'use strict';
+
+
+var AE=window.AE,
+    $=AE.$,
+    h=AE.h,
+    sb=AE.sb,
+    toast=AE.toast;
+
+
+var presenceChannel=null,
+    uid,
+    email='',
+    me,
+    posts=[],
+    likes={},
+    comments={},
+    openCm={},
+    filter='all',
+    mood='',
+    imgBlob=null,
+    busy=false;
+
+
+var favs={},
+    dates=[],
+    orders=[],
+    conv=null,
+    msgs=[],
+    chatAdminProfile=null,
+    chatProfiles={},
+    section='comunidad',
+    catF='Todo',
+    chatDraft='',
+    chatSub=false;
+
+
+/* =====================================================
+ * CHAT TYPING
+ * ===================================================== */
+
+var chatChannel=null;
+var chatChannelReady=false;
+var typingTimer=null;
+var typingHideTimer=null;
+var typingActive=false;
+
+
+/*
+ * Evita crear varios canales para la misma conversación
+ * y permite reconstruir el canal si Supabase lo cierra.
+ */
+var chatChannelName='';
+
+/* =====================================================
+ * VALIDACIONES DE CONTACTO Y CHAT
+ * ===================================================== */
+var AE_TEMP_EMAIL_DOMAINS={
+  '10minutemail.com':1,'10minutemail.net':1,'guerrillamail.com':1,
+  'guerrillamail.net':1,'guerrillamail.org':1,'mailinator.com':1,
+  'tempmail.com':1,'temp-mail.org':1,'throwawaymail.com':1,
+  'yopmail.com':1,'getnada.com':1,'sharklasers.com':1,
+  'grr.la':1,'dispostable.com':1,'emailondeck.com':1,
+  'maildrop.cc':1,'moakt.com':1,'trashmail.com':1
+};
+
+function aeNormalizeEmail(v){ return String(v||'').trim().toLowerCase(); }
+function aeValidEmail(v){
+  v=aeNormalizeEmail(v);
+  if(!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(v)) return false;
+  var d=v.split('@')[1];
+  if(AE_TEMP_EMAIL_DOMAINS[d]) return false;
+  return true;
+}
+function aeValidVePhone(v){
+  var n=String(v||'').replace(/\D/g,'');
+  if(n.indexOf('58')===0) n=n.slice(2);
+  if(n.indexOf('0')===0) n=n.slice(1);
+  return /^4(?:12|14|16|24|26)\d{7}$/.test(n);
+}
+function aeCensorText(text){
+  /*
+   * Censura groserías incluso cuando el usuario repite letras:
+   * puta -> ***, putaaaaaa -> ***, malpariiiiido -> ***.
+   * También normaliza acentos y mayúsculas para detectar variantes.
+   */
+  var bad=[
+    'hijo de puta','hija de puta','hijueputa','hijueputas',
+    'malparido','malparida','malparidos','malparidas',
+    'mamaguevo','mamagueva','mamaguevos','mamaguevas',
+    'mamagüevo','mamagüevas','mamagüevos',
+    'marico','marica','maricón','maricon','mariquera',
+    'pajuo','pajua','pajudo','pajuda',
+    'pendejo','pendeja','pendejos','pendejas',
+    'coño','coñazo','cono',
+    'mierda','mierdero','mierdera',
+    'puta','puto','putas','putos',
+    'verga','vergas','vergacion',
+    'carajo','carajos',
+    'cabron','cabrón','cabrona','cabrones',
+    'culiao','culeado','culeada','culero',
+    'jodido','jodida','jodidos','jodidas',
+    'maricon','maricona','maricones',
+    'imbecil','imbécil','estupido','estúpido','estupida','estúpida',
+    'idiota','idiotas','maldito','maldita','malditos','malditas',
+    'hdp','hp'
+  ];
+
+  var out=String(text||'');
+
+  function fold(v){
+    return String(v||'').toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g,'');
+  }
+
+  bad.sort(function(a,b){return b.length-a.length;}).forEach(function(w){
+    var chars=fold(w).split('').map(function(ch){
+      if(ch===' ')return '\\s+';
+      var esc=ch.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+      return esc+'+';
+    }).join('');
+
+    var re=new RegExp('(^|[^a-z0-9])'+chars+'(?=$|[^a-z0-9])','gi');
+    out=out.replace(re,function(_,pre){return pre+'***';});
+  });
+
+  return out;
+}
+function aeValidateChatText(text){
+  var clean=aeCensorText(text).trim();
+  return clean;
+}
+
+
+var SECS=[
+  ['perfil','Perfil'],
+  ['comunidad','Comunidad'],
+  ['coleccion','Colección'],
+  ['favoritos','Favoritos'],
+  ['fechas','Fechas'],
+  ['pedidos','Pedidos'],
+  ['mensajes','Mensajes']
+];
+
+
+var GREET={
+  comunidad:'Cuenta tu momento con flores',
+  coleccion:'Rosas hechas a mano para ti',
+  favoritos:'Tu lista de deseos',
+  fechas:'Que ninguna fecha especial se te pase',
+  pedidos:'Sigue tu pedido paso a paso',
+  mensajes:'Habla directo con Aeterna'
+};
+
+
+var MOODS=[
+  ['💖','Feliz con mi pedido'],
+  ['💐','Mi ramo'],
+  ['🎁','Regalo sorpresa'],
+  ['💡','Ideas y consejos'],
+  ['📸','Mi decoración']
+];
+
+
+var LEVELS=[
+  [0,'🌱','Brote'],
+  [1,'🌷','Capullo'],
+  [3,'🌹','Rosa en flor'],
+  [8,'🌸','Jardín Aeterna'],
+  [15,'👑','Reina de las rosas']
+];
+
+
+AE.petals($('petals'));
+
+$('brand').onclick=function(){
+  go('comunidad');
+};
+
+
+/* =====================================================
+ * ARRANQUE
+ * ===================================================== */
+
+async function boot(){
+
+  var s=(await sb.auth.getSession()).data.session;
+
+  if(!s){
+
+    location.replace('index.html');
+
+    return;
+  }
+
+  uid=s.user.id;
+  email=s.user.email||'';
+
+
+  var pr=await sb
+    .from('profiles')
+    .select('id,display_name,role,avatar_url,bio')
+    .eq('id',uid)
+    .maybeSingle();
+
+
+  me=pr.data||{
+    id:uid,
+    display_name:
+      (
+        s.user.user_metadata&&
+        s.user.user_metadata.display_name
+      )||
+      email.split('@')[0]
+  };
+
+
+  var ar=await sb
+    .from('profiles')
+    .select('id,display_name,avatar_url,role')
+    .eq('role','admin')
+    .limit(1)
+    .maybeSingle();
+
+
+  chatAdminProfile=ar.data||null;
+
+
+  if(me.role==='admin'){
+
+    location.replace('admin.html');
+
+    return;
+  }
+
+  document.body.classList.remove('ae-auth-pending');
+
+
+  try{
+
+    var ct=await sb
+      .from('customer_contacts')
+      .select('phone,email')
+      .eq('user_id',uid)
+      .maybeSingle();
+
+    me.phone=(ct.data&&ct.data.phone)||'';
+    me.contactEmail=(ct.data&&ct.data.email)||email||'';
+
+  }catch(e){
+
+    me.phone='';
+
+  }
+
+
+  AE.buildNav({
+
+    secs:SECS,
+
+    tabs:[
+      'comunidad',
+      'coleccion',
+      'favoritos',
+      'fechas',
+      'pedidos',
+      'mensajes'
+    ],
+
+    bn:[
+      ['comunidad','Inicio','home'],
+      ['coleccion','Colección','bag'],
+      ['mensajes','Chat','chat'],
+      ['pedidos','Pedidos','box'],
+      ['perfil','Perfil','user']
+    ],
+
+    go:go,
+
+    badges:{
+      mensajes:'msg',
+      pedidos:'ord'
+    }
+
+  });
+
+
+  renderProfile();
+
+  buildMoods();
+
+  buildQuick();
+
+  buildFilters();
+
+  buildCatChips();
+
+  renderCatalog();
+
+
+  $('feed').replaceChildren(
+
+    h('div',{
+      class:'sk'
+    }),
+
+    h('div',{
+      class:'sk',
+      style:'animation-delay:.15s'
+    })
+
+  );
+
+
+  var hs=(location.hash||'').slice(1);
+
+
+  go(
+    SECS.some(function(x){
+      return x[0]===hs;
+    })
+    ? hs
+    : 'comunidad'
+  );
+
+
+  $('splash').remove();
+
+
+  await Promise.all([
+
+    loadFeed(),
+
+    loadFavs(),
+
+    loadDates(),
+
+    loadOrders(),
+
+    loadChat()
+
+  ]);
+
+
+  realtime();
+
+
+  var chatAv=$('chatAdminAv');
+
+
+  if(chatAv){
+
+    AE.fillAv(
+      chatAv,
+      chatAdminProfile||{
+        display_name:'Aeterna',
+        avatar_url:null
+      }
+    );
+
+  }
+
+
+  var chatName=$('chatAdminName');
+
+
+  if(chatName){
+
+    chatName.textContent=
+      (
+        chatAdminProfile&&
+        chatAdminProfile.display_name
+      )||
+      'Aeterna';
+
+  }
+
+}
+
+
+function safe(fn){
+
+  return fn().catch(function(e){
+
+    console.error(e);
+
+  });
+
+}
+
+
+/* =====================================================
+ * NAVEGACIÓN
+ * ===================================================== */
+
+function go(s){
+
+  if(s!=='mensajes'){
+
+    stopTyping();
+
+    showOtherTyping(false);
+
+  }
+
+
+  if(s==='perfil'){
+
+    $('layout').classList.add('show-profile');
+
+    AE.setCurrent('perfil');
+
+    window.scrollTo({
+      top:0,
+      behavior:'smooth'
+    });
+
+
+    var c=$('pcard');
+
+    c.classList.remove('pulse');
+
+    void c.offsetWidth;
+
+    c.classList.add('pulse');
+
+
+    updChatBadge();
+
+    return;
+  }
+
+
+  section=s;
+
+  $('layout').classList.remove('show-profile');
+
+
+  document
+    .querySelectorAll('[data-sec]')
+    .forEach(function(x){
+
+      x.hidden=
+        x.getAttribute('data-sec')!==s;
+
+    });
+
+
+  AE.setCurrent(s);
+
+  if(s==='pedidos'){
+    markCustomerOrderNotificationsSeen().then(function(){
+      renderOrders();
+    });
+  }
+
+
+  $('greetH').textContent=
+    GREET[s]||GREET.comunidad;
+
+
+  if(s==='mensajes'){
+
+    markSeen();
+
+    applyDraft();
+
+    renderChat();
+
+
+    if(conv){
+
+      subChat();
+
+
+      syncStaffMessageStatus()
+        .catch(function(e){
+
+          console.error(
+            'Error sincronizando estado del chat:',
+            e
+          );
+
+        });
+
+    }
+
+  }
+
+
+  updChatBadge();
+
+
+  window.scrollTo({
+    top:0,
+    behavior:'smooth'
+  });
+
+}
+
+
+/* =====================================================
+ * PERFIL
+ * ===================================================== */
+
+function levelOf(n){
+
+  var l=LEVELS[0],
+      nx=null;
+
+
+  for(var i=0;i<LEVELS.length;i++){
+
+    if(n>=LEVELS[i][0]){
+
+      l=LEVELS[i];
+
+      nx=
+        LEVELS[i+1]||
+        null;
+
+    }
+
+  }
+
+
+  return {
+    l:l,
+    nx:nx
+  };
+
+}
+
+
+function greeting(){
+
+  var hr=new Date().getHours();
+
+  return hr<12
+    ? 'Buenos días'
+    : hr<19
+      ? 'Buenas tardes'
+      : 'Buenas noches';
+
+}
+
+
+function waLink(t){
+
+  return 'https://wa.me/'+
+    AE.CFG.wa+
+    '?text='+
+    encodeURIComponent(t);
+
+}
+
+
+function renderProfile(){
+
+  $('pName').textContent=
+    me.display_name||'Clienta';
+
+  $('pMail').textContent=email;
+
+  $('pBio').textContent=
+    me.bio||
+    'Añade una frase sobre ti para que la comunidad te conozca.';
+
+  $('navWho').textContent=
+    AE.first(me.display_name);
+
+  $('greetEy').textContent=
+    greeting()+', '+
+    AE.first(me.display_name);
+
+  AE.fillAv(
+    $('bigAv'),
+    me
+  );
+
+  AE.fillAv(
+    $('navAv'),
+    me
+  );
+
+  AE.fillAv(
+    $('cmpAv'),
+    me
+  );
+
+
+  $('waOrder').href=
+    waLink(
+      'Hola Aeterna, soy '+
+      (
+        me.display_name||
+        'cliente'
+      )+'. Me gustaría conocer sus opciones y recibir asesoría. '
+    );
+
+
+  $('waChat').href=
+    $('waOrder').href;
+
+
+  $('fakeText').textContent=
+    '¿Qué flores te hicieron feliz hoy, '+
+    AE.first(me.display_name)+
+    '?';
+
+}
+
+
+function renderStats(){
+
+  var mine=posts.filter(function(p){
+
+    return p.user_id===uid;
+
+  });
+
+
+  $('stPosts').textContent=
+    mine.length;
+
+  $('stOrders').textContent=
+    orders.length;
+
+  $('stFavs').textContent=
+    Object.keys(favs).length;
+
+
+  var lv=levelOf(mine.length);
+
+
+  $('pLevel').textContent=
+    lv.l[1]+' '+lv.l[2];
+
+
+  if(lv.nx){
+
+    $('lvlBar').style.width=
+      Math.max(
+        6,
+        (
+          (
+            mine.length-
+            lv.l[0]
+          )/
+          (
+            lv.nx[0]-
+            lv.l[0]
+          )
+        )*100
+      )+'%';
+
+
+    $('lvlNote').textContent=
+      'Publica '+
+      (
+        lv.nx[0]-
+        mine.length
+      )+
+      ' más para ser '+
+      lv.nx[1]+' '+
+      lv.nx[2];
+
+  }else{
+
+    $('lvlBar').style.width='100%';
+
+    $('lvlNote').textContent=
+      '¡Nivel máximo! Gracias por ser parte de Aeterna 👑';
+
+  }
+
+}
+
+
+function renderWidgets(){
+
+  var box=$('widgets');
+
+  box.replaceChildren();
+
+
+  var act=orders.filter(function(o){
+
+    return o.status!=='entregado'&&
+           o.status!=='cancelado';
+
+  })[0];
+
+
+  if(act){
+
+    box.append(
+
+      h(
+        'button',
+        {
+          class:'wgt',
+          type:'button',
+          onclick:function(){
+            go('pedidos');
+          }
+        },
+
+        h(
+          'span',
+          {
+            class:'wi',
+            text:
+              AE.STATUS[
+                Math.max(
+                  0,
+                  AE.statusIdx(act.status)
+                )
+              ][2]
+          }
+        ),
+
+        h(
+          'div',
+          null,
+
+          h(
+            'b',
+            {
+              text:'Pedido en curso'
+            }
+          ),
+
+          h(
+            'small',
+            {
+              text:
+                act.product_name+
+                ' · '+
+                AE.statusLabel(act.status)
+            }
+          )
+
+        )
+
+      )
+
+    );
+
+  }
+
+
+  var nd=dates
+    .slice()
+    .sort(function(a,b){
+
+      return AE.dleft(a)-
+             AE.dleft(b);
+
+    })[0];
+
+
+  if(nd){
+
+    box.append(
+
+      h(
+        'button',
+        {
+          class:'wgt',
+          type:'button',
+          onclick:function(){
+            go('fechas');
+          }
+        },
+
+        h(
+          'span',
+          {
+            class:'wi',
+            text:
+              AE.occ(nd.occasion)[1]
+          }
+        ),
+
+        h(
+          'div',
+          null,
+
+          h(
+            'b',
+            {
+              text:'Próxima fecha'
+            }
+          ),
+
+          h(
+            'small',
+            {
+              text:
+                nd.title+
+                ' · '+
+                AE.cd(AE.dleft(nd))
+            }
+          )
+
+        )
+
+      )
+
+    );
+
+  }
+
+}
+
+
+$('avatarInput').onchange=async function(){
+
+  var f=this.files&&this.files[0];
+
+  this.value='';
+
+  if(!f)return;
+
+
+  if(!/^image\//.test(f.type)){
+
+    toast('Elige una imagen.');
+
+    return;
+  }
+
+
+  toast('Subiendo tu foto…');
+
+
+  try{
+
+    var url=
+      await AE.uploadAvatar(
+        uid,
+        f
+      );
+
+    me.avatar_url=url;
+
+    me._bust=Date.now();
+
+    renderProfile();
+
+    toast('¡Foto actualizada! 📸');
+
+    loadFeed(true);
+
+  }catch(e){
+
+    console.error(e);
+
+    toast('No pudimos subir la foto.');
+
+  }
+
+};
+
+
+function openEdit(){
+
+  var n=h(
+    'input',
+    {
+      type:'text',
+      maxlength:'24',
+      id:'eName'
+    }
+  );
+
+
+  n.value=
+    me.display_name||'';
+
+
+  var b=h(
+    'textarea',
+    {
+      rows:'3',
+      maxlength:'140',
+      placeholder:'Ej: Amante de las rosas amarillas 🌼',
+      id:'eBio'
+    }
+  );
+
+
+  b.value=
+    me.bio||'';
+
+
+  var ph=h(
+    'input',
+    {
+      type:'tel',
+      maxlength:'20',
+      placeholder:'0412 000 0000',
+      id:'ePhone'
+    }
+  );
+
+
+  ph.value=
+    me.phone||'';
+
+
+  var save=h(
+    'button',
+    {
+      class:'btn',
+      type:'button'
+    },
+    'Guardar cambios'
+  );
+
+
+  save.onclick=async function(){
+
+    var name=n.value.trim();
+
+    var bio=
+      b.value
+       .trim()
+       .slice(0,140);
+
+    var phone=
+      ph.value.trim();
+
+
+    if(!/^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9._ -]{3,24}$/.test(name)){
+
+      toast(
+        'El nombre debe tener entre 3 y 24 caracteres.'
+      );
+
+      return;
+    }
+
+
+    save.disabled=true;
+
+
+    var r=await sb
+      .from('profiles')
+      .update({
+        display_name:name,
+        bio:bio
+      })
+      .eq('id',uid);
+
+
+    var contactError=null;
+
+    if(!r.error){
+
+      var cr=await sb
+        .from('customer_contacts')
+        .upsert({
+          user_id:uid,
+          phone:phone,
+          updated_at:new Date().toISOString()
+        });
+
+      contactError=cr.error||null;
+      if(contactError)console.error(contactError);
+    }
+
+
+    save.disabled=false;
+
+
+    if(r.error){
+
+      toast(
+        'No pudimos guardar. Intenta de nuevo.'
+      );
+
+      return;
+    }
+
+
+    me.display_name=name;
+    me.bio=bio;
+    me.phone=phone;
+
+
+    renderProfile();
+
+    AE.closeSheet();
+
+    toast(
+      contactError
+        ? 'Perfil actualizado, pero no pudimos guardar tu WhatsApp.'
+        : 'Perfil actualizado ✨'
+    );
+
+    loadFeed(true);
+
+  };
+
+
+  AE.openSheet(
+    AE.sheet(
+      'Editar perfil',
+      [
+
+        h(
+          'label',
+          {
+            class:'f',
+            for:'eName'
+          },
+          'Nombre de usuario',
+          n
+        ),
+
+        h(
+          'label',
+          {
+            class:'f',
+            for:'eBio'
+          },
+          'Sobre ti',
+          b
+        ),
+
+        h(
+          'label',
+          {
+            class:'f',
+            for:'ePhone'
+          },
+          'Tu WhatsApp (privado, solo Aeterna lo ve)',
+          ph
+        ),
+
+        save
+
+      ]
+    )
+  );
+
+
+  setTimeout(function(){
+
+    n.focus();
+
+  },60);
+
+}
+
+
+$('editBtn').onclick=openEdit;
+
+
+async function out(){
+
+  stopTyping();
+
+  await sb.auth.signOut();
+
+  location.replace('index.html');
+
+}
+
+
+$('logout').onclick=out;
+$('logout2').onclick=out;
+
+
+$('sideChat').onclick=function(){
+
+  go('mensajes');
+
+};
+
+
+/* =====================================================
+ * COMUNIDAD
+ * ===================================================== */
+
+function buildMoods(box){
+
+  box=box||$('moodsBox');
+
+  if(!box)return;
+
+
+  box.replaceChildren.apply(
+    box,
+
+    MOODS.map(function(m){
+
+      return h(
+        'button',
+        {
+          class:'chip',
+          type:'button',
+          'aria-pressed':
+            String(mood===m[1]),
+          onclick:function(){
+
+            mood=
+              mood===m[1]
+                ? ''
+                : m[1];
+
+            buildMoods(box);
+
+          }
+        },
+        m[0]+' '+m[1]
+      );
+
+    })
+
+  );
+
+}
+
+
+function buildQuick(){
+
+  $('quick').replaceChildren.apply(
+
+    $('quick'),
+
+    MOODS.slice(0,4).map(function(m){
+
+      return h(
+        'button',
+        {
+          class:'chip',
+          type:'button',
+          onclick:function(){
+
+            openComposer(m[1]);
+
+          }
+        },
+        m[0]+' '+m[1]
+      );
+
+    })
+
+  );
+
+}
+
+
+function openComposer(preMood){
+
+  if(preMood!==undefined)
+    mood=preMood;
+
+  imgBlob=null;
+
+
+  var ta=h(
+    'textarea',
+    {
+      maxlength:'800',
+      rows:'4',
+      placeholder:
+        'Cuéntanos cómo fue: ¿quién recibió las flores? ¿cómo reaccionó esa persona? 💐',
+      'aria-label':
+        'Escribe tu publicación'
+    }
+  );
+
+
+  var moodsBox=h(
+    'div',
+    {
+      class:'moods',
+      role:'group',
+      'aria-label':
+        'Tipo de publicación',
+      id:'moodsBox'
+    }
+  );
+
+
+  var att;
+
+
+  var prev=h(
+    'div',
+    {
+      class:'preview',
+      hidden:true
+    },
+
+    h(
+      'img',
+      {
+        alt:'Vista previa'
+      }
+    ),
+
+    h(
+      'button',
+      {
+        class:'x',
+        type:'button',
+        'aria-label':'Quitar foto',
+        onclick:function(){
+
+          imgBlob=null;
+
+          prev.hidden=true;
+
+          att.hidden=false;
+
+        }
+      },
+      '×'
+    )
+
+  );
+
+
+  var inp=h(
+    'input',
+    {
+      type:'file',
+      accept:'image/*'
+    }
+  );
+
+
+  att=h(
+    'label',
+    {
+      class:'attach'
+    },
+
+    h(
+      'span',
+      {
+        text:'📷 Añadir una foto'
+      }
+    ),
+
+    inp
+
+  );
+
+
+  inp.onchange=async function(){
+
+    var f=
+      inp.files&&
+      inp.files[0];
+
+    inp.value='';
+
+    if(!f)return;
+
+
+    if(!/^image\//.test(f.type)){
+
+      toast('Elige una imagen.');
+
+      return;
+    }
+
+
+    try{
+
+      imgBlob=
+        await AE.shrink(
+          f,
+          1400,
+          .82
+        );
+
+      prev
+        .querySelector('img')
+        .src=
+          URL.createObjectURL(
+            imgBlob
+          );
+
+      prev.hidden=false;
+
+      att.hidden=true;
+
+    }catch(e){
+
+      toast(
+        'No pudimos leer esa imagen.'
+      );
+
+    }
+
+  };
+
+
+  var count=h(
+    'span',
+    {
+      class:'count',
+      text:'0 / 800'
+    }
+  );
+
+
+  ta.addEventListener(
+    'input',
+    function(){
+
+      count.textContent=
+        ta.value.length+
+        ' / 800';
+
+    }
+  );
+
+
+  var btn=h(
+    'button',
+    {
+      class:'btn',
+      type:'button'
+    },
+    'Publicar'
+  );
+
+
+  btn.onclick=async function(){
+
+    if(busy)return;
+
+
+    var t=ta.value.trim();
+
+
+    if(!t){
+
+      toast(
+        'Escribe algo para publicar 💐'
+      );
+
+      ta.focus();
+
+      return;
+    }
+
+
+    busy=true;
+
+    btn.disabled=true;
+
+    btn.textContent=
+      'Publicando…';
+
+
+    try{
+
+      var url=null;
+
+
+      if(imgBlob){
+
+        var path=
+          uid+'/'+
+          Date.now()+
+          '.jpg';
+
+
+        var up=
+          await sb.storage
+            .from('posts')
+            .upload(
+              path,
+              imgBlob,
+              {
+                contentType:
+                  'image/jpeg'
+              }
+            );
+
+
+        if(up.error)
+          throw up.error;
+
+
+        url=
+          sb.storage
+            .from('posts')
+            .getPublicUrl(path)
+            .data
+            .publicUrl;
+
+      }
+
+
+      var r=
+        await sb
+          .from('community_posts')
+          .insert({
+            user_id:uid,
+            body:t.slice(0,800),
+            image_url:url,
+            mood:mood||null
+          });
+
+
+      if(r.error)
+        throw r.error;
+
+
+      imgBlob=null;
+
+      mood='';
+
+
+      AE.closeSheet();
+
+      toast(
+        '¡Publicado! Gracias por compartir 🌹'
+      );
+
+
+      go('comunidad');
+
+      await loadFeed(true);
+
+
+    }catch(err){
+
+      console.error(err);
+
+      toast(
+        'No pudimos publicar. Intenta de nuevo.'
+      );
+
+      btn.disabled=false;
+
+      btn.textContent=
+        'Publicar';
+
+    }
+
+
+    busy=false;
+
+  };
+
+
+  AE.openSheet(
+    AE.sheet(
+      'Nueva publicación',
+      [
+
+        h(
+          'div',
+          {
+            class:'who-line'
+          },
+
+          AE.avatar(me),
+
+          h(
+            'div',
+            null,
+
+            h(
+              'strong',
+              {
+                text:
+                  me.display_name||
+                  'Clienta'
+              }
+            ),
+
+            h(
+              'div',
+              {
+                class:'count',
+                text:
+                  'Visible para toda la comunidad'
+              }
+            )
+
+          )
+
+        ),
+
+        ta,
+
+        moodsBox,
+
+        prev,
+
+        att,
+
+        h(
+          'div',
+          {
+            class:'cmp-bot'
+          },
+
+          count,
+
+          btn
+
+        )
+
+      ]
+    )
+  );
+
+
+  buildMoods(moodsBox);
+
+
+  setTimeout(function(){
+
+    ta.focus();
+
+  },80);
+
+}
+
+
+$('openComposer').onclick=function(){
+
+  openComposer();
+
+};
+
+
+function buildFilters(){
+
+  var F=[
+    ['all','Todas'],
+    ['mine','Mis publicaciones'],
+    ['photo','Con foto'],
+    ['top','Más queridas']
+  ];
+
+
+  $('filters').replaceChildren.apply(
+
+    $('filters'),
+
+    F.map(function(f){
+
+      return h(
+        'button',
+        {
+          class:'chip',
+          type:'button',
+          'aria-pressed':
+            String(filter===f[0]),
+          onclick:function(){
+
+            filter=f[0];
+
+            buildFilters();
+
+            renderFeed();
+
+          }
+        },
+        f[1]
+      );
+
+    })
+
+  );
+
+}
+
+
+async function loadFeed(soft){
+
+  var r=
+    await sb
+      .from('community_posts')
+      .select(
+        'id,user_id,body,image_url,mood,created_at,profiles(display_name,avatar_url,role)'
+      )
+      .order(
+        'created_at',
+        {
+          ascending:false
+        }
+      )
+      .limit(60);
+
+
+  if(r.error){
+
+    console.error(r.error);
+
+
+    if(!soft){
+
+      $('feed').replaceChildren(
+
+        h(
+          'div',
+          {
+            class:'empty'
+          },
+
+          h(
+            'h3',
+            {
+              text:
+                'La comunidad está descansando'
+            }
+          ),
+
+          h(
+            'p',
+            {
+              text:
+                'Vuelve en un momento.'
+            }
+          )
+
+        )
+
+      );
+
+    }
+
+    return;
+  }
+
+
+  posts=r.data||[];
+
+
+  var ids=posts.map(function(p){
+
+    return p.id;
+
+  });
+
+
+  likes={};
+
+  comments={};
+
+
+  if(ids.length){
+
+    var l=
+      await sb
+        .from('post_likes')
+        .select(
+          'post_id,user_id'
+        )
+        .in(
+          'post_id',
+          ids
+        );
+
+
+    (l.data||[]).forEach(
+      function(x){
+
+        var o=
+          likes[x.post_id]||
+          (
+            likes[x.post_id]={
+              count:0,
+              mine:false
+            }
+          );
+
+
+        o.count++;
+
+
+        if(x.user_id===uid)
+          o.mine=true;
+
+      }
+    );
+
+
+    var c=
+      await sb
+        .from('post_comments')
+        .select(
+          'id,post_id,user_id,body,created_at,profiles(display_name,avatar_url)'
+        )
+        .in(
+          'post_id',
+          ids
+        )
+        .order(
+          'created_at',
+          {
+            ascending:true
+          }
+        );
+
+
+    (c.data||[]).forEach(
+      function(x){
+
+        (
+          comments[x.post_id]||
+          (
+            comments[x.post_id]=[]
+          )
+        ).push(x);
+
+      }
+    );
+
+  }
+
+
+  renderStats();
+
+  renderFeed();
+
+}
+
+
+function renderFeed(){
+
+  var list=posts.slice();
+
+
+  if(filter==='mine'){
+
+    list=list.filter(function(p){
+
+      return p.user_id===uid;
+
+    });
+
+  }
+
+
+  if(filter==='photo'){
+
+    list=list.filter(function(p){
+
+      return p.image_url;
+
+    });
+
+  }
+
+
+  if(filter==='top'){
+
+    list.sort(function(a,b){
+
+      return (
+        (likes[b.id]||{}).count||0
+      )-
+      (
+        (likes[a.id]||{}).count||0
+      );
+
+    });
+
+  }
+
+
+  var box=$('feed');
+
+  box.replaceChildren();
+
+
+  if(!list.length){
+
+    box.append(
+
+      h(
+        'div',
+        {
+          class:'empty'
+        },
+
+        h(
+          'h3',
+          {
+            text:
+              filter==='mine'
+                ? 'Aún no has publicado'
+                : 'Sé la primera en publicar'
+          }
+        ),
+
+        h(
+          'p',
+          {
+            text:
+              'Comparte la foto de tu ramo o cuéntanos cómo reaccionó esa persona especial. 💐'
+          }
+        ),
+
+        h(
+          'button',
+          {
+            class:'btn',
+            type:'button',
+            onclick:function(){
+
+              openComposer();
+
+            }
+          },
+          'Crear publicación'
+        )
+
+      )
+
+    );
+
+    return;
+  }
+
+
+  list.forEach(function(p,i){
+
+    box.append(
+      postEl(p,i)
+    );
+
+  });
+
+}
+
+
+function postEl(p,i){
+
+  var pr=p.profiles||{};
+
+
+  var lk=
+    likes[p.id]||
+    {
+      count:0,
+      mine:false
+    };
+
+
+  var cms=
+    comments[p.id]||[];
+
+
+  var isMine=
+    p.user_id===uid;
+
+
+  var el=h(
+    'article',
+    {
+      class:'card post',
+      style:
+        'animation-delay:'+
+        Math.min(i,8)*.05+
+        's'
+    }
+  );
+
+
+  var nameEl=
+    h(
+      'strong',
+      {
+        text:
+          pr.display_name||
+          'Clienta'
+      }
+    );
+
+
+  if(pr.role==='admin'){
+
+    nameEl.append(
+      h(
+        'span',
+        {
+          class:'staff-b',
+          text:'Aeterna'
+        }
+      )
+    );
+
+  }
+
+
+  el.append(
+
+    h(
+      'div',
+      {
+        class:'post-h'
+      },
+
+      AE.avatar(pr),
+
+      h(
+        'div',
+        {
+          class:'meta'
+        },
+
+        nameEl,
+
+        h(
+          'small',
+          {
+            text:
+              AE.ago(
+                p.created_at
+              )
+          }
+        )
+
+      ),
+
+      p.mood
+        ? h(
+            'span',
+            {
+              class:'tag',
+              text:p.mood
+            }
+          )
+        : null
+
+    )
+
+  );
+
+
+  if(p.body){
+
+    el.append(
+
+      h(
+        'p',
+        {
+          class:'post-b',
+          text:p.body
+        }
+      )
+
+    );
+
+  }
+
+
+  if(p.image_url){
+
+    el.append(
+
+      h(
+        'img',
+        {
+          class:'post-img',
+          src:p.image_url,
+          alt:
+            'Foto de '+
+            (
+              pr.display_name||
+              'clienta'
+            ),
+          loading:'lazy',
+          onclick:function(){
+
+            AE.zoom(
+              p.image_url
+            );
+
+          }
+        }
+      )
+
+    );
+
+  }
+
+
+  var likeBtn=
+    h(
+      'button',
+      {
+        class:
+          'act'+
+          (
+            lk.mine
+              ? ' liked'
+              : ''
+          ),
+        type:'button',
+        'aria-pressed':
+          String(lk.mine),
+        'aria-label':
+          'Me gusta'
+      },
+
+      AE.icon(
+        AE.ico.heart
+      ),
+
+      h(
+        'span',
+        {
+          text:String(
+            lk.count
+          )
+        }
+      )
+
+    );
+
+
+  likeBtn.onclick=function(){
+
+    toggleLike(
+      p,
+      likeBtn
+    );
+
+  };
+
+
+  var foot=
+    h(
+      'div',
+      {
+        class:'post-f'
+      },
+
+      likeBtn,
+
+      h(
+        'button',
+        {
+          class:'act',
+          type:'button',
+          'aria-label':
+            'Comentarios',
+          onclick:function(){
+
+            openCm[p.id]=
+              !openCm[p.id];
+
+            renderFeed();
+
+          }
+        },
+
+        AE.icon(
+          AE.ico.chat
+        ),
+
+        h(
+          'span',
+          {
+            text:String(
+              cms.length
+            )
+          }
+        )
+
+      ),
+
+      h(
+        'button',
+        {
+          class:'act',
+          type:'button',
+          'aria-label':
+            'Compartir',
+          onclick:
+            sharePost
+        },
+
+        AE.icon(
+          AE.ico.share
+        )
+
+      )
+
+    );
+
+
+  if(isMine){
+
+    foot.append(
+
+      h(
+        'button',
+        {
+          class:'act del',
+          type:'button',
+          onclick:function(){
+
+            delPost(p);
+
+          }
+        },
+        'Eliminar'
+      )
+
+    );
+
+  }
+
+
+  el.append(foot);
+
+
+  if(openCm[p.id]){
+
+    var cb=h(
+      'div',
+      {
+        class:'comments'
+      }
+    );
+
+
+    cms.forEach(function(c){
+
+      cb.append(
+
+        h(
+          'div',
+          {
+            class:'cm'
+          },
+
+          AE.avatar(
+            c.profiles,
+            30
+          ),
+
+          h(
+            'div',
+            null,
+
+            h(
+              'b',
+              {
+                text:
+                  (
+                    c.profiles&&
+                    c.profiles.display_name
+                  )||
+                  'Clienta'
+              }
+            ),
+
+            c.body
+
+          )
+
+        )
+
+      );
+
+    });
+
+
+    var inp=h(
+      'input',
+      {
+        type:'text',
+        maxlength:'400',
+        placeholder:
+          'Escribe un comentario…',
+        'aria-label':
+          'Comentario'
+      }
+    );
+
+
+    cb.append(
+
+      h(
+        'form',
+        {
+          class:'cm-form',
+          onsubmit:
+            async function(e){
+
+              e.preventDefault();
+
+
+              var t=
+                inp.value.trim();
+
+
+              if(!t)return;
+
+
+              inp.disabled=true;
+
+
+              var r=
+                await sb
+                  .from('post_comments')
+                  .insert({
+                    post_id:p.id,
+                    user_id:uid,
+                    body:t.slice(0,400)
+                  });
+
+
+              if(r.error){
+
+                toast(
+                  'No pudimos comentar.'
+                );
+
+                inp.disabled=false;
+
+                return;
+              }
+
+
+              await loadFeed(true);
+
+            }
+        },
+
+        inp,
+
+        h(
+          'button',
+          {
+            class:'btn sm',
+            type:'submit'
+          },
+          'Enviar'
+        )
+
+      )
+
+    );
+
+
+    el.append(cb);
+
+  }
+
+
+  return el;
+
+}
+
+
+async function toggleLike(p,btn){
+
+  var o=
+    likes[p.id]||
+    (
+      likes[p.id]={
+        count:0,
+        mine:false
+      }
+    );
+
+
+  var was=o.mine;
+
+
+  o.mine=!was;
+
+  o.count+=was
+    ? -1
+    : 1;
+
+
+  btn.classList.toggle(
+    'liked',
+    o.mine
+  );
+
+
+  btn.lastChild.textContent=
+    o.count;
+
+
+  var r=
+    was
+      ? await sb
+          .from('post_likes')
+          .delete()
+          .eq(
+            'post_id',
+            p.id
+          )
+          .eq(
+            'user_id',
+            uid
+          )
+
+      : await sb
+          .from('post_likes')
+          .insert({
+            post_id:p.id,
+            user_id:uid
+          });
+
+
+  if(r.error){
+
+    o.mine=was;
+
+    o.count+=was
+      ? 1
+      : -1;
+
+
+    btn.classList.toggle(
+      'liked',
+      was
+    );
+
+
+    btn.lastChild.textContent=
+      o.count;
+
+
+    toast(
+      'No pudimos registrar tu me gusta.'
+    );
+
+  }
+
+}
+
+
+async function delPost(p){
+
+  if(
+    !confirm(
+      '¿Eliminar esta publicación?'
+    )
+  )return;
+
+
+  var r=
+    await sb
+      .from('community_posts')
+      .delete()
+      .eq(
+        'id',
+        p.id
+      );
+
+
+  if(r.error){
+
+    toast(
+      'No pudimos eliminarla.'
+    );
+
+    return;
+  }
+
+
+  if(p.image_url){
+
+    var m=
+      p.image_url.split(
+        '/posts/'
+      )[1];
+
+
+    if(m){
+
+      sb.storage
+        .from('posts')
+        .remove([
+          decodeURIComponent(m)
+        ]);
+
+    }
+
+  }
+
+
+  toast(
+    'Publicación eliminada'
+  );
+
+
+  loadFeed(true);
+
+}
+
+
+function sharePost(){
+
+  var txt=
+    'Mira las flores eternas de Aeterna 🌹 '+
+    location.href.replace(
+      /[^/]*$/,
+      ''
+    )+
+    'index.html';
+
+
+  if(navigator.share){
+
+    navigator
+      .share({
+        title:'Aeterna',
+        text:txt
+      })
+      .catch(function(){});
+
+  }else if(navigator.clipboard){
+
+    navigator.clipboard
+      .writeText(txt)
+      .then(function(){
+
+        toast(
+          'Enlace copiado'
+        );
+
+      });
+
+  }
+
+}
+
+
+/* =====================================================
+ * COLECCIÓN Y FAVORITOS
+ * ===================================================== */
+
+function buildCatChips(){
+
+  var cats=['Todo'];
+
+
+  AE.PRODUCTS.forEach(function(p){
+
+    if(
+      cats.indexOf(p.cat)<0
+    ){
+
+      cats.push(p.cat);
+
+    }
+
+  });
+
+
+  $('catChips').replaceChildren.apply(
+
+    $('catChips'),
+
+    cats.map(function(c){
+
+      return h(
+        'button',
+        {
+          class:'chip',
+          type:'button',
+          'aria-pressed':
+            String(catF===c),
+          onclick:function(){
+
+            catF=c;
+
+            buildCatChips();
+
+            renderCatalog();
+
+          }
+        },
+        c
+      );
+
+    })
+
+  );
+
+}
+
+
+function pcard(p){
+
+  var fav=!!favs[p.id];
+
+
+  var heart=
+    h(
+      'button',
+      {
+        class:
+          'heart'+
+          (
+            fav
+              ? ' on'
+              : ''
+          ),
+        type:'button',
+        'aria-label':
+          fav
+            ? 'Quitar de favoritos'
+            : 'Guardar en favoritos',
+        'aria-pressed':
+          String(fav),
+        onclick:function(e){
+
+          e.stopPropagation();
+
+          toggleFav(p.id);
+
+        }
+      },
+
+      AE.icon(
+        AE.ico.heart
+      )
+
+    );
+
+
+  return h(
+    'article',
+    {
+      class:'card pc',
+      tabindex:'0',
+      role:'button',
+      'aria-label':p.name,
+      onclick:function(){
+
+        openProduct(p);
+
+      },
+      onkeydown:function(e){
+
+        if(e.key==='Enter')
+          openProduct(p);
+
+      }
+    },
+
+    h(
+      'div',
+      {
+        class:'ph'
+      },
+
+      h(
+        'img',
+        {
+          src:p.img,
+          alt:p.name,
+          loading:'lazy',
+          onerror:function(){
+
+            this.style.visibility=
+              'hidden';
+
+          }
+        }
+      ),
+
+      heart,
+
+      h(
+        'span',
+        {
+          class:'cat-tag',
+          text:p.cat
+        }
+      )
+
+    ),
+
+    h(
+      'div',
+      {
+        class:'pb'
+      },
+
+      h(
+        'b',
+        {
+          text:p.name
+        }
+      ),
+
+      h(
+        'small',
+        {
+          text:p.size
+        }
+      ),
+
+      h(
+        'div',
+        {
+          class:'pbuy'
+        },
+
+        h(
+          'span',
+          {
+            class:'pr'
+          },
+
+          p.from
+            ? h(
+                'small',
+                {
+                  text:'Desde'
+                }
+              )
+            : null,
+
+          AE.money(p.price)
+
+        ),
+
+        h(
+          'button',
+          {
+            class:'btn sm',
+            type:'button',
+            onclick:function(e){
+
+              e.stopPropagation();
+
+              openOrder(p);
+
+            }
+          },
+          'Pedir'
+        )
+
+      )
+
+    )
+
+  );
+
+}
+
+
+function renderCatalog(){
+
+  var g=$('catGrid');
+
+  g.replaceChildren();
+
+
+  AE.PRODUCTS.forEach(function(p){
+
+    if(
+      catF==='Todo'||
+      p.cat===catF
+    ){
+
+      g.append(
+        pcard(p)
+      );
+
+    }
+
+  });
+
+}
+
+
+function renderFavs(){
+
+  var g=$('favGrid');
+
+  g.replaceChildren();
+
+
+  var list=
+    AE.PRODUCTS.filter(
+      function(p){
+
+        return favs[p.id];
+
+      }
+    );
+
+
+  if(!list.length){
+
+    g.style.display='block';
+
+
+    g.append(
+
+      h(
+        'div',
+        {
+          class:'empty'
+        },
+
+        h(
+          'h3',
+          {
+            text:
+              'Aún no tienes favoritos'
+          }
+        ),
+
+        h(
+          'p',
+          {
+            text:
+              'Toca el corazón ❤ en cualquier pieza para guardarla aquí.'
+          }
+        ),
+
+        h(
+          'button',
+          {
+            class:'btn',
+            type:'button',
+            onclick:function(){
+
+              go('coleccion');
+
+            }
+          },
+          'Ver colección'
+        )
+
+      )
+
+    );
+
+
+    return;
+
+  }
+
+
+  g.style.display='';
+
+
+  list.forEach(function(p){
+
+    g.append(
+      pcard(p)
+    );
+
+  });
+
+}
+
+
+async function loadFavs(){
+
+  var r=
+    await sb
+      .from('favorites')
+      .select('product_id')
+      .eq(
+        'user_id',
+        uid
+      );
+
+
+  if(r.error){
+
+    console.error(r.error);
+
+    renderFavs();
+
+    return;
+
+  }
+
+
+  favs={};
+
+
+  (r.data||[]).forEach(function(x){
+
+    favs[x.product_id]=true;
+
+  });
+
+
+  refreshProducts();
+
+}
+
+
+function refreshProducts(){
+
+  renderCatalog();
+
+  renderFavs();
+
+  renderStats();
+
+}
+
+
+async function toggleFav(id){
+
+  var was=!!favs[id];
+
+
+  if(was)
+    delete favs[id];
+  else
+    favs[id]=true;
+
+
+  refreshProducts();
+
+
+  var r=
+    was
+
+      ? await sb
+          .from('favorites')
+          .delete()
+          .eq(
+            'user_id',
+            uid
+          )
+          .eq(
+            'product_id',
+            id
+          )
+
+      : await sb
+          .from('favorites')
+          .upsert(
+            {
+              user_id:uid,
+              product_id:id
+            },
+            {
+              onConflict:'user_id,product_id',
+              ignoreDuplicates:true
+            }
+          );
+
+
+  if(r.error){
+
+    console.error(r.error);
+
+
+    if(was)
+      favs[id]=true;
+    else
+      delete favs[id];
+
+
+    refreshProducts();
+
+
+    toast(
+      'No pudimos guardar tu favorito.'
+    );
+
+    return;
+
+  }
+
+
+  /*
+   * Volvemos a leer desde Supabase después de guardar.
+   * Así el corazón no depende solamente del estado local
+   * y permanece marcado después de cambiar de sección o recargar.
+   */
+  await loadFavs();
+
+  toast(
+    was
+      ? 'Quitado de favoritos'
+      : 'Guardado en favoritos ❤'
+  );
+
+}
+
+
+function openProduct(p){
+
+  var favBtn=
+    h(
+      'button',
+      {
+        class:'btn ghost',
+        type:'button'
+      },
+      favs[p.id]
+        ? '❤ En favoritos'
+        : '♡ Guardar'
+    );
+
+
+  favBtn.onclick=async function(){
+
+    await toggleFav(p.id);
+
+
+    favBtn.textContent=
+      favs[p.id]
+        ? '❤ En favoritos'
+        : '♡ Guardar';
+
+  };
+
+
+  AE.openSheet(
+    AE.sheet(
+      p.name,
+
+      h(
+        'div',
+        {
+          class:'pdet'
+        },
+
+        h(
+          'img',
+          {
+            class:'big',
+            src:p.img,
+            alt:p.name,
+            onclick:function(){
+
+              AE.zoom(p.img);
+
+            }
+          }
+        ),
+
+        h(
+          'div',
+          null,
+
+          h(
+            'span',
+            {
+              class:'pill',
+              text:p.cat
+            }
+          )
+
+        ),
+
+        h(
+          'p',
+          {
+            text:p.desc
+          }
+        ),
+
+        h(
+          'p',
+          {
+            class:'note-inline',
+            text:
+              'Incluye: '+
+              p.size
+          }
+        ),
+
+        h(
+          'div',
+          {
+            class:'pr'
+          },
+
+          p.from
+            ? h(
+                'small',
+                {
+                  text:'Desde'
+                }
+              )
+            : null,
+
+          AE.money(p.price)
+
+        ),
+
+        h(
+          'div',
+          {
+            class:'acts'
+          },
+
+          h(
+            'button',
+            {
+              class:'btn',
+              type:'button',
+              onclick:function(){
+
+                openOrder(p);
+
+              }
+            },
+            'Pedir ahora'
+          ),
+
+          favBtn,
+
+          h(
+            'button',
+            {
+              class:'btn ghost',
+              type:'button',
+              style:
+                'grid-column:1/-1',
+              onclick:function(){
+
+                AE.closeSheet();
+
+                chatDraft=
+                  'Hola Aeterna, me interesa el '+
+                  p.name+
+                  ' ('+
+                  AE.money(p.price)+
+                  '). Quisiera consultar: ';
+
+                go('mensajes');
+
+              }
+            },
+            'Preguntar por el chat'
+          )
+
+        )
+
+      ),
+
+      p.name
+
+    )
+  );
+
+}
+
+
+/* =====================================================
+ * PEDIDOS
+ * ===================================================== */
+
+function openOrder(p,pre){
+
+  pre=pre||{};
+
+
+  var qty=pre.qty||1;
+
+  var zone=
+    pre.zone||
+    'gato-negro';
+
+
+  var qv=h(
+    'b',
+    {
+      text:String(qty)
+    }
+  );
+
+
+  var dateIn=h(
+    'input',
+    {
+      type:'date',
+      min:
+        AE.isoD(
+          AE.todayD()
+        )
+    }
+  );
+
+
+  dateIn.value=
+    pre.date||'';
+
+
+  var addr=h(
+    'textarea',
+    {
+      rows:'2',
+      maxlength:'250',
+      placeholder:
+        'Dirección o punto de referencia'
+    }
+  );
+
+
+  addr.value=
+    pre.address||'';
+
+
+  var notes=h(
+    'textarea',
+    {
+      rows:'2',
+      maxlength:'300',
+      placeholder:
+        'Dedicatoria, colores, detalles…'
+    }
+  );
+
+
+  notes.value=
+    pre.notes||'';
+
+
+  var addrLbl=
+    h(
+      'label',
+      {
+        class:'f'
+      },
+      'Dirección de entrega',
+      addr
+    );
+
+
+  var zoneBox=
+    h(
+      'div',
+      {
+        class:'opts',
+        role:'group',
+        'aria-label':
+          'Zona de entrega'
+      }
+    );
+
+
+  var sum=h(
+    'div',
+    {
+      class:'sum'
+    }
+  );
+
+
+  var send=
+    h(
+      'button',
+      {
+        class:'btn block',
+        type:'button'
+      },
+      'Confirmar pedido'
+    );
+
+
+  function fee(){
+
+    var z=AE.zone(zone);
+
+    return z.price;
+
+  }
+
+
+  function paint(){
+
+    qv.textContent=
+      qty;
+
+
+    addrLbl.hidden=
+      zone==='retiro';
+
+
+    zoneBox.replaceChildren.apply(
+
+      zoneBox,
+
+      AE.ZONES.map(function(z){
+
+        return h(
+          'button',
+          {
+            class:'chip',
+            type:'button',
+            'aria-pressed':
+              String(zone===z.id),
+            onclick:function(){
+
+              zone=z.id;
+
+              paint();
+
+            }
+          },
+          z.name
+        );
+
+      })
+
+    );
+
+
+    var f=fee();
+
+    var sub=
+      p.price*qty;
+
+
+    sum.replaceChildren(
+
+      h(
+        'div',
+        null,
+
+        h(
+          'span',
+          {
+            text:
+              qty+
+              ' × '+
+              p.name
+          }
+        ),
+
+        h(
+          'span',
+          {
+            text:
+              AE.money(sub)
+          }
+        )
+
+      ),
+
+      h(
+        'div',
+        null,
+
+        h(
+          'span',
+          {
+            text:
+              AE.zone(zone).name
+          }
+        ),
+
+        h(
+          'span',
+          {
+            text:
+              f==null
+                ? 'A convenir'
+                : (
+                    f===0
+                      ? 'Gratis'
+                      : AE.money(f)
+                  )
+          }
+        )
+
+      ),
+
+      h(
+        'div',
+        {
+          class:'t'
+        },
+
+        h(
+          'span',
+          {
+            text:
+              'Total estimado'
+          }
+        ),
+
+        h(
+          'span',
+          {
+            text:
+              f==null
+                ? AE.money(sub)+
+                  ' + delivery'
+                : AE.money(
+                    sub+f
+                  )
+          }
+        )
+
+      )
+
+    );
+
+  }
+
+
+  send.onclick=async function(){
+
+    if(!dateIn.value){
+
+      toast(
+        'Elige la fecha de entrega.'
+      );
+
+      dateIn.focus();
+
+      return;
+
+    }
+
+
+    if(
+      AE.parseD(dateIn.value)<
+      AE.todayD()
+    ){
+
+      toast(
+        'La fecha no puede ser pasada.'
+      );
+
+      return;
+
+    }
+
+
+    if(
+      zone!=='retiro'&&
+      addr.value.trim().length<5
+    ){
+
+      toast(
+        'Escribe la dirección de entrega.'
+      );
+
+      addr.focus();
+
+      return;
+
+    }
+
+
+    send.disabled=true;
+
+    send.textContent=
+      'Enviando pedido…';
+
+
+    var f=fee();
+
+
+    var row={
+
+      user_id:uid,
+
+      product_id:p.id,
+
+      product_name:p.name,
+
+      product_image:p.img,
+
+      unit_price:p.price,
+
+      qty:qty,
+
+      zone:zone,
+
+      zone_label:
+        AE.zone(zone).name,
+
+      delivery_fee:f,
+
+      delivery_date:
+        dateIn.value,
+
+      address:
+        zone==='retiro'
+          ? null
+          : addr.value.trim(),
+
+      notes:
+        notes.value.trim()||
+        null,
+
+      status:'recibido'
+
+    };
+
+
+    /*
+     * IMPORTANTE: no usamos INSERT ... SELECT aquí.
+     * En Supabase puede existir una política RLS que permita
+     * insertar el pedido pero no devolver la fila recién creada.
+     * Eso hacía que el usuario viera un error aunque el INSERT
+     * hubiese ocurrido. Insertamos primero y después recargamos
+     * los pedidos con la consulta normal de la cuenta.
+     */
+    var r=
+      await sb
+        .from('orders')
+        .insert(row);
+
+
+    if(r.error){
+
+      console.error('ERROR INSERTANDO PEDIDO:',r.error);
+
+      toast(
+        'No pudimos enviar el pedido. '+
+        (r.error.message||'Intenta de nuevo.')
+      );
+
+      send.disabled=false;
+
+      send.textContent=
+        'Confirmar pedido';
+
+      return;
+
+    }
+
+
+    await loadOrders();
+
+    renderWidgets();
+
+    AE.closeSheet();
+
+    /* Buscamos la fila recién insertada para obtener su ID si RLS
+       permite leer los pedidos de la propia cuenta. */
+    var created=orders.filter(function(o){
+      return o.product_id===row.product_id &&
+             o.user_id===uid &&
+             o.delivery_date===row.delivery_date &&
+             o.status==='recibido';
+    })[0]||orders[0]||null;
+
+    var orderRef=created&&created.id
+      ? ' #'+AE.shortId(created.id)
+      : '';
+
+    var txt=
+      '🛍️ Nuevo pedido'+
+      orderRef+
+      '\n'+
+      qty+
+      ' × '+
+      p.name+
+      ' ('+
+      AE.money(p.price)+
+      ')\n'+
+      'Entrega: '+
+      new Date(
+        dateIn.value+
+        'T00:00'
+      ).toLocaleDateString(
+        'es',
+        {
+          day:'numeric',
+          month:'long'
+        }
+      )+
+      ' · '+
+      AE.zone(zone).name+
+      (
+        row.address
+          ? '\nDirección: '+
+            row.address
+          : ''
+      )+
+      (
+        row.notes
+          ? '\nNota: '+
+            row.notes
+          : ''
+      );
+
+
+    safe(function(){
+
+      return sendMsg(txt);
+
+    });
+
+
+    toast(
+      '¡Pedido enviado! Te avisaremos cada paso 🌹'
+    );
+
+
+    go('pedidos');
+
+  };
+
+
+  paint();
+
+
+  AE.openSheet(
+    AE.sheet(
+      'Hacer pedido',
+      [
+
+        h(
+          'div',
+          {
+            class:'mini'
+          },
+
+          h(
+            'img',
+            {
+              src:p.img,
+              alt:p.name
+            }
+          ),
+
+          h(
+            'div',
+            null,
+
+            h(
+              'b',
+              {
+                text:p.name
+              }
+            ),
+
+            h(
+              'span',
+              {
+                class:'note-inline',
+                text:p.size
+              }
+            )
+
+          )
+
+        ),
+
+        h(
+          'label',
+          {
+            class:'f'
+          },
+
+          'Cantidad',
+
+          h(
+            'div',
+            {
+              class:'qty'
+            },
+
+            h(
+              'button',
+              {
+                type:'button',
+                'aria-label':'Menos',
+                onclick:function(){
+
+                  if(qty>1){
+
+                    qty--;
+
+                    paint();
+
+                  }
+
+                }
+              },
+              '−'
+            ),
+
+            qv,
+
+            h(
+              'button',
+              {
+                type:'button',
+                'aria-label':'Más',
+                onclick:function(){
+
+                  if(qty<10){
+
+                    qty++;
+
+                    paint();
+
+                  }
+
+                }
+              },
+              '+'
+            )
+
+          )
+
+        ),
+
+        h(
+          'label',
+          {
+            class:'f'
+          },
+          'Fecha de entrega',
+          dateIn
+        ),
+
+        h(
+          'div',
+          {
+            class:'f'
+          },
+
+          h(
+            'span',
+            {
+              text:'Zona de entrega'
+            }
+          ),
+
+          zoneBox
+
+        ),
+
+        addrLbl,
+
+        h(
+          'label',
+          {
+            class:'f'
+          },
+          'Dedicatoria o detalles (opcional)',
+          notes
+        ),
+
+        sum,
+
+        h(
+          'p',
+          {
+            class:'note-inline',
+            text:
+              'Confirmaremos contigo el costo exacto y el pago por el chat.'
+          }
+        ),
+
+        send
+
+      ]
+    )
+  );
+
+}
+
+
+async function loadOrders(){
+
+  var r=
+    await sb
+      .from('orders')
+      .select('*')
+      .eq(
+        'user_id',
+        uid
+      )
+      .order(
+        'created_at',
+        {
+          ascending:false
+        }
+      )
+      .limit(100);
+
+
+  if(r.error){
+
+    console.error(r.error);
+
+    renderOrders();
+
+    return;
+
+  }
+
+
+  orders=
+    r.data||[];
+
+
+  renderOrders();
+
+  renderStats();
+
+  renderWidgets();
+
+}
+
+
+function oTotal(o){
+
+  var s=
+    o.unit_price*
+    o.qty;
+
+
+  return o.zone==='otra'
+    ? AE.money(s)+
+      ' + delivery'
+    : AE.money(
+        s+
+        (
+          o.delivery_fee||
+          0
+        )
+      );
+
+}
+
+
+function orderCard(o){
+
+  var idx=
+    AE.statusIdx(
+      o.status
+    );
+
+  var cancelled=
+    o.status==='cancelado';
+
+  var done=
+    o.status==='entregado';
+
+
+  var el=h(
+    'article',
+    {
+      class:'card ocard'
+    }
+  );
+
+
+  el.append(
+
+    h(
+      'div',
+      {
+        class:'otop'
+      },
+
+      h(
+        'img',
+        {
+          src:
+            o.product_image||
+            '',
+          alt:o.product_name,
+          onerror:function(){
+
+            this.style.visibility=
+              'hidden';
+
+          }
+        }
+      ),
+
+      h(
+        'div',
+        {
+          class:'m'
+        },
+
+        h(
+          'b',
+          {
+            text:o.product_name
+          }
+        ),
+
+        h(
+          'small',
+          {
+            text:
+              'Pedido #'+
+              AE.shortId(o.id)+
+              ' · '+
+              AE.ago(
+                o.created_at
+              )
+          }
+        )
+
+      ),
+
+      h(
+        'span',
+        {
+          class:
+            'pill'+
+            (
+              done
+                ? ' ok'
+                : cancelled
+                  ? ' no'
+                  : ''
+            ),
+          text:
+            AE.statusLabel(
+              o.status
+            )
+        }
+      )
+
+    )
+
+  );
+
+
+  if(!cancelled){
+
+    el.append(
+
+      h(
+        'div',
+        {
+          class:'trk'
+        },
+
+        AE.STATUS.map(
+          function(s,i){
+
+            return h(
+              'div',
+              {
+                class:
+                  'st'+
+                  (
+                    i<=idx
+                      ? ' done'
+                      : ''
+                  )+
+                  (
+                    i===idx
+                      ? ' now'
+                      : ''
+                  )
+              },
+
+              h(
+                'i',
+                {
+                  text:
+                    i<=idx
+                      ? '✓'
+                      : String(i+1)
+                }
+              ),
+
+              s[1]
+
+            );
+
+          }
+        )
+
+      )
+
+    );
+
+  }
+
+
+  el.append(
+
+    h(
+      'div',
+      {
+        class:'odet'
+      },
+
+      h(
+        'span',
+        null,
+
+        'Cantidad: ',
+
+        h(
+          'b',
+          {
+            text:String(o.qty)
+          }
+        )
+
+      ),
+
+      h(
+        'span',
+        null,
+
+        'Entrega: ',
+
+        h(
+          'b',
+          {
+            text:
+              o.delivery_date
+                ? new Date(
+                    o.delivery_date+
+                    'T00:00'
+                  ).toLocaleDateString(
+                    'es',
+                    {
+                      day:'numeric',
+                      month:'short'
+                    }
+                  )
+                : '—'
+          }
+        )
+
+      ),
+
+      h(
+        'span',
+        null,
+        o.zone_label||''
+      ),
+
+      h(
+        'span',
+        null,
+
+        'Total: ',
+
+        h(
+          'b',
+          {
+            text:
+              oTotal(o)
+          }
+        )
+
+      )
+
+    )
+
+  );
+
+
+  var acts=
+    h(
+      'div',
+      {
+        class:'oacts'
+      },
+
+      h(
+        'button',
+        {
+          class:'btn sm',
+          type:'button',
+          onclick:function(){
+
+            reorder(o);
+
+          }
+        },
+        '↻ Volver a pedir'
+      ),
+
+      h(
+        'button',
+        {
+          class:'btn ghost sm',
+          type:'button',
+          onclick:function(){
+
+            chatDraft=
+              'Hola, sobre mi pedido #'+
+              AE.shortId(o.id)+
+              ' ('+
+              o.product_name+
+              '): ';
+
+            go('mensajes');
+
+          }
+        },
+        'Escribir a Aeterna'
+      )
+
+    );
+
+
+  if(
+    o.status==='recibido'
+  ){
+
+    acts.append(
+
+      h(
+        'button',
+        {
+          class:'btn ghost sm',
+          type:'button',
+          onclick:function(){
+
+            cancelOrder(o);
+
+          }
+        },
+        'Cancelar'
+      )
+
+    );
+
+  }
+
+
+  el.append(acts);
+
+
+  return el;
+
+}
+
+
+async function markCustomerOrderNotificationsSeen(){
+
+  var ids=orders
+    .filter(function(o){
+      return (o.status==='entregado'||o.status==='cancelado') && !o.customer_seen_at;
+    })
+    .map(function(o){ return o.id; });
+
+  if(!ids.length)return;
+
+  var now=new Date().toISOString();
+
+  var r=await sb
+    .from('orders')
+    .update({customer_seen_at:now})
+    .in('id',ids)
+    .eq('user_id',uid);
+
+  if(r.error){
+    console.error('No se pudieron marcar notificaciones de pedidos:',r.error);
+    return;
+  }
+
+  orders.forEach(function(o){
+    if(ids.indexOf(o.id)>=0) o.customer_seen_at=now;
+  });
+
+  AE.setBadge('ord',0);
+}
+
+function renderOrders(){
+
+  var a=$('ordActive');
+
+  var hs=$('ordHist');
+
+
+  a.replaceChildren();
+
+  hs.replaceChildren();
+
+
+  var act=
+    orders.filter(function(o){
+
+      return o.status!=='entregado'&&
+             o.status!=='cancelado';
+
+    });
+
+
+  var hist=
+    orders.filter(function(o){
+
+      return o.status==='entregado'||
+             o.status==='cancelado';
+
+    });
+
+
+  if(!act.length){
+
+    a.append(
+
+      h(
+        'div',
+        {
+          class:'empty'
+        },
+
+        h(
+          'h3',
+          {
+            text:
+              'No tienes pedidos activos'
+          }
+        ),
+
+        h(
+          'p',
+          {
+            text:
+              'Cuando hagas un pedido verás aquí su estado en tiempo real.'
+          }
+        ),
+
+        h(
+          'button',
+          {
+            class:'btn',
+            type:'button',
+            onclick:function(){
+
+              go('coleccion');
+
+            }
+          },
+          'Ver colección'
+        )
+
+      )
+
+    );
+
+  }
+
+
+  act.forEach(function(o){
+
+    a.append(
+      orderCard(o)
+    );
+
+  });
+
+
+  if(!hist.length){
+
+    hs.append(
+
+      h(
+        'div',
+        {
+          class:'empty'
+        },
+
+        h(
+          'p',
+          {
+            text:
+              'Tu historial aparecerá aquí.'
+          }
+        )
+
+      )
+
+    );
+
+  }
+
+
+  hist.forEach(function(o){
+
+    hs.append(
+      orderCard(o)
+    );
+
+  });
+
+
+  var notifications=orders.filter(function(o){
+    return (o.status==='entregado'||o.status==='cancelado') && !o.customer_seen_at;
+  }).length;
+
+  AE.setBadge(
+    'ord',
+    notifications
+  );
+
+}
+
+
+function reorder(o){
+
+  var p=
+    AE.product(o.product_id)||
+    {
+      id:o.product_id,
+      name:o.product_name,
+      price:o.unit_price,
+      img:o.product_image,
+      size:'',
+      cat:''
+    };
+
+
+  openOrder(
+    p,
+    {
+      qty:o.qty,
+      zone:o.zone,
+      address:o.address,
+      notes:o.notes
+    }
+  );
+
+}
+
+
+async function cancelOrder(o){
+
+  if(
+    !confirm(
+      '¿Cancelar este pedido?'
+    )
+  )return;
+
+
+  var r=
+    await sb
+      .from('orders')
+      .update({
+        status:'cancelado',
+        updated_at:
+          new Date().toISOString()
+      })
+      .eq(
+        'id',
+        o.id
+      )
+      .eq(
+        'user_id',
+        uid
+      );
+
+
+  if(r.error){
+
+    toast(
+      'No pudimos cancelarlo. Escríbenos por el chat.'
+    );
+
+    return;
+
+  }
+
+
+  safe(function(){
+
+    return sendMsg(
+      '❌ Cancelé mi pedido #'+
+      AE.shortId(o.id)+
+      ' ('+
+      o.product_name+
+      ').'
+    );
+
+  });
+
+
+  toast(
+    'Pedido cancelado'
+  );
+
+
+  loadOrders();
+
+}
+
+
+/* =====================================================
+ * FECHAS ESPECIALES
+ * ===================================================== */
+
+async function loadDates(){
+
+  var r=
+    await sb
+      .from('special_dates')
+      .select('*')
+      .eq(
+        'user_id',
+        uid
+      );
+
+
+  if(r.error){
+
+    console.error(r.error);
+
+    renderDates();
+
+    return;
+
+  }
+
+
+  dates=
+    r.data||[];
+
+
+  renderDates();
+
+  renderWidgets();
+
+}
+
+
+function renderDates(){
+
+  var box=$('dateList');
+
+  box.replaceChildren();
+
+
+  if(!dates.length){
+
+    box.append(
+
+      h(
+        'div',
+        {
+          class:'empty'
+        },
+
+        h(
+          'h3',
+          {
+            text:
+              'Aún no guardas fechas'
+          }
+        ),
+
+        h(
+          'p',
+          {
+            text:
+              'Añade un cumpleaños o aniversario y te recordamos con tiempo, con ideas de regalo incluidas. 🎂'
+          }
+        ),
+
+        h(
+          'button',
+          {
+            class:'btn',
+            type:'button',
+            onclick:function(){
+
+              openDate();
+
+            }
+          },
+          'Añadir mi primera fecha'
+        )
+
+      )
+
+    );
+
+    return;
+
+  }
+
+
+  dates
+    .slice()
+    .sort(function(a,b){
+
+      return AE.dleft(a)-
+             AE.dleft(b);
+
+    })
+    .forEach(function(d){
+
+      box.append(
+        dateCard(d)
+      );
+
+    });
+
+}
+
+
+function dateCard(d){
+
+  var o=AE.nextOcc(d);
+
+  var n=AE.dleft(d);
+
+  var oc=AE.occ(d.occasion);
+
+
+  var sug=
+    h(
+      'div',
+      {
+        class:'sug'
+      },
+
+      (
+        AE.SUGGEST[
+          d.occasion
+        ]||
+        AE.SUGGEST.otro
+      )
+      .map(AE.product)
+      .filter(Boolean)
+      .map(function(p){
+
+        return h(
+          'button',
+          {
+            type:'button',
+            'aria-label':
+              'Pedir '+p.name,
+            onclick:function(){
+
+              openOrder(
+                p,
+                {
+                  date:
+                    AE.isoD(o)
+                }
+              );
+
+            }
+          },
+
+          h(
+            'img',
+            {
+              src:p.img,
+              alt:p.name,
+              loading:'lazy'
+            }
+          ),
+
+          h(
+            'b',
+            {
+              text:p.name
+            }
+          ),
+
+          h(
+            'span',
+            {
+              text:
+                AE.money(
+                  p.price
+                )
+            }
+          )
+
+        );
+
+      })
+
+    );
+
+
+  var chL=
+    (
+      AE.CHANNELS.filter(
+        function(c){
+
+          return c[0]===d.channel;
+
+        }
+      )[0]||
+      []
+    )[1]||'';
+
+
+  return h(
+    'article',
+    {
+      class:'card dcard'
+    },
+
+    h(
+      'div',
+      {
+        class:'dtop'
+      },
+
+      h(
+        'div',
+        {
+          class:'dbadge'
+        },
+
+        h(
+          'i',
+          {
+            text:
+              o.toLocaleDateString(
+                'es',
+                {
+                  month:'short'
+                }
+              )
+          }
+        ),
+
+        h(
+          'b',
+          {
+            text:
+              String(
+                o.getDate()
+              )
+          }
+        )
+
+      ),
+
+      h(
+        'div',
+        {
+          class:'dmain'
+        },
+
+        h(
+          'strong',
+          {
+            text:
+              oc[1]+' '+d.title
+          }
+        ),
+
+        h(
+          'small',
+          {
+            text:
+              oc[2]+' · '+
+              AE.longDate(o)
+          }
+        )
+
+      ),
+
+      h(
+        'span',
+        {
+          class:
+            'cd'+
+            (
+              n<=7
+                ? ' soon'
+                : ''
+            ),
+          text:
+            AE.cd(n)
+        }
+      )
+
+    ),
+
+    h(
+      'div',
+      {
+        class:'rem'
+      },
+
+      h(
+        'span',
+        {
+          text:
+            d.remind_days
+              ? '🔔 Recordatorio '+
+                d.remind_days+
+                (
+                  d.remind_days===1
+                    ? ' día'
+                    : ' días'
+                )+
+                ' antes · '+
+                chL
+              : '🔕 Sin recordatorio'
+        }
+      ),
+
+      h(
+        'button',
+        {
+          class:'act',
+          type:'button',
+          onclick:function(){
+
+            openDate(d);
+
+          }
+        },
+        'Editar'
+      ),
+
+      h(
+        'button',
+        {
+          class:'act',
+          type:'button',
+          onclick:function(){
+
+            delDate(d);
+
+          }
+        },
+        'Eliminar'
+      )
+
+    ),
+
+    h(
+      'div',
+      null,
+
+      h(
+        'p',
+        {
+          class:'eyebrow',
+          style:
+            'margin-bottom:.4rem',
+          text:
+            'Ideas para esta fecha'
+        }
+      ),
+
+      sug
+
+    )
+
+  );
+
+}
+
+
+function openDate(d){
+
+  var occ=d?d.occasion:'cumple';
+  var chan=d?d.channel:'whatsapp';
+  if(['whatsapp','correo','ambos'].indexOf(chan)<0) chan='whatsapp';
+
+  var title=h('input',{type:'text',maxlength:'80',placeholder:'Ej: Cumpleaños de mi novia'});
+  title.value=d?d.title:'';
+  var date=h('input',{type:'date'}); date.value=d?d.event_date:'';
+  var yearly=h('input',{type:'checkbox'}); yearly.checked=d?d.repeat_yearly:true;
+  var rem=h('select',null,[0,1,3,7,14].map(function(n){return h('option',{value:String(n)},n===0?'Sin recordatorio':n+(n===1?' día antes':' días antes'));}));
+  rem.value=String(d?d.remind_days:3);
+
+  var phone=h('input',{class:'date-contact-input',type:'tel',maxlength:'20',placeholder:'0412 000 0000',autocomplete:'tel'});
+  phone.value=d?(d.phone||me.phone||''):(me.phone||'');
+  var emailInput=h('input',{class:'date-contact-input',type:'email',maxlength:'160',placeholder:'ejemplo@gmail.com',autocomplete:'email',spellcheck:'false',inputmode:'email'});
+  emailInput.value=d?(d.email||me.contactEmail||email||''):(me.contactEmail||email||'');
+
+  var occBox=h('div',{class:'opts'}), chBox=h('div',{class:'opts'});
+  var contactBox=h('div',{class:'date-contact-fields',style:'display:grid;gap:.55rem'});
+
+  function paint(){
+    occBox.replaceChildren.apply(occBox,AE.OCC.map(function(o){
+      return h('button',{class:'chip',type:'button','aria-pressed':String(occ===o[0]),onclick:function(){occ=o[0];paint();}},o[1]+' '+o[2]);
+    }));
+    var channels=[['whatsapp','WhatsApp'],['correo','Correo'],['ambos','Ambos']];
+    chBox.replaceChildren.apply(chBox,channels.map(function(c){
+      return h('button',{class:'chip',type:'button','aria-pressed':String(chan===c[0]),onclick:function(){chan=c[0];paint();}},c[1]);
+    }));
+    contactBox.replaceChildren();
+    if(chan==='whatsapp'||chan==='ambos') contactBox.append(h('label',{class:'f'},'Teléfono',phone));
+    if(chan==='correo'||chan==='ambos') contactBox.append(h('label',{class:'f'},'Correo electrónico',emailInput));
+  }
+
+  var save=h('button',{class:'btn block',type:'button'},d?'Guardar cambios':'Guardar fecha');
+  save.onclick=async function(){
+    var t=title.value.trim(), ph=phone.value.trim(), em=aeNormalizeEmail(emailInput.value);
+
+    if(!t){toast('Ponle un nombre a la fecha.');title.focus();return;}
+    if(!date.value){toast('Elige la fecha.');date.focus();return;}
+
+    var days=+rem.value;
+
+    if((chan==='whatsapp'||chan==='ambos') && days>0 && !ph){
+      toast('Añade tu teléfono para recibir el recordatorio.');
+      phone.focus();
+      return;
+    }
+
+    if((chan==='correo'||chan==='ambos') && days>0 && !em){
+      toast('Añade tu correo para recibir el recordatorio.');
+      emailInput.focus();
+      return;
+    }
+
+    if((chan==='whatsapp'||chan==='ambos') && ph && !aeValidVePhone(ph)){
+      toast('Introduce un número venezolano válido. Ej: 0412 000 0000');
+      phone.focus();
+      return;
+    }
+
+    if((chan==='correo'||chan==='ambos') && em && !aeValidEmail(em)){
+      toast('Introduce un correo válido y no temporal.');
+      emailInput.focus();
+      return;
+    }
+
+    save.disabled=true;
+
+    var row={
+      user_id:uid,
+      title:t,
+      occasion:occ,
+      event_date:date.value,
+      repeat_yearly:yearly.checked,
+      remind_days:days,
+      channel:chan,
+      phone:ph||null,
+      email:em||null
+    };
+
+    var r=d
+      ?await sb.from('special_dates').update(row).eq('id',d.id)
+      :await sb.from('special_dates').insert(row);
+
+    if(r.error && /email|column|schema|constraint|check/i.test(r.error.message||'')){
+      var rowCompat=Object.assign({},row);
+      delete rowCompat.email;
+
+      r=d
+        ?await sb.from('special_dates').update(rowCompat).eq('id',d.id)
+        :await sb.from('special_dates').insert(rowCompat);
+    }
+
+    if(r.error && chan==='ambos' && /channel|check|constraint|valid/i.test(r.error.message||'')){
+      var rowBothCompat={
+        user_id:uid,
+        title:t,
+        occasion:occ,
+        event_date:date.value,
+        repeat_yearly:yearly.checked,
+        remind_days:days,
+        channel:'whatsapp',
+        phone:ph||null
+      };
+
+      r=d
+        ?await sb.from('special_dates').update(rowBothCompat).eq('id',d.id)
+        :await sb.from('special_dates').insert(rowBothCompat);
+    }
+
+    if(!r.error && (ph||em)){
+      var contactPayload={
+        user_id:uid,
+        phone:ph||me.phone||null,
+        email:em||me.contactEmail||null,
+        updated_at:new Date().toISOString()
+      };
+
+      var cr=await sb.from('customer_contacts').upsert(contactPayload,{onConflict:'user_id'});
+
+      if(cr.error && /email|column/i.test(cr.error.message||'')){
+        cr=await sb.from('customer_contacts').upsert({
+          user_id:uid,
+          phone:ph||me.phone||null,
+          updated_at:new Date().toISOString()
+        },{onConflict:'user_id'});
+      }
+
+      if(!cr.error){
+        if(ph)me.phone=ph;
+        if(em)me.contactEmail=em;
+      }
+    }
+
+    save.disabled=false;
+
+    if(r.error){
+      console.error(r.error);
+      toast('No pudimos guardar la fecha. Revisa los datos e inténtalo de nuevo.');
+      return;
+    }
+
+    AE.closeSheet();
+    toast('Fecha guardada 📅');
+    loadDates();
+  };
+  paint();
+  AE.openSheet(AE.sheet(d?'Editar fecha':'Nueva fecha especial',[
+    h('label',{class:'f'},'¿Qué celebras?',title),
+    h('div',{class:'f'},h('span',{text:'Ocasión'}),occBox),
+    h('label',{class:'f'},'Fecha',date),
+    h('label',{class:'f',style:'grid-template-columns:auto 1fr;align-items:center;gap:.6rem'},yearly,h('span',{text:'Repetir cada año'})),
+    h('label',{class:'f'},'¿Cuándo te recordamos?',rem),
+    h('div',{class:'f'},h('span',{text:'¿Por dónde?'}),chBox),
+    contactBox,
+    save
+  ]));
+}
+
+
+async function delDate(d){
+
+  if(
+    !confirm(
+      '¿Eliminar esta fecha?'
+    )
+  )return;
+
+
+  var r=
+    await sb
+      .from('special_dates')
+      .delete()
+      .eq(
+        'id',
+        d.id
+      );
+
+
+  if(r.error){
+
+    toast(
+      'No pudimos eliminarla.'
+    );
+
+    return;
+
+  }
+
+
+  toast(
+    'Fecha eliminada'
+  );
+
+
+  loadDates();
+
+}
+
+
+$('addDate').onclick=function(){
+
+  openDate();
+
+};
+
+
+/* =====================================================
+ * CHAT PRIVADO
+ * ===================================================== */
+
+function seenKey(){
+
+  return 'ae_seen_'+uid;
+
+}
+
+
+function markSeen(){
+
+  try{
+
+    localStorage.setItem(
+      seenKey(),
+      String(
+        Date.now()
+      )
+    );
+
+  }catch(e){}
+
+}
+
+
+function updChatBadge(){
+
+  var seen=0;
+
+
+  try{
+
+    seen=
+      +localStorage.getItem(
+        seenKey()
+      )||
+      0;
+
+  }catch(e){}
+
+
+  var n=
+    msgs.filter(function(m){
+
+      return (
+        m.sender_role!=='customer'&&
+        new Date(
+          m.created_at
+        ).getTime()>seen
+      );
+
+    }).length;
+
+
+  if(
+    section==='mensajes'&&
+    !$('layout')
+      .classList
+      .contains('show-profile')
+  ){
+
+    n=0;
+
+  }
+
+
+  AE.setBadge(
+    'msg',
+    n
+  );
+
+}
+
+
+/* =====================================================
+ * CONVERSACIÓN
+ * ===================================================== */
+
+async function findConv(){
+
+  if(conv)return conv;
+
+
+  var r=
+    await sb
+      .from('conversations')
+      .select('*')
+      .eq(
+        'customer_id',
+        uid
+      )
+      .order(
+        'created_at',
+        {
+          ascending:true
+        }
+      )
+      .limit(1)
+      .maybeSingle();
+
+
+  if(r.error)
+    throw r.error;
+
+
+  conv=
+    r.data||
+    null;
+
+
+  return conv;
+
+}
+
+
+async function getConv(){
+
+  var c=
+    await findConv();
+
+
+  if(c){
+
+    if(!chatChannel){
+
+      subChat();
+
+    }
+
+    return c;
+
+  }
+
+
+  var ins=
+    await sb
+      .from('conversations')
+      .insert({
+        customer_id:uid,
+        alias:
+          (
+            me.display_name||
+            ''
+          ).slice(
+            0,
+            40
+          )
+      })
+      .select()
+      .single();
+
+
+  if(ins.error)
+    throw ins.error;
+
+
+  conv=
+    ins.data;
+
+
+  subChat();
+
+
+  return conv;
+
+}
+
+
+/* =====================================================
+ * SONIDOS DEL CHAT
+ * ===================================================== */
+var aeChatAudioCtx=null;
+var aeTypingSoundTimer=null;
+var aeTypingSoundActive=false;
+var aeTypingSoundWasActive=false;
+function aeChatAudio(){try{if(!aeChatAudioCtx){var C=window.AudioContext||window.webkitAudioContext;if(!C)return null;aeChatAudioCtx=new C()}if(aeChatAudioCtx.state==='suspended')aeChatAudioCtx.resume().catch(function(){});return aeChatAudioCtx}catch(e){return null}}
+function aePlayChatBubble(){var ctx=aeChatAudio();if(!ctx)return;try{var n=ctx.currentTime,o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.setValueAtTime(880,n);o.frequency.exponentialRampToValueAtTime(620,n+.10);g.gain.setValueAtTime(.0001,n);g.gain.exponentialRampToValueAtTime(.075,n+.012);g.gain.exponentialRampToValueAtTime(.0001,n+.16);o.connect(g);g.connect(ctx.destination);o.start(n);o.stop(n+.17)}catch(e){}}
+function aePlayTypingTick(){var ctx=aeChatAudio();if(!ctx)return;try{var n=ctx.currentTime,o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.setValueAtTime(540,n);o.frequency.exponentialRampToValueAtTime(390,n+.055);g.gain.setValueAtTime(.0001,n);g.gain.exponentialRampToValueAtTime(.035,n+.008);g.gain.exponentialRampToValueAtTime(.0001,n+.075);o.connect(g);g.connect(ctx.destination);o.start(n);o.stop(n+.08)}catch(e){}}
+function aeStartTypingSound(){if(aeTypingSoundActive)return;aeTypingSoundActive=true;aeTypingSoundWasActive=true;aePlayTypingTick();aeTypingSoundTimer=setInterval(function(){if(!aeTypingSoundActive){clearInterval(aeTypingSoundTimer);aeTypingSoundTimer=null;return}aePlayTypingTick()},650)}
+function aeStopTypingSound(playFinishedBubble){var was=aeTypingSoundActive||aeTypingSoundWasActive;aeTypingSoundActive=false;aeTypingSoundWasActive=false;if(aeTypingSoundTimer){clearInterval(aeTypingSoundTimer);aeTypingSoundTimer=null}if(playFinishedBubble&&was)aePlayChatBubble()}
+
+/* =====================================================
+ * CHAT TYPING — RECEPCIÓN Y ENVÍO
+ * ===================================================== */
+
+function setChatTypingVisible(show){
+
+  var el=$('chatTyping');
+
+  if(!el)return;
+
+  el.hidden=!show;
+
+}
+
+
+function showOtherTyping(show){
+
+  clearTimeout(
+    typingHideTimer
+  );
+
+
+  if(!show){
+
+    aeStopTypingSound();
+    setChatTypingVisible(
+      false
+    );
+
+    return;
+
+  }
+
+  if(section==='mensajes'&&!$('layout').classList.contains('show-profile'))aeStartTypingSound();
+
+  var el=$('chatTyping');
+  if(el){
+    el.innerHTML='Aeterna está escribiendo<span class=\"typing-dots\"><i></i><i></i><i></i></span>';
+  }
+
+  setChatTypingVisible(
+    true
+  );
+
+
+  typingHideTimer=
+    setTimeout(
+      function(){
+
+        setChatTypingVisible(
+          false
+        );
+
+      },
+      2500
+    );
+
+}
+
+
+async function sendTypingState(isTyping){
+
+  if(!chatChannel)
+    return;
+
+  if(!chatChannelReady)
+    return;
+
+  if(!conv)
+    return;
+
+
+  try{
+
+    await chatChannel.send({
+
+      type:'broadcast',
+
+      event:'typing',
+
+      payload:{
+
+        user_id:uid,
+
+        role:'customer',
+
+        typing:!!isTyping
+
+      }
+
+    });
+
+
+    console.log(
+      '[AE CHAT] typing enviado:',
+      !!isTyping
+    );
+
+
+  }catch(e){
+
+    console.error(
+      '[AE CHAT TYPING SEND]',
+      e
+    );
+
+  }
+
+}
+
+
+function stopTyping(){
+
+  clearTimeout(
+    typingTimer
+  );
+
+
+  typingTimer=null;
+
+
+  if(!typingActive)
+    return;
+
+
+  typingActive=false;
+
+
+  sendTypingState(
+    false
+  );
+
+}
+
+
+function typingInput(){
+
+  /*
+   * IMPORTANTE:
+   * El estado typingActive se marca ANTES de comprobar
+   * si el canal ya está conectado.
+   *
+   * Así, si el usuario empieza a escribir mientras
+   * Supabase está haciendo SUBSCRIBE, el estado no
+   * se pierde. Cuando llegue SUBSCRIBED, subChat()
+   * enviará automáticamente typing:true.
+   */
+
+  if(!typingActive){
+
+    typingActive=true;
+
+  }
+
+
+  clearTimeout(
+    typingTimer
+  );
+
+
+  typingTimer=
+    setTimeout(
+      function(){
+
+        stopTyping();
+
+      },
+      1800
+    );
+
+
+  /*
+   * Si todavía no existe conversación:
+   * la creamos y luego intentamos anunciar typing.
+   */
+  if(!conv){
+
+    getConv()
+      .then(function(){
+
+        if(
+          chatChannelReady&&
+          typingActive
+        ){
+
+          sendTypingState(
+            true
+          );
+
+        }
+
+      })
+      .catch(function(e){
+
+        console.error(
+          '[AE CHAT TYPING CONV]',
+          e
+        );
+
+        typingActive=false;
+
+      });
+
+    return;
+
+  }
+
+
+  /*
+   * Si todavía no existe canal, lo creamos.
+   */
+  if(!chatChannel){
+
+    subChat();
+
+    return;
+
+  }
+
+
+  /*
+   * Si el canal existe pero todavía conecta,
+   * NO cancelamos typingActive.
+   *
+   * SUBSCRIBED se encargará de enviar true.
+   */
+  if(!chatChannelReady){
+
+    return;
+
+  }
+
+
+  sendTypingState(
+    true
+  );
+
+}
+
+
+/*
+ * Si el usuario cambia de pestaña o minimiza la página,
+ * dejamos de anunciar escritura.
+ */
+document.addEventListener(
+  'visibilitychange',
+  function(){
+
+    if(document.hidden){
+
+      stopTyping();
+
+      showOtherTyping(false);
+
+    }else{
+
+      if(
+        section==='mensajes'&&
+        conv&&
+        !chatChannel
+      ){
+
+        subChat();
+
+      }
+
+    }
+
+  }
+);
+
+
+/*
+ * Si abandona el textarea, dejamos de anunciar typing.
+ */
+$('chatText').addEventListener('focus',function(){aeChatAudio()});
+
+$('chatText').addEventListener(
+  'blur',
+  function(){
+
+    stopTyping();
+
+  }
+);
+
+
+/* =====================================================
+ * ESTADOS DE MENSAJES DEL STAFF
+ * ===================================================== */
+
+async function markStaffMessagesDelivered(
+  conversationId
+){
+
+  var r=
+    await sb
+      .from('messages')
+      .update({
+        delivered_at:
+          new Date().toISOString()
+      })
+      .eq(
+        'conversation_id',
+        conversationId
+      )
+      .eq(
+        'sender_role',
+        'staff'
+      )
+      .is(
+        'delivered_at',
+        null
+      );
+
+
+  if(r.error){
+
+    console.error(
+      'Error marcando mensajes como entregados:',
+      r.error
+    );
+
+  }
+
+}
+
+
+async function markStaffMessagesRead(
+  conversationId
+){
+
+  var now=
+    new Date().toISOString();
+
+
+  var r=
+    await sb
+      .from('messages')
+      .update({
+        delivered_at:now,
+        read_at:now
+      })
+      .eq(
+        'conversation_id',
+        conversationId
+      )
+      .eq(
+        'sender_role',
+        'staff'
+      )
+      .is(
+        'read_at',
+        null
+      );
+
+
+  if(r.error){
+
+    console.error(
+      'Error marcando mensajes como leídos:',
+      r.error
+    );
+
+  }
+
+}
+
+
+async function syncStaffMessageStatus(){
+
+  if(!conv)return;
+
+
+  await markStaffMessagesDelivered(
+    conv.id
+  );
+
+
+  var chatAbierto=(
+    section==='mensajes' &&
+    !$('layout')
+      .classList
+      .contains('show-profile')
+  );
+
+
+  if(chatAbierto){
+
+    await markStaffMessagesRead(
+      conv.id
+    );
+
+  }
+
+
+  await loadChat();
+
+}
+
+
+/* =====================================================
+ * CARGAR CHAT
+ * ===================================================== */
+
+async function loadChat(){
+
+  var c=
+    await findConv();
+
+
+  if(!c){
+
+    msgs=[];
+
+    chatProfiles={};
+
+    renderChat();
+
+    updChatBadge();
+
+    return;
+
+  }
+
+
+  var r=
+    await sb
+      .from('messages')
+      .select('*')
+      .eq(
+        'conversation_id',
+        c.id
+      )
+      .order(
+        'created_at',
+        {
+          ascending:true
+        }
+      )
+      .limit(300);
+
+
+  if(r.error){
+
+    console.error(
+      'Error cargando mensajes:',
+      r.error
+    );
+
+    return;
+
+  }
+
+
+  msgs=
+    r.data||[];
+
+
+  chatProfiles={};
+
+
+  var ids=[];
+
+
+  msgs.forEach(function(m){
+
+    if(
+      m.sender_id &&
+      ids.indexOf(
+        m.sender_id
+      )===-1
+    ){
+
+      ids.push(
+        m.sender_id
+      );
+
+    }
+
+  });
+
+
+  if(ids.length){
+
+    var pr=
+      await sb
+        .from('profiles')
+        .select(
+          'id,display_name,avatar_url,role'
+        )
+        .in(
+          'id',
+          ids
+        );
+
+
+    if(pr.error){
+
+      console.error(
+        'Error cargando perfiles del chat:',
+        pr.error
+      );
+
+    }else{
+
+      (pr.data||[]).forEach(
+        function(p){
+
+          chatProfiles[p.id]=p;
+
+        }
+      );
+
+    }
+
+  }
+
+
+  renderChat();
+
+  updChatBadge();
+
+
+  subChat();
+
+}
+
+
+/* =====================================================
+ * SUSCRIPCIÓN DEL CHAT
+ * ===================================================== */
+
+function closeChatChannel(){
+
+  if(chatChannel){
+
+    try{
+
+      sb.removeChannel(
+        chatChannel
+      );
+
+    }catch(e){
+
+      console.error(
+        '[AE CHAT] error cerrando canal:',
+        e
+      );
+
+    }
+
+  }
+
+
+  chatChannel=null;
+
+  chatChannelReady=false;
+
+  chatChannelName='';
+
+}
+
+
+function subChat(){
+
+  if(!conv){
+
+    return;
+
+  }
+
+
+  var wantedName=
+    'ae-chat-'+
+    conv.id;
+
+
+  /*
+   * Si ya tenemos exactamente este canal,
+   * no creamos otro.
+   */
+  if(
+    chatChannel&&
+    chatChannelName===wantedName
+  ){
+
+    return;
+
+  }
+
+
+  /*
+   * Si existe un canal viejo de otra conversación,
+   * lo limpiamos antes de crear el nuevo.
+   */
+  if(chatChannel){
+
+    closeChatChannel();
+
+  }
+
+
+  chatChannelReady=false;
+
+  chatChannelName=
+    wantedName;
+
+
+  console.log(
+    '[AE CHAT] creando canal:',
+    wantedName
+  );
+
+
+  chatChannel=
+    sb.channel(
+      wantedName,
+      {
+        config:{
+          broadcast:{
+            self:false
+          }
+        }
+      }
+    );
+
+
+  /*
+   * =================================================
+   * TYPING
+   * =================================================
+   */
+
+  chatChannel.on(
+
+    'broadcast',
+
+    {
+      event:'typing'
+    },
+
+    function(p){
+
+      var d=
+        p&&p.payload
+          ? p.payload
+          : {};
+
+
+      console.log(
+        '[AE CHAT] typing recibido:',
+        d
+      );
+
+
+      if(
+        d.user_id===uid
+      ){
+
+        return;
+
+      }
+
+
+      /*
+       * perfil.html solamente muestra typing
+       * enviado por staff/admin.
+       */
+      if(
+        d.role!=='staff'&&
+        d.role!=='admin'
+      ){
+
+        return;
+
+      }
+
+
+      showOtherTyping(
+        !!d.typing
+      );
+
+    }
+
+  );
+
+
+  /*
+   * =================================================
+   * MENSAJES
+   * =================================================
+   */
+
+  chatChannel.on(
+
+    'postgres_changes',
+
+    {
+      event:'*',
+      schema:'public',
+      table:'messages',
+      filter:
+        'conversation_id=eq.'+
+        conv.id
+    },
+
+    async function(p){
+
+      var m=
+        p.new||
+        {};
+
+
+      if(
+        p.eventType==='INSERT'
+      ){
+
+        if(
+          m.sender_role==='staff'
+        ){
+
+          var aeChatWasOpen=(section==='mensajes'&&!$('layout').classList.contains('show-profile'));
+          if(!aeChatWasOpen&&m.sender_id!==uid)aePlayChatBubble();
+          showOtherTyping(
+            false
+          );
+
+
+          await markStaffMessagesDelivered(
+            conv.id
+          );
+
+
+          var chatAbierto=(
+            section==='mensajes' &&
+            !$('layout')
+              .classList
+              .contains('show-profile')
+          );
+
+
+          if(chatAbierto){
+
+            await markStaffMessagesRead(
+              conv.id
+            );
+
+            markSeen();
+
+          }
+
+        }
+
+
+        await loadChat();
+
+        updChatBadge();
+
+        return;
+
+      }
+
+
+      if(
+        p.eventType==='UPDATE'
+      ){
+
+        await loadChat();
+
+        return;
+
+      }
+
+    }
+
+  );
+
+
+  /*
+   * =================================================
+   * SUSCRIPCIÓN REALTIME
+   * =================================================
+   */
+
+  chatChannel.subscribe(
+    function(status){
+
+      console.log(
+        '[AE CHAT] estado:',
+        status
+      );
+
+
+      if(
+        status==='SUBSCRIBED'
+      ){
+
+        chatChannelReady=true;
+
+
+        console.log(
+          '[AE CHAT] typing listo ✔',
+          wantedName
+        );
+
+
+        /*
+         * Si el usuario empezó a escribir mientras
+         * el canal estaba conectando, enviamos ahora
+         * el typing:true.
+         */
+        if(
+          typingActive
+        ){
+
+          sendTypingState(
+            true
+          );
+
+        }
+
+      }
+
+
+      if(
+        status==='CHANNEL_ERROR'||
+        status==='TIMED_OUT'||
+        status==='CLOSED'
+      ){
+
+        console.warn(
+          '[AE CHAT] canal perdido:',
+          status
+        );
+
+
+        chatChannelReady=false;
+
+
+        /*
+         * Liberamos el canal para que una siguiente
+         * entrada al chat pueda reconstruirlo.
+         */
+        if(
+          chatChannel&&
+          chatChannelName===wantedName
+        ){
+
+          var oldChannel=
+            chatChannel;
+
+
+          chatChannel=null;
+
+          chatChannelReady=false;
+
+          chatChannelName='';
+
+
+          try{
+
+            sb.removeChannel(
+              oldChannel
+            );
+
+          }catch(e){
+
+            console.error(
+              '[AE CHAT] removeChannel:',
+              e
+            );
+
+          }
+
+
+          /*
+           * Si el usuario sigue escribiendo, intentamos
+           * reconstruir el canal después de un pequeño
+           * intervalo.
+           */
+          if(
+            typingActive&&
+            conv
+          ){
+
+            setTimeout(
+              function(){
+
+                if(
+                  conv&&
+                  !chatChannel&&
+                  typingActive
+                ){
+
+                  subChat();
+
+                }
+
+              },
+              800
+            );
+
+          }
+
+        }
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+ * RENDER CHAT
+ * ===================================================== */
+
+function renderChat(){
+
+  var log=$('chatLog');
+
+  log.replaceChildren();
+
+
+  log.append(
+
+    h(
+      'div',
+      {
+        class:'msg them'
+      },
+
+      '¡Hola, '+
+      AE.first(
+        me.display_name
+      )+
+      '! 🌹 Cuéntanos qué ocasión celebras y te ayudamos a elegir la pieza perfecta.'
+
+    )
+
+  );
+
+
+  var last='';
+
+
+  msgs.forEach(function(m){
+
+    var dl=
+      AE.dayLabel(
+        m.created_at
+      );
+
+
+    if(dl!==last){
+
+      log.append(
+
+        h(
+          'div',
+          {
+            class:'day',
+            text:dl
+          }
+        )
+
+      );
+
+
+      last=dl;
+
+    }
+
+
+    var isMine=
+      m.sender_role===
+      'customer';
+
+
+    var pr=
+      isMine
+        ? me
+        : (
+            chatProfiles[
+              m.sender_id
+            ]||
+            {
+              id:m.sender_id,
+              display_name:'Aeterna',
+              role:'admin',
+              avatar_url:null
+            }
+          );
+
+
+    var row=
+      h(
+        'div',
+        {
+          class:
+            'chat-msg-row '+
+            (
+              isMine
+                ? 'mine'
+                : 'theirs'
+            )
+        }
+      );
+
+
+    var avatar=
+      AE.avatar(
+        pr,
+        32
+      );
+
+
+    var ticks=
+      isMine
+
+        ? h(
+            'span',
+            {
+              class:
+                'msg-ticks'+
+                (
+                  m.read_at
+                    ? ' read'
+                    : ''
+                ),
+
+              title:
+                m.read_at
+                  ? 'Leído'
+                  : (
+                      m.delivered_at
+                        ? 'Entregado'
+                        : 'Enviado'
+                    ),
+
+              text:
+                m.read_at||
+                m.delivered_at
+                  ? '✓✓'
+                  : '✓'
+
+            }
+          )
+
+        : null;
+
+
+    var meta=
+      h(
+        'small',
+        {
+          class:'msg-meta'
+        },
+
+        AE.hhmm(
+          m.created_at
+        ),
+
+        ticks
+
+      );
+
+
+    var bubble=
+      h(
+        'div',
+        {
+          class:
+            'msg '+
+            (
+              isMine
+                ? 'me'
+                : 'them'
+            )
+        },
+
+        h(
+          'div',
+          {
+            class:'chat-name'
+          },
+
+          pr.display_name||
+          'Aeterna'
+
+        ),
+
+        h(
+          'div',
+          {
+            text:m.body
+          }
+        ),
+
+        meta
+
+      );
+
+
+    if(isMine){
+
+      row.append(
+        bubble,
+        avatar
+      );
+
+    }else{
+
+      row.append(
+        avatar,
+        bubble
+      );
+
+    }
+
+
+    log.append(row);
+
+  });
+
+
+  log.scrollTop=
+    log.scrollHeight;
+
+
+  var qr=$('chatQr');
+
+
+  if(qr){
+
+    qr.replaceChildren.apply(
+
+      qr,
+
+      [
+        '¿Tienen disponible para hoy?',
+        'Quiero cambiar los colores',
+        'Quiero cotizar una boda',
+        '¿Cómo puedo pagar?'
+      ].map(function(t){
+
+        return h(
+          'button',
+          {
+            class:'chip',
+            type:'button',
+            onclick:function(){
+
+              $('chatText').value=t;
+
+              $('chatText').focus();
+
+              typingInput();
+
+            }
+          },
+          t
+        );
+
+      })
+
+    );
+
+  }
+
+}
+
+
+function applyDraft(){
+
+  if(chatDraft){
+
+    $('chatText').value=
+      chatDraft;
+
+    chatDraft='';
+
+
+    setTimeout(function(){
+
+      $('chatText').focus();
+
+
+      if(
+        $('chatText')
+          .value
+          .trim()
+      ){
+
+        typingInput();
+
+      }
+
+    },120);
+
+  }
+
+}
+
+
+/* =====================================================
+ * ENVIAR MENSAJE
+ * ===================================================== */
+
+async function sendMsg(text){
+
+  text=aeValidateChatText(text);
+  if(!text) return;
+  var c=
+    await getConv();
+
+
+  stopTyping();
+
+
+  var ins=
+    await sb
+      .from('messages')
+      .insert({
+
+        conversation_id:
+          c.id,
+
+        sender_id:
+          uid,
+
+        sender_role:
+          'customer',
+
+        body:
+          text.slice(
+            0,
+            1000
+          )
+
+      });
+
+
+  if(ins.error)
+    throw ins.error;
+
+
+  var up=
+    await sb
+      .from('conversations')
+      .update({
+
+        alias:
+          (
+            me.display_name||
+            c.alias||
+            ''
+          ).slice(
+            0,
+            40
+          ),
+
+        last_text:
+          text.slice(
+            0,
+            140
+          ),
+
+        last_at:
+          new Date().toISOString(),
+
+        last_sender_role:
+          'customer',
+
+        unread:true
+
+      })
+      .eq(
+        'id',
+        c.id
+      );
+
+
+  if(up.error){
+
+    console.error(
+      up.error
+    );
+
+  }
+
+
+  msgs.push({
+
+    sender_role:
+      'customer',
+
+    sender_id:
+      uid,
+
+    body:
+      text,
+
+    created_at:
+      new Date().toISOString()
+
+  });
+
+
+  renderChat();
+
+}
+
+
+/* =====================================================
+ * FORMULARIO DEL CHAT
+ * ===================================================== */
+
+$('chatForm').addEventListener(
+  'submit',
+  async function(e){
+
+    e.preventDefault();
+
+
+    var t=
+      aeValidateChatText($('chatText').value);
+
+
+    if(!t)return;
+
+
+    stopTyping();
+
+
+    $('chatSend').disabled=true;
+
+
+    try{
+
+      await sendMsg(t);
+
+
+      $('chatText').value='';
+
+
+      markSeen();
+
+
+    }catch(err){
+
+      console.error(err);
+
+
+      toast(
+        'No pudimos enviar tu mensaje. Intenta de nuevo.'
+      );
+
+    }
+
+
+    $('chatSend').disabled=false;
+
+  }
+);
+
+
+/* =====================================================
+ * DETECTAR ESCRITURA REAL
+ * ===================================================== */
+
+$('chatText').addEventListener(
+  'input',
+  function(){
+
+    if(
+      this.value.trim()
+    ){
+
+      typingInput();
+
+    }else{
+
+      stopTyping();
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+ * ENTER PARA ENVIAR
+ * ===================================================== */
+
+$('chatText').addEventListener(
+  'keydown',
+  function(e){
+
+    if(
+      e.key==='Enter'&&
+      !e.shiftKey&&
+      window.innerWidth>900
+    ){
+
+      e.preventDefault();
+
+      $('chatForm')
+        .requestSubmit();
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+ * PRESENCIA: USUARIO ONLINE
+ * ===================================================== */
+
+function subOnlinePresence(){
+
+  if(presenceChannel||!uid)return;
+
+  presenceChannel=sb.channel('ae-online-users',{
+    config:{
+      presence:{
+        key:uid
+      }
+    }
+  });
+
+  presenceChannel.subscribe(function(status){
+
+    if(status==='SUBSCRIBED'){
+
+      presenceChannel.track({
+        user_id:uid,
+        role:me&&me.role||'customer',
+        display_name:me&&me.display_name||email.split('@')[0]||'Cliente'
+      });
+
+    }
+
+  });
+}
+
+/* =====================================================
+ * TIEMPO REAL
+ * ===================================================== */
+
+function realtime(){
+
+  subOnlinePresence();
+
+  sb.channel(
+    'ae-community'
+  )
+
+    .on(
+      'postgres_changes',
+      {
+        event:'*',
+        schema:'public',
+        table:'community_posts'
+      },
+      function(){
+
+        loadFeed(true);
+
+      }
+    )
+
+    .on(
+      'postgres_changes',
+      {
+        event:'*',
+        schema:'public',
+        table:'post_likes'
+      },
+      function(){
+
+        loadFeed(true);
+
+      }
+    )
+
+    .on(
+      'postgres_changes',
+      {
+        event:'*',
+        schema:'public',
+        table:'post_comments'
+      },
+      function(){
+
+        loadFeed(true);
+
+      }
+    )
+
+    .subscribe();
+
+
+  sb.channel(
+    'ae-orders-'+uid
+  )
+
+    .on(
+      'postgres_changes',
+      {
+        event:'UPDATE',
+        schema:'public',
+        table:'orders',
+        filter:
+          'user_id=eq.'+
+          uid
+      },
+      function(p){
+
+        var o=p.new;
+
+
+        var old=
+          orders.filter(function(x){
+
+            return x.id===o.id;
+
+          })[0];
+
+
+        if(
+          old&&
+          old.status!==o.status
+        ){
+
+          toast(
+            'Tu pedido #'+
+            AE.shortId(o.id)+
+            ': '+
+            AE.statusLabel(
+              o.status
+            )+
+            ' '+
+            (
+              AE.STATUS[
+                AE.statusIdx(
+                  o.status
+                )
+              ]||
+              ['','','']
+            )[2]
+          );
+
+        }
+
+
+        loadOrders();
+
+      }
+    )
+
+    .subscribe();
+
+  /* Fallback: si Realtime no entrega el UPDATE (por publicación/RLS),
+     comprobamos los pedidos periódicamente. Así el estado del cliente
+     siempre termina sincronizado con el que puso Admin. */
+  if(!window.aeOrdersPoll){
+    window.aeOrdersPoll=setInterval(function(){
+      if(document.visibilityState==='visible' && uid){
+        loadOrders();
+      }
+    },5000);
+  }
+
+  document.addEventListener('visibilitychange',function(){
+    if(document.visibilityState==='visible' && uid){
+      loadOrders();
+    }
+  });
+
+}
+
+
+/* =====================================================
+ * INICIO
+ * ===================================================== */
+
+boot().catch(function(e){
+
+  console.error(e);
+
+
+  $('splash').textContent=
+    'No pudimos cargar tu perfil. Recarga la página.';
+
+});
+
+})();
+</script>
+
+</body>
+</html>

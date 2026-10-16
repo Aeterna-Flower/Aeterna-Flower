@@ -1,0 +1,4910 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#FFF8F9">
+<title>Panel · Aeterna</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
+
+<link rel="stylesheet" href="aeterna.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<style>
+.msg-meta{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:5px;
+}
+
+.msg-ticks{
+  color:#929292;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:-3px;
+  padding-right:3px;
+  line-height:1;
+}
+
+.msg-ticks.read{
+  color:#39a9e8;
+}
+
+/* =========================
+   INDICADOR ESCRIBIENDO
+   ========================= */
+
+.chat-typing{
+  font-weight:600;
+  opacity:.85;
+  color:#8b6b73;
+  min-height:16px;
+  transition:opacity .2s ease;
+}
+</style>
+
+<body>
+<script>try{sessionStorage.removeItem('aeternaLogin')}catch(e){}</script>
+
+<div class="splash" id="splash">Aeterna…</div>
+
+<header class="nav">
+  <div class="wrap">
+
+    <button class="brand" type="button" id="brand" aria-label="Aeterna, resumen">
+      <img
+        src="logo.png"
+        alt="Aeterna"
+        onerror="this.hidden=true;this.nextElementSibling.hidden=false"
+      >
+      <span class="fb" hidden>🌹</span>
+
+      <span>
+        <b>Aeterna</b>
+        <small>Panel administrativo</small>
+      </span>
+    </button>
+
+    <nav class="nlinks" id="nav" aria-label="Menú del panel"></nav>
+
+    <div class="nav-user">
+      <span class="who" id="navWho"></span>
+      <span class="av mini-av" id="navAv"></span>
+      <button class="btn ghost sm" id="logout" type="button">Salir</button>
+    </div>
+
+  </div>
+</header>
+
+<div class="cover" aria-hidden="true">
+  <div class="petals" id="petals"></div>
+  <div class="giant">Aeterna</div>
+</div>
+
+<main class="wrap layout" id="layout">
+
+  <aside class="side">
+
+    <section class="card pcard" id="pcard" aria-label="Mi perfil">
+
+      <div class="avwrap">
+        <span class="av" id="bigAv"></span>
+
+        <label class="cam" title="Cambiar foto de perfil">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+            <circle cx="12" cy="13" r="4"/>
+          </svg>
+
+          <input
+            type="file"
+            id="avatarInput"
+            accept="image/*"
+            hidden
+            aria-label="Cambiar foto de perfil"
+          >
+        </label>
+      </div>
+
+      <h1 class="pname" id="pName">…</h1>
+      <p class="pmail" id="pMail"></p>
+      <span class="plevel">👑 Administradora</span>
+      <p class="pbio" id="pBio"></p>
+
+      <div class="stats">
+        <div>
+          <b id="stOrd">0</b>
+          <span>Activos</span>
+        </div>
+
+        <div>
+          <b id="stChat">0</b>
+          <span>Sin leer</span>
+        </div>
+
+        <div>
+          <b id="stCli">0</b>
+          <span>Clientes</span>
+        </div>
+      </div>
+
+      <div class="row-btn">
+        <button class="btn ghost sm" id="editBtn" type="button">
+          ✎ Editar perfil
+        </button>
+
+        <button class="btn ghost sm" id="logout2" type="button">
+          Cerrar sesión
+        </button>
+      </div>
+
+    </section>
+
+    <div class="wgts" id="widgets"></div>
+
+    <section class="card shopcard">
+      <p class="eyebrow">Tu tienda</p>
+      <h3>Mira cómo ven tu sitio</h3>
+      <p>
+        Abre la página pública de Aeterna para revisar la colección y las reseñas.
+      </p>
+
+      <a
+        class="btn block"
+        href="index.html#inicio"
+        onclick="try{sessionStorage.setItem('aeternaStore','1')}catch(e){}"
+      >
+        Ir a la tienda
+      </a>
+    </section>
+
+  </aside>
+
+  <div class="mainc">
+
+    <div class="ptabs" id="ptabs" role="tablist" aria-label="Secciones"></div>
+
+    <div class="greet">
+      <p class="eyebrow" id="greetEy">Panel de Aeterna</p>
+      <h2 id="greetH">Así va tu día</h2>
+    </div>
+
+    <section data-sec="resumen">
+
+      <div class="kpis" id="kpis"></div>
+
+      <div class="cols2">
+
+        <div class="card panel">
+          <h3>Pedidos por atender</h3>
+          <div id="pNew"></div>
+        </div>
+
+        <div class="card panel">
+          <h3>Mensajes sin leer</h3>
+          <div id="pChats"></div>
+        </div>
+
+        <div
+          class="card panel"
+          style="grid-column:1/-1"
+        >
+          <h3>Fechas de clientes en los próximos 7 días</h3>
+          <div id="pDates"></div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <section data-sec="mensajes" hidden>
+
+      <div class="inbox" id="inbox" data-open="0">
+
+        <div class="conv-list" id="convList"></div>
+
+        <div class="thread" id="thread"></div>
+
+      </div>
+
+    </section>
+
+    <section data-sec="pedidos" hidden>
+
+      <div class="sec-top">
+
+        <div
+          class="filters"
+          id="ordChips"
+          style="margin:0"
+        ></div>
+
+        <label
+          class="note-inline"
+          style="display:flex;gap:.4rem;align-items:center"
+        >
+          <input type="checkbox" id="notifyOn" checked>
+          Avisar al cliente por el chat al cambiar el estado
+        </label>
+
+      </div>
+
+      <div id="ordList"></div>
+
+    </section>
+
+    <section data-sec="comunidad" hidden>
+
+      <div
+        class="card"
+        style="padding:1rem;margin-bottom:1rem;display:grid;gap:.7rem"
+      >
+
+        <div class="who-line">
+          <span class="av" id="cmpAv"></span>
+          <strong>Publicar como Aeterna</strong>
+        </div>
+
+        <textarea
+          id="aText"
+          rows="3"
+          maxlength="800"
+          placeholder="Comparte un nuevo trabajo, una promo o un consejo de cuidado 🌹"
+        ></textarea>
+
+        <div class="preview" id="aPrev" hidden>
+          <img alt="Vista previa">
+          <button
+            class="x"
+            type="button"
+            id="aRm"
+            aria-label="Quitar foto"
+          >
+            ×
+          </button>
+        </div>
+
+        <div class="cmp-bot">
+
+          <label
+            class="btn ghost sm"
+            style="cursor:pointer"
+          >
+            📷 Añadir foto
+            <input
+              type="file"
+              id="aImg"
+              accept="image/*"
+              hidden
+            >
+          </label>
+
+          <button
+            class="btn"
+            id="aPost"
+            type="button"
+          >
+            Publicar
+          </button>
+
+        </div>
+
+      </div>
+
+      <div class="feed" id="postList"></div>
+
+    </section>
+
+    <section data-sec="recordatorios" hidden>
+
+      <div class="sec-top">
+
+        <p>
+          Fechas especiales que tus clientes guardaron.
+          Envía el recordatorio por WhatsApp con un toque
+          y sugiere el arreglo ideal.
+        </p>
+
+        <div
+          class="filters"
+          id="remChips"
+          style="margin:0"
+        ></div>
+
+      </div>
+
+      <div class="feed" id="remList"></div>
+
+    </section>
+
+  </div>
+
+</main>
+
+<nav
+  class="bnav"
+  id="bnav"
+  aria-label="Navegación principal"
+></nav>
+
+<style>
+/* =====================================================
+ * CHAT TYPING · ESTILO WHATSAPP
+ * ===================================================== */
+.chat-typing{
+  display:inline-flex !important;
+  align-items:center;
+  gap:5px;
+  color:#8b6b73;
+  font-weight:700;
+  line-height:1.15;
+  min-height:16px;
+  opacity:0;
+  transform:translateY(2px);
+  transition:opacity .18s ease,transform .18s ease;
+}
+.chat-typing:not([hidden]){
+  opacity:1;
+  transform:translateY(0);
+}
+.chat-typing .typing-dots{
+  display:inline-flex;
+  gap:2px;
+  margin-left:2px;
+}
+.chat-typing .typing-dots i{
+  width:4px;
+  height:4px;
+  border-radius:50%;
+  background:currentColor;
+  display:block;
+  animation:aeTypingDot 1.15s infinite ease-in-out;
+}
+.chat-typing .typing-dots i:nth-child(2){animation-delay:.16s}
+.chat-typing .typing-dots i:nth-child(3){animation-delay:.32s}
+@keyframes aeTypingDot{
+  0%,60%,100%{transform:translateY(0);opacity:.42}
+  30%{transform:translateY(-3px);opacity:1}
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="aeterna-common.js"></script>
+
+<script>
+(function(){
+
+'use strict';
+
+var AE=window.AE,
+    $=AE.$,
+    h=AE.h,
+    sb=AE.sb,
+    toast=AE.toast;
+
+var uid,
+    email='',
+    me,
+    section='resumen',
+    profs={},
+    phones={};
+
+/* =====================================================
+ * VALIDACIONES DE CONTACTO Y CHAT
+ * ===================================================== */
+var AE_TEMP_EMAIL_DOMAINS={'10minutemail.com':1,'10minutemail.net':1,'guerrillamail.com':1,'guerrillamail.net':1,'guerrillamail.org':1,'mailinator.com':1,'tempmail.com':1,'temp-mail.org':1,'throwawaymail.com':1,'yopmail.com':1,'getnada.com':1,'sharklasers.com':1,'grr.la':1,'dispostable.com':1,'emailondeck.com':1,'maildrop.cc':1,'moakt.com':1,'trashmail.com':1};
+function aeNormalizeEmail(v){return String(v||'').trim().toLowerCase();}
+function aeValidEmail(v){v=aeNormalizeEmail(v);if(!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(v))return false;return !AE_TEMP_EMAIL_DOMAINS[v.split('@')[1]];}
+function aeValidVePhone(v){var n=String(v||'').replace(/\D/g,'');if(n.indexOf('58')===0)n=n.slice(2);if(n.indexOf('0')===0)n=n.slice(1);return /^4(?:12|14|16|24|26)\d{7}$/.test(n);}
+function aeCensorText(text){
+  /*
+   * Censura groserías incluso cuando el usuario repite letras:
+   * puta -> ***, putaaaaaa -> ***, malpariiiiido -> ***.
+   * También normaliza acentos y mayúsculas para detectar variantes.
+   */
+  var bad=[
+    'hijo de puta','hija de puta','hijueputa','hijueputas',
+    'malparido','malparida','malparidos','malparidas',
+    'mamaguevo','mamagueva','mamaguevos','mamaguevas',
+    'mamagüevo','mamagüevas','mamagüevos',
+    'marico','marica','maricón','maricon','mariquera',
+    'pajuo','pajua','pajudo','pajuda',
+    'pendejo','pendeja','pendejos','pendejas',
+    'coño','coñazo','cono',
+    'mierda','mierdero','mierdera',
+    'puta','puto','putas','putos',
+    'verga','vergas','vergacion',
+    'carajo','carajos',
+    'cabron','cabrón','cabrona','cabrones',
+    'culiao','culeado','culeada','culero',
+    'jodido','jodida','jodidos','jodidas',
+    'maricon','maricona','maricones',
+    'imbecil','imbécil','estupido','estúpido','estupida','estúpida',
+    'idiota','idiotas','maldito','maldita','malditos','malditas',
+    'hdp','hp'
+  ];
+
+  var out=String(text||'');
+
+  function fold(v){
+    return String(v||'').toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g,'');
+  }
+
+  bad.sort(function(a,b){return b.length-a.length;}).forEach(function(w){
+    var chars=fold(w).split('').map(function(ch){
+      if(ch===' ')return '\\s+';
+      var esc=ch.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+      return esc+'+';
+    }).join('');
+
+    var re=new RegExp('(^|[^a-z0-9])'+chars+'(?=$|[^a-z0-9])','gi');
+    out=out.replace(re,function(_,pre){return pre+'***';});
+  });
+
+  return out;
+}
+function aeValidateChatText(text){return aeCensorText(text).trim();}
+
+var presenceChannel=null,
+    onlineUsers={},
+    convs=[],
+    openId=null,
+    msgs=[],
+    orders=[],
+    ordF='nuevos',
+    ordCust=null,
+    posts=[],
+    pLikes={},
+    pCm={},
+    dates=[],
+    clients=0,
+    remF='todas',
+    aBlob=null;
+
+/* =========================
+   TYPING
+   ========================= */
+
+var chatChannel=null;
+var chatChannelReady=false;
+var adminTypingTimer=null;
+var adminTypingActive=false;
+var adminTypingHideTimer=null;
+var customerTyping=false;
+
+/* =========================
+   CONFIG
+   ========================= */
+
+var SECS=[
+  ['perfil','Perfil'],
+  ['resumen','Resumen'],
+  ['mensajes','Mensajes'],
+  ['pedidos','Pedidos'],
+  ['comunidad','Comunidad'],
+  ['recordatorios','Recordatorios']
+];
+
+var GREET={
+  resumen:'Así va tu día',
+  mensajes:'Conversa con tus clientas',
+  pedidos:'Gestiona cada pedido',
+  comunidad:'Lo que comparte la comunidad',
+  recordatorios:'Fechas por recordar'
+};
+
+var QUICK=[
+  '¡Hola! 🌹 Con gusto te ayudo, cuéntame qué necesitas.',
+  '¿Para qué fecha lo necesitas?',
+  'Te envío una foto del arreglo antes de entregarlo 📸',
+  'Tu pedido ya está en preparación 🌹',
+  'Tu pedido va en camino 🛵',
+  'Quedamos pendientes del pago para confirmar. ¡Gracias!'
+];
+
+var ORD_F=[
+  ['nuevos','Nuevos'],
+  ['proceso','En proceso'],
+  ['entregados','Entregados'],
+  ['cancelados','Cancelados'],
+  ['todos','Todos']
+];
+
+var ORD_FN={
+  nuevos:function(o){
+    return o.status==='recibido'
+  },
+
+  proceso:function(o){
+    return ['preparacion','diseno','camino'].indexOf(o.status)>=0
+  },
+
+  entregados:function(o){
+    return o.status==='entregado'
+  },
+
+  cancelados:function(o){
+    return o.status==='cancelado'
+  },
+
+  todos:function(){
+    return true
+  }
+};
+
+AE.petals($('petals'));
+
+$('brand').onclick=function(){
+  go('resumen')
+};
+
+/* =========================
+   ARRANQUE
+   ========================= */
+
+async function boot(){
+
+  console.log('🔐 ADMIN BOOT');
+
+  var sessionResult=await sb.auth.getSession();
+
+  console.log('📦 SESSION RESULT:',sessionResult);
+
+  var s=sessionResult.data&&sessionResult.data.session;
+
+  console.log('👤 SESSION:',s);
+
+  if(!s){
+    console.error('❌ NO HAY SESIÓN EN ADMIN');
+    location.replace('index.html');
+    return;
+  }
+
+  if(!s.user||!s.user.id){
+    console.error('❌ LA SESIÓN NO TIENE USER ID:',s);
+    $('splash').textContent='No se pudo obtener el usuario.';
+    return;
+  }
+
+  uid=s.user.id;
+  email=s.user.email||'';
+
+  console.log('🆔 UID REAL:',uid);
+  console.log('📧 EMAIL:',email);
+
+  var pr=await sb
+    .from('profiles')
+    .select('id,display_name,role,avatar_url,bio')
+    .eq('id',uid)
+    .maybeSingle();
+
+  console.log('👑 ADMIN PROFILE:',pr);
+
+  if(pr.error){
+    console.error('❌ ERROR LEYENDO PROFILES:',pr.error);
+    $('splash').textContent=
+      'Error leyendo profiles: '+pr.error.message;
+    return;
+  }
+
+  if(!pr.data){
+    console.error('❌ NO EXISTE PERFIL:',uid);
+    $('splash').textContent=
+      'No existe un perfil para esta cuenta.';
+    return;
+  }
+
+  me=pr.data;
+
+  console.log('👑 ROLE:',me.role);
+
+  if(me.role!=='admin'){
+    console.error('❌ NO ES ADMIN:',me.role);
+    location.replace('perfil.html');
+    return;
+  }
+
+  console.log('🌸 ADMIN AUTORIZADA');
+
+  try{
+
+    var ct=await sb
+      .from('customer_contacts')
+      .select('phone,email')
+      .eq('user_id',uid)
+      .maybeSingle();
+
+    me.phone=(ct.data&&ct.data.phone)||'';
+    me.contactEmail=(ct.data&&ct.data.email)||email||'';
+
+  }catch(e){
+    me.phone='';
+  }
+
+  profs[uid]=me;
+
+  AE.buildNav({
+    secs:SECS,
+    tabs:[
+      'resumen',
+      'mensajes',
+      'pedidos',
+      'comunidad',
+      'recordatorios'
+    ],
+    bn:[
+      ['resumen','Resumen','chart'],
+      ['mensajes','Chats','chat'],
+      ['pedidos','Pedidos','box'],
+      ['recordatorios','Fechas','bell'],
+      ['perfil','Perfil','user']
+    ],
+    go:go,
+    badges:{
+      mensajes:'msg',
+      pedidos:'ord'
+    }
+  });
+
+  renderProfile();
+  buildOrdChips();
+  buildRemChips();
+
+  var hs=(location.hash||'').slice(1),
+      conv=null;
+
+  if(hs&&hs.length>8){
+    conv=hs;
+  }
+
+  go('resumen');
+
+  $('splash').remove();
+
+  await Promise.all([
+    loadPhones(),
+    loadConvs(),
+    loadOrders(),
+    loadDates(),
+    loadClients(),
+    loadPosts()
+  ]);
+
+  renderAll();
+
+  if(conv){
+    go('mensajes');
+    openConv(conv);
+  }
+
+  realtime();
+}
+
+function safe(fn){
+  return fn().catch(function(e){
+    console.error(e);
+  });
+}
+
+/* =========================
+   NAVEGACIÓN
+   ========================= */
+
+function go(s){
+
+  if(s!=='mensajes'){
+    stopAdminTyping();
+    showCustomerTyping(false);
+  }
+
+  if(s==='perfil'){
+
+    $('layout').classList.add('show-profile');
+
+    AE.setCurrent('perfil');
+
+    window.scrollTo({
+      top:0,
+      behavior:'smooth'
+    });
+
+    var c=$('pcard');
+
+    c.classList.remove('pulse');
+
+    void c.offsetWidth;
+
+    c.classList.add('pulse');
+
+    return;
+  }
+
+  section=s;
+
+  $('layout').classList.remove('show-profile');
+
+  document.querySelectorAll('[data-sec]').forEach(function(x){
+
+    x.hidden=x.getAttribute('data-sec')!==s;
+
+  });
+
+  AE.setCurrent(s);
+
+  if(s==='pedidos'){
+    markAdminNewOrdersSeen().then(function(){
+      renderStats();
+    });
+  }
+
+  $('greetH').textContent=
+    GREET[s]||GREET.resumen;
+
+  window.scrollTo({
+    top:0,
+    behavior:'smooth'
+  });
+}
+
+function greeting(){
+
+  var hr=new Date().getHours();
+
+  return hr<12
+    ?'Buenos días'
+    :hr<19
+      ?'Buenas tardes'
+      :'Buenas noches';
+}
+
+/* =========================
+   PERFIL ADMIN
+   ========================= */
+
+function renderProfile(){
+
+  $('pName').textContent=
+    me.display_name||'Aeterna';
+
+  $('pMail').textContent=email;
+
+  $('pBio').textContent=
+    me.bio||
+    'Añade una frase para tu perfil de Aeterna.';
+
+  $('navWho').textContent=
+    AE.first(me.display_name);
+
+  $('greetEy').textContent=
+    greeting()+', '+
+    AE.first(me.display_name);
+
+  AE.fillAv($('bigAv'),me);
+  AE.fillAv($('navAv'),me);
+  AE.fillAv($('cmpAv'),me);
+}
+
+$('avatarInput').onchange=async function(){
+
+  var f=this.files&&this.files[0];
+
+  this.value='';
+
+  if(!f)return;
+
+  if(!/^image\//.test(f.type)){
+    toast('Elige una imagen.');
+    return;
+  }
+
+  toast('Subiendo tu foto…');
+
+  try{
+
+    var url=await AE.uploadAvatar(uid,f);
+
+    me.avatar_url=url;
+    me._bust=Date.now();
+
+    renderProfile();
+
+    toast('¡Foto actualizada! 📸');
+
+  }catch(e){
+
+    console.error(e);
+
+    toast('No pudimos subir la foto.');
+
+  }
+};
+
+$('editBtn').onclick=function(){
+
+  var n=h('input',{
+    type:'text',
+    maxlength:'30'
+  });
+
+  n.value=me.display_name||'';
+
+  var b=h('textarea',{
+    rows:'3',
+    maxlength:'140',
+    placeholder:
+      'Ej: Hacemos flores que no se marchitan 🌹'
+  });
+
+  b.value=me.bio||'';
+
+  var ph=h('input',{
+    type:'tel',
+    maxlength:'20',
+    placeholder:'0412 000 0000'
+  });
+
+  ph.value=me.phone||'';
+
+  var save=h(
+    'button',
+    {
+      class:'btn',
+      type:'button'
+    },
+    'Guardar cambios'
+  );
+
+  save.onclick=async function(){
+
+    var name=n.value.trim();
+
+    if(name.length<3){
+      toast(
+        'El nombre debe tener al menos 3 caracteres.'
+      );
+      return;
+    }
+
+    save.disabled=true;
+
+    var r=await sb
+      .from('profiles')
+      .update({
+        display_name:name,
+        bio:b.value.trim().slice(0,140)
+      })
+      .eq('id',uid);
+
+    if(!r.error){
+
+      await sb
+        .from('customer_contacts')
+        .upsert({
+          user_id:uid,
+          phone:ph.value.trim(),
+          updated_at:new Date().toISOString()
+        });
+
+    }
+
+    save.disabled=false;
+
+    if(r.error){
+      toast('No pudimos guardar.');
+      return;
+    }
+
+    me.display_name=name;
+    me.bio=b.value.trim().slice(0,140);
+    me.phone=ph.value.trim();
+
+    renderProfile();
+
+    AE.closeSheet();
+
+    toast('Perfil actualizado ✨');
+  };
+
+  AE.openSheet(
+    AE.sheet(
+      'Editar perfil',
+      [
+        h('label',{class:'f'},'Nombre',n),
+        h('label',{class:'f'},'Sobre ti',b),
+        h(
+          'label',
+          {class:'f'},
+          'WhatsApp del negocio',
+          ph
+        ),
+        save
+      ]
+    )
+  );
+};
+
+async function out(){
+
+  closeAdminTypingChannel();
+
+  await sb.auth.signOut();
+
+  location.replace('index.html');
+}
+
+$('logout').onclick=out;
+$('logout2').onclick=out;
+
+/* =========================
+   DATOS
+   ========================= */
+
+async function ensureProfs(ids){
+
+  var miss=ids.filter(function(i){
+    return i&&!profs[i];
+  });
+
+  miss=miss.filter(function(v,i){
+    return miss.indexOf(v)===i;
+  });
+
+  if(!miss.length)return;
+
+  var r=await sb
+    .from('profiles')
+    .select('id,display_name,avatar_url,role')
+    .in('id',miss);
+
+  (r.data||[]).forEach(function(p){
+    profs[p.id]=p;
+  });
+}
+
+async function loadPhones(){
+
+  var r=await sb
+    .from('customer_contacts')
+    .select('user_id,phone,email');
+
+  if(r.error && /email|column/i.test(r.error.message||'')){
+    r=await sb
+      .from('customer_contacts')
+      .select('user_id,phone');
+  }
+
+  if(r.error){
+    console.error(r.error);
+    return;
+  }
+
+  phones={};
+  window.AE_EMAILS={};
+
+  (r.data||[]).forEach(function(x){
+    if(x.phone) phones[x.user_id]=x.phone;
+    if(x.email) window.AE_EMAILS[x.user_id]=x.email;
+  });
+}
+
+async function loadClients(){
+
+  var r=await sb
+    .from('profiles')
+    .select('id',{
+      count:'exact',
+      head:true
+    })
+    .or('role.is.null,role.neq.admin');
+
+  clients=r.count||0;
+}
+
+async function loadConvs(){
+
+  var r=await sb
+    .from('conversations')
+    .select('*')
+    .order('last_at',{
+      ascending:false,
+      nullsFirst:false
+    })
+    .limit(150);
+
+  if(r.error){
+    console.error(r.error);
+    renderConvs();
+    return;
+  }
+
+  convs=r.data||[];
+
+  await ensureProfs(
+    convs.map(function(c){
+      return c.customer_id;
+    })
+  );
+
+  renderConvs();
+  renderStats();
+
+  if(openId){
+    renderThreadHead();
+  }
+}
+
+async function loadOrders(){
+
+  var r=await sb
+    .from('orders')
+    .select('*')
+    .order('created_at',{
+      ascending:false
+    })
+    .limit(250);
+
+  if(r.error){
+    console.error('❌ ERROR CARGANDO PEDIDOS:',r.error);
+
+    /*
+     * Si RLS bloquea el SELECT directo, intentamos el RPC de
+     * administrador. El RPC es opcional y se crea en Supabase
+     * con el SQL que te dejo junto a este archivo.
+     */
+    var rr=await sb.rpc('admin_list_orders');
+
+    if(!rr.error){
+      orders=rr.data||[];
+    }else{
+      orders=[];
+      toast('No se pudieron cargar los pedidos. Revisa las policies de orders.');
+      console.error('❌ RPC admin_list_orders:',rr.error);
+    }
+
+    renderOrders();
+    renderStats();
+    renderSummary();
+    return;
+  }
+
+  orders=r.data||[];
+
+  /* Si RLS devuelve 0 filas al admin, probamos el RPC seguro. */
+  if(!orders.length){
+    var rr2=await sb.rpc('admin_list_orders');
+    if(!rr2.error && Array.isArray(rr2.data) && rr2.data.length){
+      orders=rr2.data;
+    }
+  }
+
+  await ensureProfs(
+    orders.map(function(o){
+      return o.user_id;
+    })
+  );
+
+  renderOrders();
+  renderStats();
+  renderSummary();
+}
+
+async function loadDates(){
+
+  var r=await sb
+    .from('special_dates')
+    .select('*');
+
+  if(r.error){
+    console.error(r.error);
+    return;
+  }
+
+  dates=r.data||[];
+
+  await ensureProfs(
+    dates.map(function(d){
+      return d.user_id;
+    })
+  );
+
+  renderRem();
+  renderSummary();
+}
+
+async function loadPosts(){
+
+  var r=await sb
+    .from('community_posts')
+    .select(
+      'id,user_id,body,image_url,mood,created_at,profiles(display_name,avatar_url,role)'
+    )
+    .order('created_at',{
+      ascending:false
+    })
+    .limit(40);
+
+  if(r.error){
+    console.error(r.error);
+    return;
+  }
+
+  posts=r.data||[];
+
+  var ids=posts.map(function(p){
+    return p.id;
+  });
+
+  pLikes={};
+  pCm={};
+
+  if(ids.length){
+
+    var l=await sb
+      .from('post_likes')
+      .select('post_id')
+      .in('post_id',ids);
+
+    (l.data||[]).forEach(function(x){
+
+      pLikes[x.post_id]=
+        (pLikes[x.post_id]||0)+1;
+
+    });
+
+    var c=await sb
+      .from('post_comments')
+      .select('post_id')
+      .in('post_id',ids);
+
+    (c.data||[]).forEach(function(x){
+
+      pCm[x.post_id]=
+        (pCm[x.post_id]||0)+1;
+
+    });
+  }
+
+  renderPosts();
+}
+
+function renderAll(){
+
+  renderConvs();
+  renderOrders();
+  renderPosts();
+  renderRem();
+  renderSummary();
+  renderStats();
+
+}
+
+function nameOf(id,fb){
+
+  return (
+    profs[id]&&
+    profs[id].display_name
+  )||fb||'Cliente';
+
+}
+
+/* =========================
+   ESTADÍSTICAS
+   ========================= */
+
+function activeOrders(){
+
+  return orders.filter(function(o){
+
+    return o.status!=='entregado'&&
+           o.status!=='cancelado';
+
+  });
+
+}
+
+function unreadConvs(){
+
+  return convs.filter(function(c){
+
+    return c.unread&&
+           c.last_sender_role!=='admin';
+
+  });
+
+}
+
+function oSum(o){
+
+  return o.unit_price*o.qty+
+    (o.delivery_fee||0);
+
+}
+
+async function markAdminNewOrdersSeen(){
+
+  var ids=orders
+    .filter(function(o){
+      return o.status==='recibido' && !o.admin_seen_at;
+    })
+    .map(function(o){ return o.id; });
+
+  if(!ids.length)return;
+
+  var r=await sb
+    .from('orders')
+    .update({admin_seen_at:new Date().toISOString()})
+    .in('id',ids);
+
+  if(r.error){
+    console.error('No se pudo marcar pedidos como vistos:',r.error);
+    return;
+  }
+
+  orders.forEach(function(o){
+    if(ids.indexOf(o.id)>=0) o.admin_seen_at=new Date().toISOString();
+  });
+
+  AE.setBadge('ord',0);
+}
+
+function renderStats(){
+
+  $('stOrd').textContent=
+    Object.keys(onlineUsers).length;
+
+  $('stChat').textContent=
+    unreadConvs().length;
+
+  $('stCli').textContent=
+    clients;
+
+  AE.setBadge(
+    'msg',
+    unreadConvs().length
+  );
+
+  AE.setBadge(
+    'ord',
+    orders.filter(function(o){
+      return ORD_FN.nuevos(o) && !o.admin_seen_at;
+    }).length
+  );
+
+  var box=$('widgets');
+
+  box.replaceChildren();
+
+  var nn=orders.filter(function(o){
+    return ORD_FN.nuevos(o) && !o.admin_seen_at;
+  }).length;
+
+  var uc=unreadConvs().length;
+
+  if(nn){
+
+    box.append(
+      h(
+        'button',
+        {
+          class:'wgt',
+          type:'button',
+          onclick:function(){
+
+            ordF='nuevos';
+
+            buildOrdChips();
+            renderOrders();
+            go('pedidos');
+
+          }
+        },
+
+        h(
+          'span',
+          {
+            class:'wi',
+            text:'🛍️'
+          }
+        ),
+
+        h(
+          'div',
+          null,
+
+          h(
+            'b',
+            {
+              text:
+                nn+
+                (nn===1
+                  ?' pedido nuevo'
+                  :' pedidos nuevos')
+            }
+          ),
+
+          h(
+            'small',
+            {
+              text:'Esperan tu confirmación'
+            }
+          )
+
+        )
+
+      )
+    );
+  }
+
+  if(uc){
+
+    box.append(
+      h(
+        'button',
+        {
+          class:'wgt',
+          type:'button',
+          onclick:function(){
+            go('mensajes');
+          }
+        },
+
+        h(
+          'span',
+          {
+            class:'wi',
+            text:'💬'
+          }
+        ),
+
+        h(
+          'div',
+          null,
+
+          h(
+            'b',
+            {
+              text:
+                uc+
+                (uc===1
+                  ?' chat sin leer'
+                  :' chats sin leer')
+            }
+          ),
+
+          h(
+            'small',
+            {
+              text:
+                'Clientes esperando respuesta'
+            }
+          )
+
+        )
+
+      )
+    );
+  }
+}
+
+function lrow(av,title,sub,right){
+
+  return h(
+    'div',
+    {class:'lrow'},
+    av,
+
+    h(
+      'div',
+      null,
+      h('b',{text:title}),
+      h('small',{text:sub})
+    ),
+
+    right||null
+  );
+}
+
+function renderSummary(){
+
+  var now=new Date();
+
+  var month=orders
+    .filter(function(o){
+
+      var d=new Date(o.created_at);
+
+      return o.status==='entregado'&&
+        d.getMonth()===now.getMonth()&&
+        d.getFullYear()===now.getFullYear();
+
+    })
+    .reduce(function(a,o){
+
+      return a+oSum(o);
+
+    },0);
+
+  var k=[
+    [
+      '📥',
+      orders.filter(ORD_FN.nuevos).length,
+      'Pedidos nuevos'
+    ],
+    [
+      '🌹',
+      orders.filter(ORD_FN.proceso).length,
+      'En proceso'
+    ],
+    [
+      '💬',
+      unreadConvs().length,
+      'Chats sin leer'
+    ],
+    [
+      '💰',
+      AE.money(month),
+      'Ventas del mes'
+    ]
+  ];
+
+  $('kpis').replaceChildren.apply(
+    $('kpis'),
+
+    k.map(function(x){
+
+      return h(
+        'div',
+        {
+          class:'card kpi',
+          'data-e':x[0]
+        },
+
+        h(
+          'b',
+          {
+            text:String(x[1])
+          }
+        ),
+
+        h(
+          'span',
+          {
+            text:x[2]
+          }
+        )
+
+      );
+
+    })
+  );
+
+  var pn=$('pNew');
+
+  pn.replaceChildren();
+
+  var nw=orders
+    .filter(ORD_FN.nuevos)
+    .slice(0,5);
+
+  if(!nw.length){
+
+    pn.append(
+      h(
+        'p',
+        {
+          class:'note-inline',
+          text:
+            'Todo al día. No hay pedidos nuevos. 🎉'
+        }
+      )
+    );
+  }
+
+  nw.forEach(function(o){
+
+    var b=h(
+      'button',
+      {
+        class:'btn sm',
+        type:'button',
+        onclick:function(){
+          setStatus(o,'preparacion');
+        }
+      },
+      'Aceptar'
+    );
+
+    pn.append(
+      lrow(
+        AE.avatar(
+          profs[o.user_id],
+          36
+        ),
+        o.qty+' × '+o.product_name,
+        nameOf(o.user_id)+
+          ' · '+
+          AE.ago(o.created_at),
+        b
+      )
+    );
+  });
+
+  var pc=$('pChats');
+
+  pc.replaceChildren();
+
+  var uc=unreadConvs().slice(0,5);
+
+  if(!uc.length){
+
+    pc.append(
+      h(
+        'p',
+        {
+          class:'note-inline',
+          text:
+            'No hay mensajes pendientes. 💌'
+        }
+      )
+    );
+  }
+
+  uc.forEach(function(c){
+
+    pc.append(
+      lrow(
+        AE.avatar(
+          profs[c.customer_id],
+          36
+        ),
+
+        nameOf(
+          c.customer_id,
+          c.alias
+        ),
+
+        c.last_text||'',
+
+        h(
+          'button',
+          {
+            class:'btn ghost sm',
+            type:'button',
+            onclick:function(){
+
+              go('mensajes');
+              openConv(c.id);
+
+            }
+          },
+          'Abrir'
+        )
+      )
+    );
+
+  });
+
+  var pd=$('pDates');
+
+  pd.replaceChildren();
+
+  var soon=dates
+    .filter(function(d){
+      return AE.dleft(d)<=7;
+    })
+    .sort(function(a,b){
+      return AE.dleft(a)-AE.dleft(b);
+    })
+    .slice(0,6);
+
+  if(!soon.length){
+
+    pd.append(
+      h(
+        'p',
+        {
+          class:'note-inline',
+          text:
+            'Ninguna fecha cercana por ahora.'
+        }
+      )
+    );
+  }
+
+  soon.forEach(function(d){
+
+    pd.append(
+      lrow(
+        AE.avatar(
+          profs[d.user_id],
+          36
+        ),
+
+        AE.occ(d.occasion)[1]+
+          ' '+
+          d.title,
+
+        nameOf(d.user_id)+
+          ' · '+
+          AE.cd(AE.dleft(d)),
+
+        h(
+          'button',
+          {
+            class:'btn ghost sm',
+            type:'button',
+            onclick:function(){
+              remindFlow(d);
+            }
+          },
+          'Recordar'
+        )
+      )
+    );
+
+  });
+}
+
+/* =========================
+   TYPING REALTIME
+   ========================= */
+
+function setAdminChatTypingVisible(show){
+
+  customerTyping=!!show;
+
+  var el=$('tTyping');
+
+  if(!el)return;
+
+  el.hidden=!show;
+}
+
+function showCustomerTyping(show){
+
+  clearTimeout(
+    adminTypingHideTimer
+  );
+
+  var el=$('tTyping');
+  if(show&&el){
+    el.innerHTML='Está escribiendo<span class=\"typing-dots\"><i></i><i></i><i></i></span>';
+    aeStartTypingSound();
+  }else if(!show){
+    aeStopTypingSound(true);
+  }
+
+  setAdminChatTypingVisible(show);
+
+  if(show){
+
+    adminTypingHideTimer=setTimeout(
+      function(){
+        aeStopTypingSound(true);
+        setAdminChatTypingVisible(false);
+      },
+      2500
+    );
+
+  }
+}
+
+async function sendAdminTypingState(isTyping){
+
+  if(
+    !chatChannel||
+    !chatChannelReady||
+    !openId
+  ){
+    return;
+  }
+
+  try{
+
+    var result=await chatChannel.send({
+      type:'broadcast',
+      event:'typing',
+      payload:{
+        user_id:uid,
+        role:'staff',
+        typing:!!isTyping
+      }
+    });
+
+    console.log(
+      '[ADMIN CHAT TYPING] enviado:',
+      !!isTyping,
+      result
+    );
+
+  }catch(e){
+
+    console.error(
+      '[ADMIN CHAT TYPING]',
+      e
+    );
+
+  }
+}
+
+function stopAdminTyping(){
+
+  clearTimeout(
+    adminTypingTimer
+  );
+
+  adminTypingTimer=null;
+
+  if(!adminTypingActive)return;
+
+  adminTypingActive=false;
+
+  /*
+   * Si el canal todavía no está conectado,
+   * no enviamos false porque no hace falta:
+   * nunca se envió true.
+   */
+  if(chatChannelReady&&chatChannel){
+
+    sendAdminTypingState(false);
+
+  }
+}
+
+function adminTypingInput(){
+
+  if(!openId)return;
+
+  /*
+   * Si todavía no existe el canal,
+   * lo creamos inmediatamente.
+   */
+  if(!chatChannel){
+
+    subAdminChatTyping();
+
+  }
+
+  /*
+   * IMPORTANTE:
+   *
+   * Marcamos typing aunque Supabase todavía
+   * esté conectando.
+   *
+   * Cuando llegue SUBSCRIBED se enviará
+   * automáticamente typing:true.
+   */
+  if(!adminTypingActive){
+
+    adminTypingActive=true;
+
+    if(chatChannelReady){
+
+      sendAdminTypingState(true);
+
+    }
+
+  }
+
+  clearTimeout(
+    adminTypingTimer
+  );
+
+  adminTypingTimer=setTimeout(
+    stopAdminTyping,
+    1800
+  );
+}
+
+function closeAdminTypingChannel(){
+
+  aeStopTypingSound();
+
+  clearTimeout(
+    adminTypingTimer
+  );
+
+  adminTypingTimer=null;
+
+  /*
+   * Primero intentamos avisar false mientras
+   * el canal todavía existe.
+   */
+  if(
+    adminTypingActive&&
+    chatChannelReady&&
+    chatChannel
+  ){
+
+    sendAdminTypingState(false);
+
+  }
+
+  adminTypingActive=false;
+
+  clearTimeout(
+    adminTypingHideTimer
+  );
+
+  adminTypingHideTimer=null;
+
+  customerTyping=false;
+
+  setAdminChatTypingVisible(false);
+
+  chatChannelReady=false;
+
+  if(chatChannel){
+
+    var oldChannel=chatChannel;
+
+    chatChannel=null;
+
+    try{
+
+      sb.removeChannel(
+        oldChannel
+      );
+
+    }catch(e){
+
+      console.error(
+        '[ADMIN CHAT CHANNEL]',
+        e
+      );
+
+    }
+
+  }
+}
+
+function subAdminChatTyping(){
+
+  /*
+   * Si ya hay un canal conectado para la
+   * conversación actual, no hacemos otro.
+   */
+  if(
+    chatChannel&&
+    chatChannelReady
+  ){
+
+    return;
+  }
+
+  /*
+   * Si existe un canal viejo que no terminó
+   * de conectar, lo eliminamos.
+   */
+  if(chatChannel){
+
+    var oldChannel=chatChannel;
+
+    chatChannel=null;
+    chatChannelReady=false;
+
+    try{
+
+      sb.removeChannel(
+        oldChannel
+      );
+
+    }catch(e){
+
+      console.error(
+        '[ADMIN CHAT CHANNEL CLEANUP]',
+        e
+      );
+
+    }
+
+  }
+
+  if(!openId)return;
+
+  var conversationId=openId;
+  var channelName=
+    'ae-chat-'+conversationId;
+
+  console.log(
+    '[ADMIN CHAT TYPING] creando canal:',
+    channelName
+  );
+
+  chatChannel=
+    sb.channel(
+      channelName,
+      {
+        config:{
+          broadcast:{
+            self:false
+          }
+        }
+      }
+    );
+
+  chatChannel
+    .on(
+      'broadcast',
+      {
+        event:'typing'
+      },
+      function(p){
+
+        var d=p&&p.payload
+          ?p.payload
+          :{};
+
+        console.log(
+          '[ADMIN CHAT TYPING] recibido:',
+          d
+        );
+
+        /*
+         * Ignorar nuestro propio usuario.
+         */
+        if(d.user_id===uid)return;
+
+        /*
+         * Desde admin solo queremos recibir
+         * typing de la clienta.
+         */
+        if(d.role!=='customer')return;
+
+        showCustomerTyping(
+          !!d.typing
+        );
+
+      }
+    )
+    .subscribe(function(status){
+
+      console.log(
+        '[ADMIN CHAT TYPING] estado:',
+        status
+      );
+
+      if(status==='SUBSCRIBED'){
+
+        chatChannelReady=true;
+
+        console.log(
+          '[ADMIN CHAT TYPING] listo ✔',
+          channelName
+        );
+
+        /*
+         * AQUÍ ESTÁ LA CORRECCIÓN IMPORTANTE.
+         *
+         * Si el admin empezó a escribir antes de
+         * que Supabase terminara de conectar,
+         * ahora sí mandamos typing:true.
+         */
+        if(
+          openId===conversationId&&
+          adminTypingActive
+        ){
+
+          sendAdminTypingState(true);
+
+        }
+
+        return;
+      }
+
+      if(
+        status==='CHANNEL_ERROR'||
+        status==='TIMED_OUT'||
+        status==='CLOSED'
+      ){
+
+        chatChannelReady=false;
+
+        console.warn(
+          '[ADMIN CHAT TYPING] canal cerrado/error:',
+          status
+        );
+
+        if(chatChannel){
+
+          var failedChannel=chatChannel;
+
+          chatChannel=null;
+
+          try{
+
+            sb.removeChannel(
+              failedChannel
+            );
+
+          }catch(e){
+
+            console.error(
+              '[ADMIN CHAT CHANNEL REMOVE]',
+              e
+            );
+
+          }
+
+        }
+
+        /*
+         * Si sigue escribiendo, intentamos
+         * levantar el canal nuevamente.
+         */
+        if(
+          openId===conversationId&&
+          adminTypingActive
+        ){
+
+          setTimeout(function(){
+
+            if(
+              openId===conversationId&&
+              adminTypingActive&&
+              !chatChannel
+            ){
+
+              subAdminChatTyping();
+
+            }
+
+          },700);
+
+        }
+
+      }
+
+    });
+}
+
+/* =========================
+   CHAT PRIVADO
+   ========================= */
+
+async function markCustomerMessagesDelivered(
+  conversationId
+){
+
+  var r=await sb
+    .from('messages')
+    .update({
+      delivered_at:
+        new Date().toISOString()
+    })
+    .eq(
+      'conversation_id',
+      conversationId
+    )
+    .eq(
+      'sender_role',
+      'customer'
+    )
+    .is(
+      'delivered_at',
+      null
+    );
+
+  if(r.error){
+
+    console.error(
+      'Error marcando mensajes del cliente como entregados:',
+      r.error
+    );
+
+  }
+}
+
+async function markCustomerMessagesRead(
+  conversationId
+){
+
+  var now=
+    new Date().toISOString();
+
+  var r=await sb
+    .from('messages')
+    .update({
+      delivered_at:now,
+      read_at:now
+    })
+    .eq(
+      'conversation_id',
+      conversationId
+    )
+    .eq(
+      'sender_role',
+      'customer'
+    )
+    .is(
+      'read_at',
+      null
+    );
+
+  if(r.error){
+
+    console.error(
+      'Error marcando mensajes del cliente como leídos:',
+      r.error
+    );
+
+  }
+}
+
+function renderConvs(){
+
+  var list=$('convList');
+
+  list.replaceChildren();
+
+  var shown=convs.filter(function(c){
+
+    return c.last_text||c.last_at;
+
+  });
+
+  if(!shown.length){
+
+    list.append(
+      h(
+        'div',
+        {class:'blank'},
+
+        h(
+          'h3',
+          {
+            text:
+              'Aún no hay conversaciones'
+          }
+        ),
+
+        h(
+          'p',
+          {
+            text:
+              'Cuando una clienta escriba desde su perfil, aparecerá aquí.'
+          }
+        )
+      )
+    );
+
+    renderThreadBlank();
+
+    return;
+  }
+
+  shown.forEach(function(c){
+
+    var unread=
+      c.unread&&
+      c.last_sender_role!=='admin';
+
+    list.append(
+      h(
+        'button',
+        {
+          class:
+            'conv'+
+            (c.id===openId?' on':''),
+          type:'button',
+
+          onclick:function(){
+            openConv(c.id);
+          }
+        },
+
+        AE.avatar(
+          profs[c.customer_id]
+        ),
+
+        h(
+          'span',
+          {
+            class:'conv-main'
+          },
+
+          h(
+            'strong',
+            {
+              text:
+                nameOf(
+                  c.customer_id,
+                  c.alias
+                )
+            }
+          ),
+
+          h(
+            'span',
+            {
+              class:'snip',
+              text:
+                (
+                  c.last_sender_role==='admin'
+                    ?'Tú: '
+                    :''
+                )+
+                (c.last_text||'')
+            }
+          )
+
+        ),
+
+        h(
+          'span',
+          {
+            class:'conv-side'
+          },
+
+          h(
+            'span',
+            {
+              text:
+                c.last_at
+                  ?AE.ago(c.last_at)
+                  :''
+            }
+          ),
+
+          unread
+            ?h(
+                'i',
+                {
+                  class:'dot',
+                  'aria-label':'Sin leer'
+                }
+              )
+            :null
+
+        )
+
+      )
+    );
+
+  });
+
+  if(!openId){
+    renderThreadBlank();
+  }
+}
+
+function renderThreadBlank(){
+
+  if(openId)return;
+
+  $('thread').replaceChildren(
+
+    h(
+      'div',
+      {class:'blank'},
+
+      h(
+        'h3',
+        {
+          text:
+            'Elige una conversación'
+        }
+      ),
+
+      h(
+        'p',
+        {
+          text:
+            'Selecciona un chat a la izquierda para responder a tu clienta.'
+        }
+      )
+
+    )
+
+  );
+}
+
+function convById(id){
+
+  return convs.filter(function(c){
+
+    return c.id===id;
+
+  })[0];
+
+}
+
+async function openConv(id){
+
+  if(openId&&openId!==id){
+
+    closeAdminTypingChannel();
+
+  }
+
+  openId=id;
+
+  $('inbox').setAttribute(
+    'data-open',
+    '1'
+  );
+
+  var c=convById(id);
+
+  if(!c){
+
+    await loadConvs();
+
+    c=convById(id);
+
+    if(!c){
+
+      openId=null;
+
+      return;
+    }
+  }
+
+  buildThread();
+
+  subAdminChatTyping();
+
+  await loadMsgs();
+
+  await markCustomerMessagesRead(id);
+
+  await loadMsgs();
+
+  if(c.unread){
+
+    c.unread=false;
+
+    sb
+      .from('conversations')
+      .update({
+        unread:false
+      })
+      .eq('id',id)
+      .then(function(){});
+
+    renderConvs();
+    renderStats();
+  }
+
+  renderConvs();
+}
+
+function buildThread(){
+
+  var c=convById(openId);
+
+  if(!c)return;
+
+  var ta=h(
+    'textarea',
+    {
+      id:'rText',
+      rows:'1',
+      maxlength:'1000',
+      placeholder:'Escribe tu respuesta…',
+      'aria-label':'Respuesta'
+    }
+  );
+
+  ta.addEventListener('focus',function(){aeChatAudio()});
+
+  ta.addEventListener(
+    'input',
+    function(){
+
+      if(this.value.trim()){
+
+        adminTypingInput();
+
+      }else{
+
+        stopAdminTyping();
+
+      }
+
+    }
+  );
+
+  ta.addEventListener(
+    'blur',
+    function(){
+
+      stopAdminTyping();
+
+    }
+  );
+
+  var form=h(
+    'form',
+    {
+      class:'chat-f',
+
+      onsubmit:async function(e){
+
+        e.preventDefault();
+
+        var t=aeValidateChatText(ta.value);
+
+        if(!t)return;
+
+        stopAdminTyping();
+
+        ta.value='';
+
+        await sendAdmin(c,t);
+
+      }
+    },
+
+    ta,
+
+    h(
+      'button',
+      {
+        class:'btn',
+        type:'submit'
+      },
+      'Enviar'
+    )
+  );
+
+  ta.addEventListener(
+    'keydown',
+    function(e){
+
+      if(
+        e.key==='Enter'&&
+        !e.shiftKey&&
+        window.innerWidth>900
+      ){
+
+        e.preventDefault();
+
+        form.requestSubmit();
+
+      }
+
+    }
+  );
+
+  var qr=h(
+    'div',
+    {class:'qr'},
+
+    QUICK.map(function(t){
+
+      return h(
+        'button',
+        {
+          class:'chip',
+          type:'button',
+
+          onclick:function(){
+
+            ta.value=t;
+
+            ta.focus();
+
+            adminTypingInput();
+
+          }
+        },
+
+        t.length>34
+          ?t.slice(0,32)+'…'
+          :t
+      );
+
+    })
+  );
+
+  $('thread').replaceChildren(
+
+    h(
+      'div',
+      {
+        class:'chat-h',
+        id:'tHead'
+      }
+    ),
+
+    h(
+      'div',
+      {
+        id:'tTyping',
+        class:'chat-typing',
+        hidden:true,
+        style:'padding:.18rem 1rem .45rem;border-bottom:1px solid var(--line);font-size:.78rem;line-height:1.2;'
+      },
+      'escribiendo...'
+    ),
+
+    h(
+      'div',
+      {
+        class:'log',
+        id:'tLog'
+      }
+    ),
+
+    qr,
+
+    form
+
+  );
+
+  renderThreadHead();
+}
+
+function renderThreadHead(){
+
+  var c=convById(openId);
+
+  var box=$('tHead');
+
+  if(!c||!box)return;
+
+  var ph=phones[c.customer_id];
+  var em=(window.AE_EMAILS&&window.AE_EMAILS[c.customer_id])||'';
+
+  box.replaceChildren(
+
+    h(
+      'button',
+      {
+        class:'x back',
+        type:'button',
+        'aria-label':'Volver',
+
+        onclick:function(){
+
+          closeAdminTypingChannel();
+
+          openId=null;
+
+          $('inbox').setAttribute(
+            'data-open',
+            '0'
+          );
+
+          renderConvs();
+
+        }
+      },
+      '‹'
+    ),
+
+    AE.avatar(
+      profs[c.customer_id]
+    ),
+
+    h(
+      'div',
+      null,
+
+      h(
+        'strong',
+        {
+          text:
+            nameOf(
+              c.customer_id,
+              c.alias
+            )
+        }
+      ),
+
+      h(
+        'small',
+        {
+          text:
+            ph&&em
+              ?'WhatsApp: '+ph+' · '+em
+              :ph
+                ?'WhatsApp: '+ph
+                :em
+                  ?'Correo: '+em
+                  :'Chat privado'
+        }
+      ),
+
+    ),
+
+    h(
+      'div',
+      {
+        style:
+          'margin-left:auto;display:flex;gap:.4rem;flex-wrap:wrap;justify-content:flex-end'
+      },
+
+      h(
+        'button',
+        {
+          class:'btn ghost sm',
+          type:'button',
+
+          onclick:function(){
+
+            ordCust=c.customer_id;
+
+            ordF='todos';
+
+            buildOrdChips();
+            renderOrders();
+
+            go('pedidos');
+
+          }
+        },
+        'Pedidos'
+      ),
+
+      ph
+        ?h(
+            'a',
+            {
+              class:'btn sm',
+              target:'_blank',
+              rel:'noopener noreferrer',
+
+              href:
+                'https://wa.me/'+
+                AE.waNumber(ph)+
+                '?text='+
+                encodeURIComponent(
+                  'Hola '+
+                  AE.first(
+                    nameOf(
+                      c.customer_id
+                    )
+                  )+
+                  ' 🌹 te escribe Aeterna.'
+                )
+            },
+            'WhatsApp'
+          )
+        :null
+
+    )
+
+  );
+}
+
+async function loadMsgs(){
+
+  var r=await sb
+    .from('messages')
+    .select('*')
+    .eq(
+      'conversation_id',
+      openId
+    )
+    .order(
+      'created_at',
+      {
+        ascending:true
+      }
+    )
+    .limit(400);
+
+  if(r.error){
+
+    console.error(r);
+
+    return;
+  }
+
+  msgs=r.data||[];
+
+  var ids=[];
+
+  msgs.forEach(function(m){
+
+    if(
+      m.sender_id&&
+      ids.indexOf(m.sender_id)===-1
+    ){
+
+      ids.push(m.sender_id);
+
+    }
+
+  });
+
+  await ensureProfs(ids);
+
+  renderMsgs();
+}
+
+function renderMsgs(){
+
+  var log=$('tLog');
+
+  if(!log)return;
+
+  log.replaceChildren();
+
+  var last='';
+
+  msgs.forEach(function(m){
+
+    var dl=AE.dayLabel(
+      m.created_at
+    );
+
+    if(dl!==last){
+
+      log.append(
+        h(
+          'div',
+          {
+            class:'day',
+            text:dl
+          }
+        )
+      );
+
+      last=dl;
+    }
+
+    var isCustomer=
+      m.sender_role==='customer';
+
+    var pr=isCustomer
+      ?(
+        profs[m.sender_id]||{
+          id:m.sender_id,
+          display_name:'Cliente',
+          avatar_url:null,
+          role:'customer'
+        }
+      )
+      :me;
+
+    var row=h(
+      'div',
+      {
+        class:
+          'chat-msg-row '+
+          (isCustomer?'theirs':'mine')
+      }
+    );
+
+    var avatar=
+      AE.avatar(
+        pr,
+        32
+      );
+
+    var ticks=null;
+
+    if(!isCustomer){
+
+      var tick='✓';
+
+      var cls='msg-ticks';
+
+      if(m.read_at){
+
+        tick='✓✓';
+
+        cls+=' read';
+
+      }else if(m.delivered_at){
+
+        tick='✓✓';
+
+      }
+
+      ticks=h(
+        'span',
+        {
+          class:cls,
+
+          text:tick,
+
+          title:
+            m.read_at
+              ?'Leído'
+              :m.delivered_at
+                ?'Entregado'
+                :'Enviado'
+        }
+      );
+    }
+
+    var meta=h(
+      'small',
+      {
+        class:'msg-meta'
+      },
+
+      h(
+        'span',
+        {
+          text:
+            AE.hhmm(
+              m.created_at
+            )
+        }
+      ),
+
+      ticks
+
+    );
+
+    var bubble=h(
+      'div',
+      {
+        class:
+          'msg '+
+          (isCustomer?'them':'me')
+      },
+
+      h(
+        'div',
+        {
+          class:'chat-name'
+        },
+        pr.display_name||
+          (isCustomer
+            ?'Cliente'
+            :'Aeterna')
+      ),
+
+      h(
+        'div',
+        {
+          text:m.body
+        }
+      ),
+
+      meta
+    );
+
+    if(isCustomer){
+
+      row.append(
+        avatar,
+        bubble
+      );
+
+    }else{
+
+      row.append(
+        bubble,
+        avatar
+      );
+
+    }
+
+    log.append(row);
+
+  });
+
+  log.scrollTop=
+    log.scrollHeight;
+}
+
+async function sendAdmin(c,text){
+
+  text=aeValidateChatText(text);
+  if(!text)return;
+  stopAdminTyping();
+
+  var ins=await sb
+    .from('messages')
+    .insert({
+      conversation_id:c.id,
+      sender_id:uid,
+      sender_role:'staff',
+      body:text.slice(0,1000)
+    });
+
+  if(ins.error){
+
+    console.error(ins.error);
+
+    toast(
+      'No pudimos enviar el mensaje.'
+    );
+
+    return;
+  }
+
+  c.last_text=
+    text.slice(0,140);
+
+  c.last_at=
+    new Date().toISOString();
+
+  c.last_sender_role='admin';
+  c.unread=false;
+
+  await sb
+    .from('conversations')
+    .update({
+      last_text:c.last_text,
+      last_at:c.last_at,
+      last_sender_role:'admin',
+      unread:false
+    })
+    .eq('id',c.id);
+
+  msgs.push({
+    sender_id:uid,
+    sender_role:'staff',
+    body:text,
+    created_at:
+      new Date().toISOString()
+  });
+
+  renderMsgs();
+}
+
+async function convFor(userId){
+
+  var c=convs.filter(function(x){
+
+    return x.customer_id===userId;
+
+  })[0];
+
+  if(c)return c;
+
+  var r=await sb
+    .from('conversations')
+    .insert({
+      customer_id:userId,
+      alias:
+        nameOf(userId).slice(0,40)
+    })
+    .select()
+    .single();
+
+  if(r.error)throw r.error;
+
+  convs.unshift(r.data);
+
+  return r.data;
+}
+
+async function notifyCustomer(
+  userId,
+  text
+){
+
+  var c=await convFor(userId);
+
+  await sendAdminTo(c,text);
+}
+
+async function sendAdminTo(c,text){
+
+  text=aeValidateChatText(text);
+  if(!text)return;
+  var ins=await sb
+    .from('messages')
+    .insert({
+      conversation_id:c.id,
+      sender_id:uid,
+      sender_role:'staff',
+      body:text.slice(0,1000)
+    });
+
+  if(ins.error)throw ins.error;
+
+  c.last_text=
+    text.slice(0,140);
+
+  c.last_at=
+    new Date().toISOString();
+
+  c.last_sender_role='admin';
+  c.unread=false;
+
+  await sb
+    .from('conversations')
+    .update({
+      last_text:c.last_text,
+      last_at:c.last_at,
+      last_sender_role:'admin',
+      unread:false
+    })
+    .eq('id',c.id);
+
+  if(openId===c.id){
+
+    msgs.push({
+      sender_id:uid,
+      sender_role:'staff',
+      body:text,
+      created_at:
+        new Date().toISOString()
+    });
+
+    renderMsgs();
+
+  }
+}
+
+async function chatWith(
+  userId,
+  draft
+){
+
+  try{
+
+    var c=await convFor(userId);
+
+    go('mensajes');
+
+    await openConv(c.id);
+
+    if(draft){
+
+      var ta=$('rText');
+
+      if(ta){
+
+        ta.value=draft;
+
+        ta.focus();
+
+        adminTypingInput();
+
+      }
+
+    }
+
+  }catch(e){
+
+    console.error(e);
+
+    toast(
+      'No pudimos abrir el chat.'
+    );
+
+  }
+}
+
+/* =========================
+   PEDIDOS
+   ========================= */
+
+function buildOrdChips(){
+
+  var box=$('ordChips');
+
+  box.replaceChildren.apply(
+    box,
+
+    ORD_F.map(function(f){
+
+      var n=orders
+        .filter(
+          ORD_FN[f[0]]
+        )
+        .length;
+
+      return h(
+        'button',
+        {
+          class:'chip',
+          type:'button',
+
+          'aria-pressed':
+            String(
+              ordF===f[0]
+            ),
+
+          onclick:function(){
+
+            ordF=f[0];
+
+            buildOrdChips();
+            renderOrders();
+
+          }
+        },
+
+        f[1]+
+          (
+            f[0]!=='todos'
+              ?' · '+n
+              :''
+          )
+
+      );
+
+    })
+  );
+
+  if(ordCust){
+
+    box.append(
+      h(
+        'button',
+        {
+          class:'chip',
+          'aria-pressed':'true',
+          type:'button',
+
+          onclick:function(){
+
+            ordCust=null;
+
+            buildOrdChips();
+            renderOrders();
+
+          }
+        },
+
+        'Cliente: '+
+          nameOf(ordCust)+
+          ' ×'
+
+      )
+    );
+  }
+}
+
+function orderCard(o){
+
+  var idx=
+    AE.statusIdx(o.status);
+
+  var cancelled=
+    o.status==='cancelado';
+
+  var done=
+    o.status==='entregado';
+
+  var p=profs[o.user_id];
+
+  var el=h(
+    'article',
+    {
+      class:'card ocard'
+    }
+  );
+
+  el.append(
+
+    h(
+      'div',
+      {
+        class:'otop'
+      },
+
+      h(
+        'img',
+        {
+          src:o.product_image||'',
+          alt:o.product_name,
+
+          onerror:function(){
+            this.style.visibility='hidden';
+          }
+        }
+      ),
+
+      h(
+        'div',
+        {
+          class:'m'
+        },
+
+        h(
+          'b',
+          {
+            text:
+              o.qty+
+              ' × '+
+              o.product_name
+          }
+        ),
+
+        h(
+          'small',
+          {
+            text:
+              nameOf(o.user_id)+
+              ' · #'+
+              AE.shortId(o.id)+
+              ' · '+
+              AE.ago(o.created_at)
+          }
+        )
+
+      ),
+
+      h(
+        'span',
+        {
+          class:
+            'pill'+
+            (
+              done
+                ?' ok'
+                :cancelled
+                  ?' no'
+                  :''
+            ),
+
+          text:
+            AE.statusLabel(
+              o.status
+            )
+        }
+      )
+
+    )
+
+  );
+
+  if(!cancelled){
+
+    el.append(
+
+      h(
+        'div',
+        {
+          class:'trk'
+        },
+
+        AE.STATUS.map(function(s,i){
+
+          return h(
+            'div',
+            {
+              class:
+                'st'+
+                (
+                  i<=idx
+                    ?' done'
+                    :''
+                )+
+                (
+                  i===idx
+                    ?' now'
+                    :''
+                )
+            },
+
+            h(
+              'i',
+              {
+                text:
+                  i<=idx
+                    ?'✓'
+                    :String(i+1)
+              }
+            ),
+
+            s[1]
+          );
+
+        })
+
+      )
+
+    );
+  }
+
+  var det=h(
+    'div',
+    {
+      class:'odet'
+    },
+
+    h(
+      'span',
+      null,
+      'Entrega: ',
+
+      h(
+        'b',
+        {
+          text:
+            o.delivery_date
+              ?new Date(
+                o.delivery_date+
+                'T00:00'
+              ).toLocaleDateString(
+                'es',
+                {
+                  weekday:'short',
+                  day:'numeric',
+                  month:'short'
+                }
+              )
+              :'—'
+        }
+      )
+    ),
+
+    h(
+      'span',
+      null,
+      o.zone_label||''
+    ),
+
+    h(
+      'span',
+      null,
+      'Total: ',
+
+      h(
+        'b',
+        {
+          text:
+            o.zone==='otra'
+              ?AE.money(
+                o.unit_price*
+                o.qty
+              )+
+              ' + delivery'
+              :AE.money(
+                oSum(o)
+              )
+        }
+      )
+    )
+
+  );
+
+  el.append(det);
+
+  if(o.address){
+
+    el.append(
+      h(
+        'p',
+        {
+          class:'note-inline'
+        },
+        '📍 '+o.address
+      )
+    );
+  }
+
+  if(o.notes){
+
+    el.append(
+      h(
+        'p',
+        {
+          class:'note-inline'
+        },
+        '📝 '+o.notes
+      )
+    );
+  }
+
+  var acts=h(
+    'div',
+    {
+      class:'oacts'
+    }
+  );
+
+  if(!cancelled&&!done){
+
+    var next=
+      AE.STATUS[idx+1];
+
+    if(next){
+
+      acts.append(
+        h(
+          'button',
+          {
+            class:'btn sm',
+            type:'button',
+
+            onclick:function(){
+              setStatus(
+                o,
+                next[0]
+              );
+            }
+          },
+
+          next[2]+
+            ' Pasar a: '+
+            next[1]
+        )
+      );
+    }
+
+    var sel=h(
+      'select',
+      {
+        class:'sel',
+        'aria-label':
+          'Cambiar estado'
+      },
+
+      AE.STATUS.map(function(s){
+
+        return h(
+          'option',
+          {
+            value:s[0]
+          },
+          s[1]
+        );
+
+      }).concat([
+
+        h(
+          'option',
+          {
+            value:'cancelado'
+          },
+          'Cancelado'
+        )
+
+      ])
+
+    );
+
+    sel.value=o.status;
+
+    sel.onchange=function(){
+
+      setStatus(
+        o,
+        sel.value
+      );
+
+    };
+
+    acts.append(sel);
+  }
+
+  acts.append(
+
+    h(
+      'button',
+      {
+        class:'btn ghost sm',
+        type:'button',
+
+        onclick:function(){
+
+          chatWith(
+            o.user_id,
+
+            'Hola, sobre tu pedido #'+
+            AE.shortId(o.id)+
+            ' ('+
+            o.product_name+
+            '): '
+          );
+
+        }
+      },
+      '💬 Escribir'
+    )
+
+  );
+
+  var ph=phones[o.user_id];
+
+  if(ph){
+
+    acts.append(
+      h(
+        'a',
+        {
+          class:'btn ghost sm',
+          target:'_blank',
+          rel:'noopener noreferrer',
+
+          href:
+            'https://wa.me/'+
+            AE.waNumber(ph)
+        },
+        'WhatsApp'
+      )
+    );
+
+  }
+
+  el.append(acts);
+
+  return el;
+}
+
+function renderOrders(){
+
+  var box=$('ordList');
+
+  if(!box)return;
+
+  box.replaceChildren();
+
+  var list=
+    orders.filter(
+      ORD_FN[ordF]
+    );
+
+  if(ordCust){
+
+    list=list.filter(function(o){
+
+      return o.user_id===ordCust;
+
+    });
+
+  }
+
+  if(
+    ordF==='nuevos'||
+    ordF==='proceso'
+  ){
+
+    list=list.slice().sort(
+      function(a,b){
+
+        return (
+          a.delivery_date||'9'
+        ).localeCompare(
+          b.delivery_date||'9'
+        );
+
+      }
+    );
+
+  }
+
+  if(!list.length){
+
+    box.append(
+      h(
+        'div',
+        {
+          class:'empty'
+        },
+
+        h(
+          'h3',
+          {
+            text:'Sin pedidos aquí'
+          }
+        ),
+
+        h(
+          'p',
+          {
+            text:
+              'Cuando una clienta haga un pedido aparecerá en esta lista.'
+          }
+        )
+
+      )
+    );
+
+    return;
+  }
+
+  list.forEach(function(o){
+
+    box.append(
+      orderCard(o)
+    );
+
+  });
+}
+
+async function setStatus(
+  o,
+  status
+){
+
+  if(o.status===status)return;
+
+  var r=await sb
+    .from('orders')
+    .update({
+      status:status,
+      updated_at:
+        new Date().toISOString()
+    })
+    .eq('id',o.id);
+
+  if(r.error){
+
+    console.error(r.error);
+
+    toast(
+      'No pudimos actualizar el estado.'
+    );
+
+    renderOrders();
+
+    return;
+  }
+
+  o.status=status;
+
+  /* Volvemos a leer la fila desde Supabase para que el estado local
+     quede exactamente igual al que se guardó en la base. */
+  await loadOrders();
+
+  buildOrdChips();
+  renderOrders();
+  renderStats();
+  renderSummary();
+
+  toast(
+    'Pedido '+
+    AE.shortId(o.id)+
+    ': '+
+    AE.statusLabel(status)
+  );
+
+  if($('notifyOn').checked){
+
+    var ic=(
+      AE.STATUS[
+        AE.statusIdx(status)
+      ]||['','','']
+    )[2];
+
+    var txt=
+      status==='cancelado'
+
+        ?'Tu pedido #'+
+          AE.shortId(o.id)+
+          ' ('+
+          o.product_name+
+          ') fue cancelado. Escríbenos si tienes dudas.'
+
+        :ic+
+          ' Tu pedido #'+
+          AE.shortId(o.id)+
+          ' ('+
+          o.product_name+
+          ') ahora está: '+
+          AE.statusLabel(status)+
+          '.';
+
+    safe(function(){
+
+      return notifyCustomer(
+        o.user_id,
+        txt
+      );
+
+    });
+
+  }
+}
+
+/* =========================
+   COMUNIDAD
+   ========================= */
+
+function renderPosts(){
+
+  var box=$('postList');
+
+  if(!box)return;
+
+  box.replaceChildren();
+
+  if(!posts.length){
+
+    box.append(
+      h(
+        'div',
+        {
+          class:'empty'
+        },
+
+        h(
+          'h3',
+          {
+            text:
+              'Aún no hay publicaciones'
+          }
+        ),
+
+        h(
+          'p',
+          {
+            text:
+              'Publica tu primer trabajo para animar a la comunidad.'
+          }
+        )
+
+      )
+    );
+
+    return;
+  }
+
+  posts.forEach(function(p,i){
+
+    var pr=p.profiles||{};
+
+    var el=h(
+      'article',
+      {
+        class:'card post',
+        style:
+          'animation-delay:'+
+          Math.min(i,8)*.05+
+          's'
+      }
+    );
+
+    var nm=h(
+      'strong',
+      {
+        text:
+          pr.display_name||
+          'Clienta'
+      }
+    );
+
+    if(pr.role==='admin'){
+
+      nm.append(
+        h(
+          'span',
+          {
+            class:'staff-b',
+            text:'Aeterna'
+          }
+        )
+      );
+    }
+
+    el.append(
+
+      h(
+        'div',
+        {
+          class:'post-h'
+        },
+
+        AE.avatar(pr),
+
+        h(
+          'div',
+          {
+            class:'meta'
+          },
+
+          nm,
+
+          h(
+            'small',
+            {
+              text:
+                AE.ago(
+                  p.created_at
+                )
+            }
+          )
+
+        ),
+
+        p.mood
+          ?h(
+            'span',
+            {
+              class:'tag',
+              text:p.mood
+            }
+          )
+          :null
+
+      )
+
+    );
+
+    if(p.body){
+
+      el.append(
+        h(
+          'p',
+          {
+            class:'post-b',
+            text:p.body
+          }
+        )
+      );
+
+    }
+
+    if(p.image_url){
+
+      el.append(
+        h(
+          'img',
+          {
+            class:'post-img',
+            src:p.image_url,
+            alt:'Foto',
+            loading:'lazy',
+
+            onclick:function(){
+              AE.zoom(
+                p.image_url
+              );
+            }
+          }
+        )
+      );
+
+    }
+
+    el.append(
+
+      h(
+        'div',
+        {
+          class:'post-f'
+        },
+
+        h(
+          'span',
+          {
+            class:'note-inline',
+            style:'padding:.5rem .7rem'
+          },
+
+          '♥ '+
+            (pLikes[p.id]||0)+
+            '  ·  💬 '+
+            (pCm[p.id]||0)
+
+        ),
+
+        h(
+          'button',
+          {
+            class:'act del',
+            type:'button',
+
+            onclick:function(){
+              delPost(p);
+            }
+          },
+          'Eliminar'
+        )
+
+      )
+
+    );
+
+    box.append(el);
+
+  });
+}
+
+async function delPost(p){
+
+  if(!confirm(
+    '¿Eliminar esta publicación de la comunidad?'
+  ))return;
+
+  var r=await sb
+    .from('community_posts')
+    .delete()
+    .eq('id',p.id);
+
+  if(r.error){
+
+    toast(
+      'No pudimos eliminarla.'
+    );
+
+    return;
+  }
+
+  if(p.image_url){
+
+    var m=
+      p.image_url
+        .split('/posts/')[1];
+
+    if(m){
+
+      sb.storage
+        .from('posts')
+        .remove([
+          decodeURIComponent(m)
+        ]);
+
+    }
+
+  }
+
+  toast(
+    'Publicación eliminada'
+  );
+
+  loadPosts();
+}
+
+$('aImg').onchange=async function(){
+
+  var f=
+    this.files&&
+    this.files[0];
+
+  this.value='';
+
+  if(!f)return;
+
+  try{
+
+    aBlob=
+      await AE.shrink(
+        f,
+        1400,
+        .82
+      );
+
+    $('aPrev')
+      .querySelector('img')
+      .src=
+        URL.createObjectURL(
+          aBlob
+        );
+
+    $('aPrev').hidden=false;
+
+  }catch(e){
+
+    toast(
+      'No pudimos leer esa imagen.'
+    );
+
+  }
+};
+
+$('aRm').onclick=function(){
+
+  aBlob=null;
+
+  $('aPrev').hidden=true;
+
+};
+
+$('aPost').onclick=async function(){
+
+  var t=
+    $('aText')
+      .value
+      .trim();
+
+  if(!t){
+
+    toast(
+      'Escribe algo para publicar.'
+    );
+
+    return;
+  }
+
+  var btn=this;
+
+  btn.disabled=true;
+  btn.textContent='Publicando…';
+
+  try{
+
+    var url=null;
+
+    if(aBlob){
+
+      var path=
+        uid+
+        '/'+
+        Date.now()+
+        '.jpg';
+
+      var up=await sb
+        .storage
+        .from('posts')
+        .upload(
+          path,
+          aBlob,
+          {
+            contentType:
+              'image/jpeg'
+          }
+        );
+
+      if(up.error)throw up.error;
+
+      url=
+        sb.storage
+          .from('posts')
+          .getPublicUrl(path)
+          .data
+          .publicUrl;
+
+    }
+
+    var r=await sb
+      .from('community_posts')
+      .insert({
+        user_id:uid,
+        body:t.slice(0,800),
+        image_url:url,
+        mood:'📣 Aeterna'
+      });
+
+    if(r.error)throw r.error;
+
+    $('aText').value='';
+
+    aBlob=null;
+
+    $('aPrev').hidden=true;
+
+    toast(
+      'Publicado como Aeterna 🌹'
+    );
+
+    loadPosts();
+
+  }catch(e){
+
+    console.error(e);
+
+    toast(
+      'No pudimos publicar.'
+    );
+
+  }
+
+  btn.disabled=false;
+  btn.textContent='Publicar';
+
+};
+
+/* =========================
+   RECORDATORIOS
+   ========================= */
+
+function remKey(d){
+
+  return 'ae_rem_'+
+    d.id+
+    '_'+
+    AE.nextOcc(d).getFullYear();
+
+}
+
+function remSent(d){
+
+  try{
+
+    return localStorage.getItem(
+      remKey(d)
+    )==='1';
+
+  }catch(e){
+
+    return false;
+
+  }
+}
+
+function buildRemChips(){
+
+  var F=[
+    ['todas','Todas'],
+    ['toca','Toca recordar'],
+    ['mes','Próximos 30 días']
+  ];
+
+  $('remChips')
+    .replaceChildren.apply(
+      $('remChips'),
+
+      F.map(function(f){
+
+        return h(
+          'button',
+          {
+            class:'chip',
+            type:'button',
+
+            'aria-pressed':
+              String(
+                remF===f[0]
+              ),
+
+            onclick:function(){
+
+              remF=f[0];
+
+              buildRemChips();
+              renderRem();
+
+            }
+          },
+
+          f[1]
+
+        );
+
+      })
+    );
+}
+
+function remText(d){
+
+  var nombre=AE.first(nameOf(d.user_id))||'hola';
+  var cuando=AE.cd(AE.dleft(d))
+    .toLowerCase()
+    .replace('faltan','en');
+
+  return 'Hola '+nombre+', ¿cómo estás? 🌹\n\n'+
+    'Te escribimos de Aeterna porque se acerca una fecha especial: '+
+    d.title+'. '+
+    'Queríamos ponernos en contacto contigo con tiempo para que, si lo deseas, puedas preparar algo especial. '+
+    'La fecha es '+cuando+'.\n\n'+
+    'Si te gustaría recibir opciones o conversar sobre una propuesta, estaremos encantados de ayudarte.\n\n'+
+    'Un saludo,\nAeterna';
+
+}
+
+function renderRem(){
+
+  var box=$('remList');
+
+  if(!box)return;
+
+  box.replaceChildren();
+
+  var list=dates.filter(function(d){
+
+    return AE.dleft(d)>=0;
+
+  });
+
+  if(remF==='toca'){
+
+    list=list.filter(function(d){
+
+      return d.remind_days>0&&
+        AE.dleft(d)<=d.remind_days;
+
+    });
+
+  }else if(remF==='mes'){
+
+    list=list.filter(function(d){
+
+      return AE.dleft(d)<=30;
+
+    });
+
+  }
+
+  list.sort(function(a,b){
+
+    return AE.dleft(a)-
+      AE.dleft(b);
+
+  });
+
+  if(!list.length){
+
+    box.append(
+      h(
+        'div',
+        {
+          class:'empty'
+        },
+
+        h(
+          'h3',
+          {
+            text:
+              remF==='toca'
+                ?'Nada por recordar hoy'
+                :remF==='mes'
+                  ?'Sin fechas próximas'
+                  :'No hay fechas guardadas'
+          }
+        ),
+
+        h(
+          'p',
+          {
+            text:
+              remF==='todas'
+                ?'Aquí aparecen todas las fechas especiales guardadas por tus clientes.'
+                :'Cuando una fecha guardada por una clienta esté cerca, aparecerá aquí.'
+          }
+        )
+
+      )
+    );
+
+    return;
+  }
+
+  list.forEach(function(d){
+
+    var n=AE.dleft(d);
+
+    var oc=AE.occ(
+      d.occasion
+    );
+
+    var sent=remSent(d);
+
+    var ph=d.phone||phones[d.user_id]||'';
+    var em=d.email||(window.AE_EMAILS&&window.AE_EMAILS[d.user_id])||'';
+    var o=AE.nextOcc(d);
+    var inferredChannel=(ph&&em)?'ambos':(d.channel||'whatsapp');
+    var chL=({whatsapp:'WhatsApp',correo:'Correo',ambos:'Ambos'})[inferredChannel]||inferredChannel||'';
+
+    var acts=h(
+      'div',
+      {
+        class:'oacts'
+      }
+    );
+
+    if((inferredChannel==='whatsapp'||inferredChannel==='ambos') && ph){
+      acts.append(h('a',{class:'btn sm',target:'_blank',rel:'noopener noreferrer',href:'https://wa.me/'+AE.waNumber(ph)+'?text='+encodeURIComponent(remText(d)),onclick:function(){markRem(d);}},'WhatsApp'));
+    }
+
+    if((inferredChannel==='correo'||inferredChannel==='ambos') && em){
+      acts.append(h('a',{class:'btn sm',href:'mailto:'+encodeURIComponent(em)+'?subject='+encodeURIComponent('Aeterna · '+d.title)+'&body='+encodeURIComponent(remText(d)),onclick:function(){markRem(d);}},'Correo'));
+    }
+
+    acts.append(
+
+      h(
+        'button',
+        {
+          class:'btn ghost sm',
+          type:'button',
+
+          onclick:function(){
+
+            markRem(d);
+
+            chatWith(
+              d.user_id,
+              remText(d)
+            );
+
+          }
+        },
+        'Por el chat'
+      )
+
+    );
+
+    if(!sent){
+
+      acts.append(
+        h(
+          'button',
+          {
+            class:'btn ghost sm',
+            type:'button',
+
+            onclick:function(){
+
+              markRem(d);
+
+              renderRem();
+
+            }
+          },
+          '✓ Marcar enviado'
+        )
+      );
+
+    }
+
+    box.append(
+
+      h(
+        'article',
+        {
+          class:'card dcard'
+        },
+
+        h(
+          'div',
+          {
+            class:'dtop'
+          },
+
+          h(
+            'div',
+            {
+              class:'dbadge'
+            },
+
+            h(
+              'i',
+              {
+                text:
+                  o.toLocaleDateString(
+                    'es',
+                    {
+                      month:'short'
+                    }
+                  )
+              }
+            ),
+
+            h(
+              'b',
+              {
+                text:
+                  String(
+                    o.getDate()
+                  )
+              }
+
+            )
+
+          ),
+
+          h(
+            'div',
+            {
+              class:'dmain'
+            },
+
+            h(
+              'strong',
+              {
+                text:
+                  oc[1]+
+                  ' '+
+                  d.title
+              }
+            ),
+
+            h(
+              'small',
+              {
+                text:
+                  nameOf(d.user_id)+
+                  ' · '+
+                  oc[2]
+              }
+            )
+
+          ),
+
+          h(
+            'span',
+            {
+              class:
+                'cd'+
+                (n<=7?' soon':''),
+
+              text:
+                AE.cd(n)
+            }
+          )
+
+        ),
+
+        h(
+          'div',
+          {
+            class:'rem'
+          },
+
+          h(
+            'span',
+            {
+              text:
+                '🔔 '+
+                (
+                  d.remind_days
+                    ?d.remind_days+
+                      ' d antes · '+
+                      chL
+                    :'Sin aviso'
+                )
+            }
+          ),
+
+          sent
+            ?h(
+              'span',
+              {
+                class:'pill ok',
+                text:
+                  '✓ Recordatorio enviado'
+              }
+            )
+            :null,
+
+          !ph
+            ?h(
+              'span',
+              {
+                class:'pill no',
+                text:'Sin WhatsApp'
+              }
+            )
+            :null
+
+        ),
+
+        acts
+
+      )
+
+    );
+
+  });
+}
+
+function markRem(d){
+
+  try{
+
+    localStorage.setItem(
+      remKey(d),
+      '1'
+    );
+
+  }catch(e){}
+
+}
+
+function remindFlow(d){
+
+  go('recordatorios');
+
+  remF='mes';
+
+  buildRemChips();
+
+  renderRem();
+
+}
+
+/* =========================
+   USUARIOS ONLINE
+   ========================= */
+
+function updateOnlineUsers(){
+
+  var unique={};
+
+  Object.keys(onlineUsers||{}).forEach(function(key){
+    var u=onlineUsers[key]||{};
+
+    if(!u.user_id)return;
+    if(u.role==='admin')return;
+
+    unique[u.user_id]=u;
+  });
+
+  onlineUsers=unique;
+
+  if($('stOrd')){
+    $('stOrd').textContent=
+      Object.keys(unique).length;
+  }
+}
+
+function subOnlinePresence(){
+
+  if(presenceChannel)return;
+
+  presenceChannel=sb.channel('ae-online-users',{
+    config:{
+      presence:{
+        key:uid
+      }
+    }
+  });
+
+  presenceChannel.on(
+    'presence',
+    {event:'sync'},
+    function(){
+
+      var state=presenceChannel.presenceState()||{};
+      var next={};
+
+      Object.keys(state).forEach(function(key){
+        (state[key]||[]).forEach(function(u){
+          if(u&&u.user_id){
+            next[key+'-'+u.user_id]=u;
+          }
+        });
+      });
+
+      onlineUsers=next;
+      updateOnlineUsers();
+    }
+  );
+
+  presenceChannel.subscribe(function(status){
+
+    if(status==='SUBSCRIBED'){
+
+      presenceChannel.track({
+        user_id:uid,
+        role:me&&me.role||'admin',
+        display_name:me&&me.display_name||'Admin'
+      });
+
+    }
+
+  });
+}
+
+/* =========================
+   SONIDOS DEL CHAT
+   ========================= */
+var aeChatAudioCtx=null;
+var aeTypingSoundTimer=null;
+var aeTypingSoundActive=false;
+var aeTypingSoundWasActive=false;
+function aeChatAudio(){try{if(!aeChatAudioCtx){var C=window.AudioContext||window.webkitAudioContext;if(!C)return null;aeChatAudioCtx=new C()}if(aeChatAudioCtx.state==='suspended')aeChatAudioCtx.resume().catch(function(){});return aeChatAudioCtx}catch(e){return null}}
+function aePlayChatBubble(){var ctx=aeChatAudio();if(!ctx)return;try{var n=ctx.currentTime,o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.setValueAtTime(880,n);o.frequency.exponentialRampToValueAtTime(620,n+.10);g.gain.setValueAtTime(.0001,n);g.gain.exponentialRampToValueAtTime(.075,n+.012);g.gain.exponentialRampToValueAtTime(.0001,n+.16);o.connect(g);g.connect(ctx.destination);o.start(n);o.stop(n+.17)}catch(e){}}
+function aePlayTypingTick(){var ctx=aeChatAudio();if(!ctx)return;try{var n=ctx.currentTime,o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.setValueAtTime(540,n);o.frequency.exponentialRampToValueAtTime(390,n+.055);g.gain.setValueAtTime(.0001,n);g.gain.exponentialRampToValueAtTime(.035,n+.008);g.gain.exponentialRampToValueAtTime(.0001,n+.075);o.connect(g);g.connect(ctx.destination);o.start(n);o.stop(n+.08)}catch(e){}}
+function aeStartTypingSound(){if(aeTypingSoundActive)return;aeTypingSoundActive=true;aeTypingSoundWasActive=true;aePlayTypingTick();aeTypingSoundTimer=setInterval(function(){if(!aeTypingSoundActive){clearInterval(aeTypingSoundTimer);aeTypingSoundTimer=null;return}aePlayTypingTick()},650)}
+function aeStopTypingSound(playFinishedBubble){var was=aeTypingSoundActive||aeTypingSoundWasActive;aeTypingSoundActive=false;aeTypingSoundWasActive=false;if(aeTypingSoundTimer){clearInterval(aeTypingSoundTimer);aeTypingSoundTimer=null}if(playFinishedBubble&&was)aePlayChatBubble()}
+
+/* =========================
+   REALTIME
+   ========================= */
+
+function realtime(){
+
+  subOnlinePresence();
+
+  /*
+   * Respaldo para nuevos pedidos: aunque Supabase Realtime no entregue
+   * el INSERT (por ejemplo, si la publicación de orders no está activa),
+   * el panel vuelve a consultar la tabla automáticamente mientras está abierto.
+   */
+  if(!window.aeAdminOrdersPoll){
+    window.aeAdminOrdersPoll=setInterval(function(){
+      if(document.visibilityState==='visible'){
+        loadOrders();
+      }
+    },5000);
+  }
+
+  if(!window.aeAdminDatesPoll){
+    window.aeAdminDatesPoll=setInterval(function(){
+      if(document.visibilityState==='visible'){
+        loadDates();
+      }
+    },3000);
+  }
+
+  sb.channel('ad-orders')
+    .on(
+      'postgres_changes',
+      {
+        event:'*',
+        schema:'public',
+        table:'orders'
+      },
+
+      function(p){
+
+        if(p.eventType==='INSERT'){
+
+          ensureProfs([
+            p.new.user_id
+          ])
+          .then(function(){
+
+            toast(
+              '🛍️ Nuevo pedido de '+
+              nameOf(
+                p.new.user_id
+              )
+            );
+
+          });
+
+        }
+
+        loadOrders();
+
+        buildOrdChips();
+
+      }
+    )
+    .subscribe();
+
+
+  sb.channel('ad-chat')
+
+    .on(
+      'postgres_changes',
+      {
+        event:'INSERT',
+        schema:'public',
+        table:'messages'
+      },
+
+      async function(p){
+
+        var m=p.new||{};
+
+        if(!m.conversation_id)return;
+
+        if(m.sender_role==='customer'){
+
+          if(openId===m.conversation_id&&section==='mensajes'&&m.sender_id!==uid)aePlayChatBubble();
+          showCustomerTyping(false);
+
+          await markCustomerMessagesDelivered(
+            m.conversation_id
+          );
+
+          await loadConvs();
+
+          var c=
+            convById(
+              m.conversation_id
+            );
+
+          if(
+            openId===
+              m.conversation_id&&
+            section==='mensajes'
+          ){
+
+            await markCustomerMessagesRead(
+              m.conversation_id
+            );
+
+            await loadMsgs();
+
+            if(c&&c.unread){
+
+              c.unread=false;
+
+              sb
+                .from('conversations')
+                .update({
+                  unread:false
+                })
+                .eq(
+                  'id',
+                  c.id
+                )
+                .then(function(){});
+
+              renderConvs();
+              renderStats();
+
+            }
+
+          }else{
+
+            toast(
+              '💬 Mensaje de '+
+              nameOf(
+                c
+                  ?c.customer_id
+                  :null,
+
+                c&&c.alias
+              )
+            );
+
+            renderConvs();
+            renderStats();
+
+          }
+
+          return;
+        }
+
+        if(m.sender_role==='staff'){
+
+          if(
+            openId===
+            m.conversation_id
+          ){
+
+            await loadMsgs();
+
+          }
+
+        }
+
+      }
+    )
+
+    .on(
+      'postgres_changes',
+      {
+        event:'UPDATE',
+        schema:'public',
+        table:'messages'
+      },
+
+      async function(p){
+
+        var m=p.new||{};
+
+        if(!m.conversation_id)return;
+
+        if(
+          openId===
+          m.conversation_id
+        ){
+
+          await loadMsgs();
+
+        }
+
+      }
+    )
+
+    .subscribe(function(status){
+
+      console.log(
+        '[ADMIN CHAT] Realtime:',
+        status
+      );
+
+    });
+
+
+  sb.channel('ad-conversations')
+
+    .on(
+      'postgres_changes',
+      {
+        event:'*',
+        schema:'public',
+        table:'conversations'
+      },
+
+      function(){
+
+        loadConvs();
+
+      }
+    )
+
+    .subscribe(function(status){
+
+      console.log(
+        '[ADMIN CONVERSATIONS] Realtime:',
+        status
+      );
+
+    });
+
+
+  sb.channel('ad-community')
+
+    .on(
+      'postgres_changes',
+      {
+        event:'*',
+        schema:'public',
+        table:'community_posts'
+      },
+
+      function(){
+        loadPosts();
+      }
+    )
+
+    .on(
+      'postgres_changes',
+      {
+        event:'*',
+        schema:'public',
+        table:'special_dates'
+      },
+
+      function(){
+        loadDates();
+      }
+    )
+
+    .subscribe();
+
+}
+
+/* =========================
+   VISIBILIDAD
+   ========================= */
+
+document.addEventListener(
+  'visibilitychange',
+  function(){
+
+    if(!document.hidden){
+
+      loadDates();
+      loadOrders();
+    }
+
+    if(document.hidden){
+
+      stopAdminTyping();
+
+      showCustomerTyping(false);
+
+    }else{
+
+      if(
+        section==='mensajes'&&
+        openId&&
+        !chatChannel
+      ){
+
+        var ta=$('rText');
+
+        if(
+          ta&&
+          ta.value.trim()
+        ){
+
+          adminTypingActive=true;
+          subAdminChatTyping();
+
+        }
+
+      }
+
+    }
+
+  }
+);
+
+/* =========================
+   ARRANQUE FINAL
+   ========================= */
+
+boot().catch(function(e){
+
+  console.error(e);
+
+  $('splash').textContent=
+    'No pudimos cargar el panel. Recarga la página.';
+
+});
+
+})();
+</script>
+
+</body>
+</html>

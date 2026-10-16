@@ -1,0 +1,55 @@
+.aeterna-welcome{
+  border-radius:24px !important;
+  border:1px solid rgba(110,40,58,.12) !important;
+  box-shadow:0 20px 60px rgba(110,40,58,.18) !important;
+}
+
+.aeterna-welcome .swal2-title{
+  font-family:Georgia,serif;
+  font-weight:600;
+  font-size:1.7rem;
+}
+.chat-msg-row{
+  display:flex;
+  align-items:flex-end;
+  gap:8px;
+  margin:8px 0;
+}
+
+.chat-msg-row.mine{
+  justify-content:flex-end;
+}
+
+.chat-msg-row.theirs{
+  justify-content:flex-start;
+}
+
+.chat-msg-row .msg{
+  max-width:78%;
+}
+
+.chat-name{
+  font-size:.75rem;
+  font-weight:700;
+  margin-bottom:3px;
+  opacity:.75;
+}
+.msg-meta{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:5px;
+}
+
+.msg-ticks{
+  color:#929292;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:-3px;
+  padding-right:3px;
+  line-height:1;
+}
+
+.msg-ticks.read{
+  color:#39a9e8;
+}
