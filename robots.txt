@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://aeterna-flower.github.io/Aeterna-Flower/sitemap.xml
